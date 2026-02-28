@@ -31,3 +31,6 @@ npm-debug.log*
 
 # Planning documents (local)
 docs/plans/
+
+# mise local config
+mise.local.toml
