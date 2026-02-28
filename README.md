@@ -1,5 +1,7 @@
 # equitherm-studio
 
+[![CI](https://github.com/P4uLT/equitherm-studio/actions/workflows/ci.yml/badge.svg)](https://github.com/P4uLT/equitherm-studio/actions/workflows/ci.yml)
+
 Companion tools for the [ESPHome](https://esphome.io) `equitherm` climate component. Visualize heating curves, configure PID parameters, and generate ESPHome YAML configurations.
 
 ## Features

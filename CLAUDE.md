@@ -16,6 +16,14 @@ pnpm test         # Run all tests (Vitest)
 pnpm typecheck    # TypeScript type check (strict mode)
 ```
 
+For local development, [Taskfile.yml](Taskfile.yml) provides the same commands via `task`:
+```bash
+task dev          # Start web dev server
+task build        # Build all packages
+task test         # Run tests
+task ci           # Run full CI locally
+```
+
 ## Monorepo Structure
 
 ```
