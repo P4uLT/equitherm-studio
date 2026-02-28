@@ -2,8 +2,7 @@
 import { useEffect, useRef } from 'react';
 import { useStore } from '../../store/useStore';
 import { useTheme } from '../../contexts/ThemeContext';
-import { computeFlowTemperature } from '../../core/curve';
-import { createPIDState, computePID, getRoomTempActual } from '../../core/pid';
+import { computeFlowTemperature, createPIDState, computePID, getRoomTempActual } from '@equitherm-studio/core';
 import type { CurveState, PIDStoreSlice, ComputedStatus } from '../../types';
 import Chart, { type TooltipItem } from 'chart.js/auto';
 import styles from './Chart.module.css';

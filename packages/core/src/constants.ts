@@ -1,5 +1,5 @@
 // src/core/constants.ts
-import type { CurveLimits, DefaultPIDParams } from '../types';
+import type { CurveLimits, DefaultPIDParams } from './types';
 
 // Curve parameter limits
 export const CURVE_LIMITS: CurveLimits = {

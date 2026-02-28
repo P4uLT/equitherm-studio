@@ -1,6 +1,6 @@
 // src/core/pid.ts
 import { DEFAULT_PID_PARAMS } from './constants';
-import type { DefaultPIDParams, DeadbandConfig, PIDResult } from '../types';
+import type { DefaultPIDParams, DeadbandConfig, PIDResult } from './types';
 
 // PID state for computation
 interface PIDComputeState {

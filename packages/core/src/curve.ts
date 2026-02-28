@@ -1,5 +1,5 @@
 // src/core/curve.ts
-import type { CurveParams } from '../types';
+import type { CurveParams } from './types';
 
 /**
  * Compute flow temperature using equitherm curve formula
