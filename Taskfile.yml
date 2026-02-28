@@ -1,7 +1,7 @@
 version: "3"
 
 vars:
-  PROJECT_NAME: equitherm-calculator
+  PROJECT_NAME: equitherm-studio
 
 tasks:
   default:
@@ -12,75 +12,66 @@ tasks:
   install:
     desc: Install dependencies
     cmds:
-      - npm install
+      - pnpm install
 
   dev:
-    desc: Start React/Preact development server
+    desc: Start web development server
     cmds:
-      - npm run dev
+      - pnpm dev
+
+  dev:core:
+    desc: Start core package in watch mode
+    cmds:
+      - pnpm dev:core
 
   build:
-    desc: Build production React app to dist/app/
+    desc: Build all packages
     cmds:
-      - npm run build
+      - pnpm build
 
-  build:lib:
-    desc: Build core library to dist/core/equitherm-core.js
+  build:core:
+    desc: Build core package only
     cmds:
-      - npm run build:lib
+      - pnpm --filter @equitherm-studio/core build
 
-  build:single:
-    desc: Build single HTML file to dist/single-file/
+  build:web:
+    desc: Build web package only
     cmds:
-      - npm run build:single
-
-  build:dev:
-    desc: Build production React app (non-minified) to dist/app/
-    cmds:
-      - npx vite build --minify false
-
-  build:single:dev:
-    desc: Build single HTML file (non-minified) to dist/single-file/
-    cmds:
-      - npx vite build --config vite.config.single.js --minify false
-
-  build:all:
-    desc: Build all outputs (app, lib, single-file)
-    cmds:
-      - npm run build
-      - npm run build:lib
-      - npm run build:single
+      - pnpm --filter @equitherm-studio/web build
 
   preview:
-    desc: Preview production build (Vite server)
+    desc: Preview web production build
     cmds:
-      - npm run preview
-
-  serve:
-    desc: Serve dist/app/ with static server
-    cmds:
-      - npx serve dist/app
+      - pnpm --filter @equitherm-studio/web preview
 
   test:
-    desc: Run tests once
+    desc: Run all tests
     cmds:
-      - npm run test
+      - pnpm test
 
   test:watch:
     desc: Run tests in watch mode
     cmds:
-      - npm run test:watch
+      - pnpm --filter @equitherm-studio/core test:watch
+
+  typecheck:
+    desc: Run TypeScript type checking
+    cmds:
+      - pnpm typecheck
 
   clean:
     desc: Remove build artifacts and node_modules
     cmds:
-      - rm -rf dist/
-      - rm -rf node_modules/
+      - rm -rf node_modules
+      - rm -rf packages/*/node_modules
+      - rm -rf packages/*/dist
+      - rm -rf dist
 
   clean:dist:
     desc: Remove build artifacts only
     cmds:
-      - rm -rf dist/
+      - rm -rf packages/*/dist
+      - rm -rf dist
 
   reinstall:
     desc: Clean and reinstall dependencies
@@ -89,8 +80,9 @@ tasks:
       - task: install
 
   ci:
-    desc: Run CI checks (install, build all, test)
+    desc: Run CI checks (install, typecheck, build, test)
     cmds:
-      - npm ci
-      - task: build:all
-      - task: test
+      - pnpm install --frozen-lockfile
+      - pnpm typecheck
+      - pnpm build
+      - pnpm test
