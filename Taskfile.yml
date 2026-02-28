@@ -1,0 +1,89 @@
+version: "3"
+
+vars:
+  PROJECT_NAME: equitherm-studio
+
+tasks:
+  default:
+    desc: Show available tasks
+    cmds:
+      - task --list
+
+  install:
+    desc: Install dependencies
+    cmds:
+      - pnpm install
+
+  dev:
+    desc: Start web development server
+    cmds:
+      - pnpm dev
+
+  dev:core:
+    desc: Start core package in watch mode
+    cmds:
+      - pnpm dev:core
+
+  build:
+    desc: Build all packages
+    cmds:
+      - pnpm build
+
+  build:core:
+    desc: Build core package only
+    cmds:
+      - pnpm --filter @equitherm-studio/core build
+
+  build:web:
+    desc: Build web package only
+    cmds:
+      - pnpm --filter @equitherm-studio/web build
+
+  preview:
+    desc: Preview web production build
+    cmds:
+      - pnpm --filter @equitherm-studio/web preview
+
+  test:
+    desc: Run all tests
+    cmds:
+      - pnpm test
+
+  test:watch:
+    desc: Run tests in watch mode
+    cmds:
+      - pnpm --filter @equitherm-studio/core test:watch
+
+  typecheck:
+    desc: Run TypeScript type checking
+    cmds:
+      - pnpm typecheck
+
+  clean:
+    desc: Remove build artifacts and node_modules
+    cmds:
+      - rm -rf node_modules
+      - rm -rf packages/*/node_modules
+      - rm -rf packages/*/dist
+      - rm -rf dist
+
+  clean:dist:
+    desc: Remove build artifacts only
+    cmds:
+      - rm -rf packages/*/dist
+      - rm -rf dist
+
+  reinstall:
+    desc: Clean and reinstall dependencies
+    cmds:
+      - task: clean
+      - task: install
+
+  ci:
+    desc: Run CI checks (install, build core, typecheck, build, test)
+    cmds:
+      - pnpm install --frozen-lockfile
+      - pnpm --filter @equitherm-studio/core build
+      - pnpm typecheck
+      - pnpm build
+      - pnpm test
