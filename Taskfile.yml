@@ -80,9 +80,10 @@ tasks:
       - task: install
 
   ci:
-    desc: Run CI checks (install, typecheck, build, test)
+    desc: Run CI checks (install, build core, typecheck, build, test)
     cmds:
       - pnpm install --frozen-lockfile
+      - pnpm --filter @equitherm-studio/core build
       - pnpm typecheck
       - pnpm build
       - pnpm test
