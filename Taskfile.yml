@@ -1,0 +1,96 @@
+version: "3"
+
+vars:
+  PROJECT_NAME: equitherm-calculator
+
+tasks:
+  default:
+    desc: Show available tasks
+    cmds:
+      - task --list
+
+  install:
+    desc: Install dependencies
+    cmds:
+      - npm install
+
+  dev:
+    desc: Start React/Preact development server
+    cmds:
+      - npm run dev
+
+  build:
+    desc: Build production React app to dist/app/
+    cmds:
+      - npm run build
+
+  build:lib:
+    desc: Build core library to dist/core/equitherm-core.js
+    cmds:
+      - npm run build:lib
+
+  build:single:
+    desc: Build single HTML file to dist/single-file/
+    cmds:
+      - npm run build:single
+
+  build:dev:
+    desc: Build production React app (non-minified) to dist/app/
+    cmds:
+      - npx vite build --minify false
+
+  build:single:dev:
+    desc: Build single HTML file (non-minified) to dist/single-file/
+    cmds:
+      - npx vite build --config vite.config.single.js --minify false
+
+  build:all:
+    desc: Build all outputs (app, lib, single-file)
+    cmds:
+      - npm run build
+      - npm run build:lib
+      - npm run build:single
+
+  preview:
+    desc: Preview production build (Vite server)
+    cmds:
+      - npm run preview
+
+  serve:
+    desc: Serve dist/app/ with static server
+    cmds:
+      - npx serve dist/app
+
+  test:
+    desc: Run tests once
+    cmds:
+      - npm run test
+
+  test:watch:
+    desc: Run tests in watch mode
+    cmds:
+      - npm run test:watch
+
+  clean:
+    desc: Remove build artifacts and node_modules
+    cmds:
+      - rm -rf dist/
+      - rm -rf node_modules/
+
+  clean:dist:
+    desc: Remove build artifacts only
+    cmds:
+      - rm -rf dist/
+
+  reinstall:
+    desc: Clean and reinstall dependencies
+    cmds:
+      - task: clean
+      - task: install
+
+  ci:
+    desc: Run CI checks (install, build all, test)
+    cmds:
+      - npm ci
+      - task: build:all
+      - task: test
