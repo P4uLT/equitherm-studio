@@ -1,44 +1,44 @@
-# Equitherm Heating Curve Calculator
+# equitherm-studio
 
-Interactive calculator for HVAC professionals to compute flow temperature based on outdoor temperature using the equitherm curve formula.
+Companion tools for the [ESPHome](https://esphome.io) `equitherm` climate component. Visualize heating curves, configure PID parameters, and generate ESPHome YAML configurations.
 
 ## Features
 
 - Real-time Chart.js visualization of heating curves
 - PID control simulation with deadband support
-- Gain scheduling for adaptive control
-- Theme support (dark/light)
-- Configuration save/load with localStorage
-- YAML export for ESPHome integration
+- ESPHome YAML configuration generator
+- Dark/light theme (ESPHome style)
+- URL parameter sharing for configurations
+
+## Packages
+
+This is a pnpm monorepo:
+
+| Package | Description |
+|---------|-------------|
+| `@equitherm-studio/core` | Pure calculation library (no framework dependencies) |
+| `@equitherm-studio/web` | React web application |
 
 ## Quick Start
 
 ```bash
 # Install dependencies
-npm install
+pnpm install
 
 # Start development server
-npm run dev
+pnpm dev
 ```
 
-Opens at http://localhost:3000
+Opens at http://localhost:5173
 
-## Build Commands
+## Commands
 
-| Command | Output | Description |
-|---------|--------|-------------|
-| `npm run dev` | localhost:3000 | Development server with hot reload |
-| `npm run build` | `dist/app/` | Production web app |
-| `npm run build:lib` | `dist/core/equitherm-core.js` | ES module library |
-| `npm run build:single` | `dist/single-file/index.html` | Standalone HTML file |
-| `npm run preview` | localhost:4173 | Preview production build |
-
-## Testing
-
-```bash
-npm test        # Run tests once
-npm test:watch  # Run tests in watch mode
-```
+| Command | Description |
+|---------|-------------|
+| `pnpm dev` | Start web dev server |
+| `pnpm build` | Build all packages |
+| `pnpm test` | Run all tests |
+| `pnpm typecheck` | TypeScript type check |
 
 ## Heating Curve Formula
 
@@ -57,8 +57,12 @@ t_flow = t_target + shift + hc × (t_target - t_outdoor)^(1/n)
 
 ## Core Library Usage
 
-```javascript
-import { computeFlowTemperature, computePID, createPIDState } from './dist/core/equitherm-core.js';
+```typescript
+import {
+  computeFlowTemperature,
+  computePID,
+  createPIDState
+} from '@equitherm-studio/core';
 
 // Calculate flow temperature
 const flowTemp = computeFlowTemperature({
@@ -78,10 +82,15 @@ const correction = computePID(pidState, 22, 20); // setpoint, actual
 
 ## Tech Stack
 
-- **Build**: Vite 5.x
+- **Build**: Vite 5.x, pnpm workspaces
+- **UI**: React 19
+- **State**: Zustand
 - **Charts**: Chart.js 4.x
-- **Styling**: CSS3 with CSS Custom Properties
-- **Fonts**: Google Fonts (Figtree)
+- **Testing**: Vitest
+
+## Related
+
+- [ESPHome equitherm component](https://github.com/P4uLT/esphome) - The climate component this tool supports
 
 ## License
 
