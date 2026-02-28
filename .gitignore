@@ -24,8 +24,7 @@ Thumbs.db
 *.log
 npm-debug.log*
 
-# pnpm (project uses npm)
-pnpm-lock.yaml
+# pnpm lock file is committed for reproducible builds
 
 # Git worktrees
 .worktrees/
