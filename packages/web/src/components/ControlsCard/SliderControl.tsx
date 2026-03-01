@@ -57,18 +57,18 @@ export function SliderControl({ id, label, min, max, step, value, unit, onChange
           onValueChange={handleValueChange}
           className={cn(
             'flex-1 cursor-pointer',
-            // Track overrides - target the Track component
-            '[&>span]:h-[6px] [&>span]:rounded-[3px] [&>span]:bg-[var(--bg-secondary)]',
+            // Track overrides - target the Track component (first span child)
+            '[&>span:first-child]:h-[6px] [&>span:first-child]:rounded-[3px] [&>span:first-child]:bg-[var(--bg-secondary)]',
             // Range (filled portion) overrides
-            '[&>span>span]:bg-[var(--accent-primary)]',
-            // Thumb overrides - target the Thumb component directly
-            '[&>button]:w-[18px] [&>button]:h-[18px] [&>button]:rounded-full',
-            '[&>button]:bg-[var(--accent-primary)] [&>button]:border-0',
-            '[&>button]:shadow-[0_2px_8px_rgba(0,0,0,0.4)]',
-            '[&>button]:cursor-pointer [&>button]:transition-none',
-            '[&>button]:hover:bg-[var(--accent-primary)]',
-            '[&>button]:focus:ring-0 [&>button]:focus:ring-offset-0',
-            '[&>button]:focus-visible:ring-2 [&>button]:focus-visible:ring-[var(--accent-primary)]'
+            '[&>span:first-child>span]:bg-[var(--accent-primary)]',
+            // Thumb overrides - target the Thumb component (button is nested inside a positioning span)
+            '[&_[role=slider]]:w-[18px] [&_[role=slider]]:h-[18px] [&_[role=slider]]:rounded-full',
+            '[&_[role=slider]]:bg-[var(--accent-primary)] [&_[role=slider]]:border-0',
+            '[&_[role=slider]]:shadow-[0_2px_8px_rgba(0,0,0,0.4)]',
+            '[&_[role=slider]]:cursor-pointer [&_[role=slider]]:transition-none',
+            '[&_[role=slider]]:hover:bg-[var(--accent-primary)]',
+            '[&_[role=slider]]:focus:ring-0 [&_[role=slider]]:focus:ring-offset-0',
+            '[&_[role=slider]]:focus-visible:ring-2 [&_[role=slider]]:focus-visible:ring-[var(--accent-primary)]'
           )}
         />
         <span className="font-['IBM_Plex_Mono',monospace] text-[0.6rem] font-medium text-[var(--text-muted)] whitespace-nowrap shrink-0 min-w-[1.75rem] text-right">
