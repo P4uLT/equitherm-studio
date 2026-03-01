@@ -11,6 +11,7 @@ import {
   MOBILE_BREAKPOINT,
   ANIMATION_DELAY,
 } from './InfoTooltip.constants';
+import styles from './InfoTooltip.module.css';
 
 interface InfoTooltipProps {
   title?: string;
@@ -36,20 +37,11 @@ export function InfoTooltip({ title, children, icon, position, size }: InfoToolt
   }, []);
 
   // Handle open state changes from the Tooltip component
-  // Using onOpenChange prevents opacity flashing that occurs when managing
-  // state manually via onClick, as it lets the tooltip library handle
-  // the animation timing correctly
   const handleOpenChange = useCallback((open: boolean) => {
-    // On mobile, toggle the state; on desktop, respect the library's hover behavior
-    if (isMobile) {
-      setIsOpen(open);
-    } else {
-      setIsOpen(open);
-    }
-  }, [isMobile]);
+    setIsOpen(open);
+  }, []);
 
-  // Handle click for mobile/touch - only prevent default to avoid
-  // conflicting with the tooltip's native click handling
+  // Handle click for mobile/touch
   const handleClick = useCallback((e: React.MouseEvent) => {
     if (isMobile) {
       e.preventDefault();
@@ -60,15 +52,11 @@ export function InfoTooltip({ title, children, icon, position, size }: InfoToolt
 
   // Handle hover for desktop
   const handleMouseEnter = useCallback(() => {
-    if (!isMobile) {
-      setIsOpen(true);
-    }
+    if (!isMobile) setIsOpen(true);
   }, [isMobile]);
 
   const handleMouseLeave = useCallback(() => {
-    if (!isMobile) {
-      setIsOpen(false);
-    }
+    if (!isMobile) setIsOpen(false);
   }, [isMobile]);
 
   // Close on outside click (mobile)
@@ -82,7 +70,6 @@ export function InfoTooltip({ title, children, icon, position, size }: InfoToolt
       }
     };
 
-    // Delay to avoid immediate close from the same click
     const timeoutId = setTimeout(() => {
       document.addEventListener('click', handleOutsideClick);
     }, 0);
@@ -105,60 +92,36 @@ export function InfoTooltip({ title, children, icon, position, size }: InfoToolt
           onMouseEnter={handleMouseEnter}
           onMouseLeave={handleMouseLeave}
           className={cn(
-            'inline-flex items-center justify-center rounded-full cursor-help',
-            'transition-all duration-150 flex-shrink-0 align-middle',
-            'bg-[var(--border-color)] text-[var(--text-muted)]',
-            'hover:bg-[var(--accent-primary)] hover:text-[var(--bg-primary)] hover:scale-115',
-            isOpen && 'bg-[var(--accent-primary)] text-[var(--bg-primary)]',
-            isSmall
-              ? 'w-4 h-4 ml-0.5'
-              : 'w-7 h-7 ml-1.5'
+            styles.trigger,
+            isOpen && styles.triggerOpen,
+            isSmall ? styles.triggerSmall : styles.triggerDefault
           )}
         >
-          <Info
-            className={cn(
-              isSmall ? 'w-2 h-2' : 'w-2.5 h-2.5',
-              'stroke-[2.5]'
-            )}
-          />
+          <Info className={cn(isSmall ? 'w-2 h-2' : 'w-2.5 h-2.5', 'stroke-[2.5]')} />
         </span>
       </TooltipTrigger>
       <TooltipContent
         side={isSideLeft ? 'left' : 'top'}
-        align={isSideLeft ? 'center' : 'center'}
+        align="center"
         sideOffset={12}
         className={cn(
-          'p-3.5 w-70 rounded-lg border border-[var(--border-color)]',
-          'bg-[var(--bg-card)] text-[var(--text-secondary)]',
-          'shadow-[0_8px_32px_rgba(0,0,0,0.4),0_0_0_1px_rgba(255,255,255,0.03)_inset]',
-          'max-w-[min(280px,calc(100vw-32px))]',
+          styles.content,
           'data-[state=open]:animate-in data-[state=closed]:animate-out',
           'data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0',
           'data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95',
-          'data-[side=top]:slide-in-from-bottom-2 data-[side=left]:slide-in-from-right-2',
-          '[&>svg]:hidden' // Hide the default arrow
+          'data-[side=top]:slide-in-from-bottom-2 data-[side=left]:slide-in-from-right-2'
         )}
       >
         {/* Header with icon and title */}
         {(icon || title) && (
-          <div className="flex items-center gap-2 mb-2.5 pb-2.5 border-b border-[var(--border-color)]">
-            {icon && (
-              <div className="w-6 h-6 flex items-center justify-center bg-[var(--accent-glow)] rounded-md text-[var(--accent-primary)] flex-shrink-0 [&>svg]:w-3.5 [&>svg]:h-3.5">
-                {icon}
-              </div>
-            )}
-            {title && (
-              <span className="text-[13px] font-semibold text-[var(--text-primary)] tracking-wide">
-                {title}
-              </span>
-            )}
+          <div className={styles.header}>
+            {icon && <div className={styles.iconWrapper}>{icon}</div>}
+            {title && <span className={styles.title}>{title}</span>}
           </div>
         )}
 
         {/* Body content */}
-        <div className="text-xs leading-relaxed text-[var(--text-secondary)] [&_p]:m-0 [&_p]:mb-2 [&_p:last-child]:mb-0 [&_strong]:text-[var(--accent-primary)] [&_strong]:font-medium [&_code]:bg-[var(--bg-secondary)] [&_code]:px-1.5 [&_code]:py-0.5 [&_code]:rounded [&_code]:text-[11px] [&_code]:text-[var(--accent-secondary)] [&_code]:font-mono">
-          {children}
-        </div>
+        <div className={styles.body}>{children}</div>
       </TooltipContent>
     </Tooltip>
   );
