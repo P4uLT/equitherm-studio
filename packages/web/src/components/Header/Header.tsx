@@ -33,7 +33,7 @@ export function Header() {
     <>
       <header className="flex items-center justify-between gap-6 px-4 py-3 bg-card border border-border rounded-xl mb-4">
         <div>
-          <h1 className="text-lg font-bold text-foreground whitespace-nowrap" style={{ fontFamily: "'Figtree', sans-serif" }}>
+          <h1 className="text-lg font-bold font-figtree text-foreground whitespace-nowrap">
             Equitherm Calculator
           </h1>
         </div>

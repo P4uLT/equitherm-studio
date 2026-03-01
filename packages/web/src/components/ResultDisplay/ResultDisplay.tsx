@@ -16,7 +16,7 @@ export function ResultDisplay() {
       <div className="flex flex-col gap-2 min-w-[200px]">
         <div className="flex justify-between px-1">
           <span className="text-xs font-medium text-muted-foreground uppercase tracking-widest">Outdoor</span>
-          <span className="font-[Figtree,sans-serif] text-xl font-bold text-foreground">{tCurrent}°C</span>
+          <span className="font-figtree text-xl font-bold text-foreground">{tCurrent}°C</span>
         </div>
         <div className="flex items-center gap-3">
           <span className="text-[0.7rem] min-w-[2.5rem] text-center text-primary">-30°</span>
@@ -45,7 +45,7 @@ export function ResultDisplay() {
       {pidEnabled && (
         <div className="flex flex-col items-center gap-1 min-w-[70px]">
           <span className="text-[0.65rem] font-medium text-muted-foreground uppercase tracking-widest">PID</span>
-          <span className={`font-[Figtree,sans-serif] text-xl font-semibold ${pidOutput >= 0 ? 'text-success' : 'text-destructive'}`}>
+          <span className={`font-figtree text-xl font-semibold ${pidOutput >= 0 ? 'text-success' : 'text-destructive'}`}>
             {pidSign}{pidOutput.toFixed(1)}°
           </span>
         </div>
@@ -63,7 +63,7 @@ export function ResultDisplay() {
       {/* Flow output */}
       <div className="flex flex-col items-center gap-1.5 min-w-[90px]">
         <span className="text-xs font-medium text-muted-foreground uppercase tracking-widest">Flow</span>
-        <span className="relative font-[Figtree,sans-serif] text-4xl font-bold text-primary pr-[0.7em]">
+        <span className="relative font-figtree text-4xl font-bold text-primary pr-[0.7em]">
           {computed.flowTemp?.toFixed(1) ?? '--'}
           <span className="absolute right-0 top-[0.1em] text-[0.4em] opacity-70">°C</span>
         </span>
