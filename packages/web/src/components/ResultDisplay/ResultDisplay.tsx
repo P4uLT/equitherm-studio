@@ -68,7 +68,7 @@ export function ResultDisplay() {
           <span className="absolute right-0 top-[0.1em] text-[0.4em] opacity-70">°C</span>
         </span>
         <div className="flex items-center gap-2 px-2.5 py-1 bg-secondary rounded border border-border">
-          <span className="w-2 h-2 rounded-full bg-[var(--success)]" />
+          <span className="w-2 h-2 rounded-full bg-success" />
           <span className="text-[0.7rem] text-muted-foreground uppercase">{computed.status}</span>
         </div>
       </div>
