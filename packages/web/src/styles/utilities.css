@@ -5,8 +5,8 @@
 @layer utilities {
   /* Primary slider - filled accent style */
   .range-slider-primary {
-    --slider-color: var(--accent-primary);
-    --slider-bg: var(--bg-secondary);
+    --slider-color: hsl(var(--primary));
+    --slider-bg: hsl(var(--secondary));
     background: linear-gradient(
       to right,
       var(--slider-color) 0%,
@@ -21,7 +21,7 @@
     width: 14px;
     height: 14px;
     border-radius: 50%;
-    background: var(--accent-primary);
+    background: hsl(var(--primary));
     cursor: pointer;
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
   }
@@ -30,7 +30,7 @@
     width: 14px;
     height: 14px;
     border-radius: 50%;
-    background: var(--accent-primary);
+    background: hsl(var(--primary));
     cursor: pointer;
     border: none;
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
@@ -38,8 +38,8 @@
 
   /* Ghost slider - outlined style for time-domain params */
   .range-slider-ghost {
-    --slider-color: var(--text-muted);
-    --slider-bg: var(--bg-secondary);
+    --slider-color: hsl(var(--muted-foreground));
+    --slider-bg: hsl(var(--secondary));
     background: linear-gradient(
       to right,
       var(--slider-color) 0%,
@@ -54,27 +54,27 @@
     width: 12px;
     height: 12px;
     border-radius: 50%;
-    background: var(--bg-card);
-    border: 2px solid var(--text-muted);
+    background: hsl(var(--card));
+    border: 2px solid hsl(var(--muted-foreground));
     cursor: pointer;
     box-shadow: none;
   }
 
   .range-slider-ghost:hover::-webkit-slider-thumb {
-    border-color: var(--text-secondary);
+    border-color: hsl(var(--secondary-foreground));
   }
 
   .range-slider-ghost::-moz-range-thumb {
     width: 12px;
     height: 12px;
     border-radius: 50%;
-    background: var(--bg-card);
-    border: 2px solid var(--text-muted);
+    background: hsl(var(--card));
+    border: 2px solid hsl(var(--muted-foreground));
     cursor: pointer;
     box-shadow: none;
   }
 
   .range-slider-ghost:hover::-moz-range-thumb {
-    border-color: var(--text-secondary);
+    border-color: hsl(var(--secondary-foreground));
   }
 }

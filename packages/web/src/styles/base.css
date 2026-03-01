@@ -11,8 +11,8 @@
   body.app-body,
   body {
     font-family: var(--font-body);
-    background-color: var(--bg-primary);
-    color: var(--text-primary);
+    background-color: hsl(var(--background));
+    color: hsl(var(--foreground));
     line-height: 1.5;
     transition: background-color 0.3s ease, color 0.3s ease;
   }
