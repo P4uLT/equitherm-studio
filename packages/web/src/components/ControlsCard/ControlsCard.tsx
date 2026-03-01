@@ -2,7 +2,7 @@
 import { useStore } from '../../store/useStore';
 import { SliderControl } from './SliderControl';
 import { InfoTooltip } from './InfoTooltip';
-import styles from './ControlsCard.module.css';
+import { Card } from '@/components/ui/card';
 
 // Tooltip icons as SVG components
 const SetpointIcon = () => (
@@ -54,8 +54,9 @@ export function ControlsCard() {
   const setCurveParam = useStore(s => s.setCurveParam);
 
   return (
-    <aside className={styles.card}>
-      <section className={styles.primary}>
+    <aside>
+      <Card className="p-4">
+      <section className="mb-4">
         <SliderControl
           id="t_target"
           label="Room Setpoint"
@@ -126,8 +127,8 @@ export function ControlsCard() {
         />
       </section>
 
-      <details className={styles.advanced}>
-        <summary>Advanced Settings</summary>
+      <details className="mb-4">
+        <summary className="cursor-pointer text-sm text-muted-foreground mb-2">Advanced Settings</summary>
 
         <SliderControl
           id="min_flow"
@@ -198,9 +199,10 @@ export function ControlsCard() {
         />
       </details>
 
-      <div className={styles.formula}>
-        <code>t_flow = t_target + shift + hc × ΔT<sup>1/n</sup></code>
+      <div className="bg-secondary rounded-md p-2 text-center">
+        <code className="font-mono text-xs text-secondary-foreground">t_flow = t_target + shift + hc × ΔT<sup>1/n</sup></code>
       </div>
+      </Card>
     </aside>
   );
 }
