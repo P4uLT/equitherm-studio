@@ -7,6 +7,10 @@ import {
   TooltipTrigger,
 } from '@/components/ui/tooltip';
 import { cn } from '@/lib/utils';
+import {
+  MOBILE_BREAKPOINT,
+  ANIMATION_DELAY,
+} from './InfoTooltip.constants';
 
 interface InfoTooltipProps {
   title?: string;
@@ -23,7 +27,7 @@ export function InfoTooltip({ title, children, icon, position, size }: InfoToolt
   // Detect mobile viewport
   useEffect(() => {
     const checkMobile = () => {
-      setIsMobile(window.innerWidth <= 768);
+      setIsMobile(window.innerWidth <= MOBILE_BREAKPOINT);
     };
 
     checkMobile();
@@ -31,7 +35,21 @@ export function InfoTooltip({ title, children, icon, position, size }: InfoToolt
     return () => window.removeEventListener('resize', checkMobile);
   }, []);
 
-  // Handle click for mobile/touch
+  // Handle open state changes from the Tooltip component
+  // Using onOpenChange prevents opacity flashing that occurs when managing
+  // state manually via onClick, as it lets the tooltip library handle
+  // the animation timing correctly
+  const handleOpenChange = useCallback((open: boolean) => {
+    // On mobile, toggle the state; on desktop, respect the library's hover behavior
+    if (isMobile) {
+      setIsOpen(open);
+    } else {
+      setIsOpen(open);
+    }
+  }, [isMobile]);
+
+  // Handle click for mobile/touch - only prevent default to avoid
+  // conflicting with the tooltip's native click handling
   const handleClick = useCallback((e: React.MouseEvent) => {
     if (isMobile) {
       e.preventDefault();
@@ -79,7 +97,7 @@ export function InfoTooltip({ title, children, icon, position, size }: InfoToolt
   const isSideLeft = position === 'sideLeft';
 
   return (
-    <Tooltip open={isOpen} onOpenChange={setIsOpen} delayDuration={200}>
+    <Tooltip open={isOpen} onOpenChange={handleOpenChange} delayDuration={ANIMATION_DELAY}>
       <TooltipTrigger asChild>
         <span
           data-info-tooltip
