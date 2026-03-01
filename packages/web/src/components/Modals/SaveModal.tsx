@@ -13,6 +13,7 @@ import {
 } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
+import styles from './SaveModal.module.css';
 
 interface SaveModalProps {
   isOpen: boolean;
@@ -48,7 +49,6 @@ export function SaveModal({ isOpen, onClose }: SaveModalProps) {
     const trimmedName = name.trim();
     if (!trimmedName) return;
 
-    // Check if config already exists
     const exists = configs.some(c => c.name === trimmedName);
     if (exists) {
       setConfirmOverwrite(trimmedName);
@@ -122,23 +122,21 @@ export function SaveModal({ isOpen, onClose }: SaveModalProps) {
 
         {/* Saved configs list */}
         {configs.length > 0 && (
-          <div className="mt-4 pt-4 border-t">
-            <div className="text-xs font-semibold text-muted-foreground uppercase tracking-wide mb-2">
-              Saved Configs
-            </div>
+          <div className={styles.sectionDivider}>
+            <div className={styles.sectionLabel}>Saved Configs</div>
             <div className="space-y-1">
               {configs.map(c => (
                 <div
                   key={c.name}
-                  className="flex items-center gap-2 px-3 py-2 bg-secondary rounded-md cursor-pointer hover:bg-secondary/80 transition-colors"
+                  className={styles.configItem}
                   onClick={() => handleLoad(c.name)}
                 >
-                  <span className="flex-1 text-sm">{c.name}</span>
-                  <span className="text-xs text-muted-foreground">
+                  <span className={styles.configName}>{c.name}</span>
+                  <span className={styles.configDate}>
                     {new Date(c.timestamp).toLocaleDateString()}
                   </span>
                   <button
-                    className="text-muted-foreground hover:text-destructive transition-colors text-lg px-1"
+                    className={styles.deleteButton}
                     onClick={e => handleDelete(e, c.name)}
                     title="Delete"
                   >

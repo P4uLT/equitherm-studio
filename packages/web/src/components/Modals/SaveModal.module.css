@@ -1,0 +1,56 @@
+/* SaveModal.module.css */
+/* Styles for SaveModal component */
+
+/* Section divider */
+.sectionDivider {
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid hsl(var(--border));
+}
+
+/* Section label */
+.sectionLabel {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: hsl(var(--muted-foreground));
+  text-transform: uppercase;
+  letter-spacing: 0.025em;
+  margin-bottom: 0.5rem;
+}
+
+/* Config list item */
+.configItem {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 0.75rem;
+  background: hsl(var(--secondary));
+  border-radius: 0.375rem;
+  cursor: pointer;
+  transition: background-color 150ms;
+}
+
+.configItem:hover {
+  background: hsl(var(--secondary) / 0.8);
+}
+
+.configName {
+  flex: 1;
+  font-size: 0.875rem;
+}
+
+.configDate {
+  font-size: 0.75rem;
+  color: hsl(var(--muted-foreground));
+}
+
+.deleteButton {
+  color: hsl(var(--muted-foreground));
+  transition: color 150ms;
+  font-size: 1.25rem;
+  padding: 0 0.25rem;
+}
+
+.deleteButton:hover {
+  color: hsl(var(--destructive));
+}
