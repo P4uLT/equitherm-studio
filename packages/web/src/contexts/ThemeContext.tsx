@@ -79,9 +79,6 @@ export function ThemeProvider({ children, defaultTheme = 'dark' }: ThemeProvider
     // Add new theme class
     root.classList.add(newTheme);
 
-    // Keep data-theme for backward compatibility with existing CSS
-    root.setAttribute('data-theme', newTheme === 'dark' ? 'esphome' : 'esphome-light');
-
     // Update meta theme-color for mobile
     const metaTheme = document.querySelector('meta[name="theme-color"]') as HTMLMetaElement | null;
     if (metaTheme) {
