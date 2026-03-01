@@ -1,5 +1,4 @@
 /* src/index.css */
 @import './styles/shadcn.css';
-@import './styles/base.css';
 @import './styles/responsive.css';
 @import './styles/highlight.css';
