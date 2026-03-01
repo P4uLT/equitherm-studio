@@ -2,6 +2,7 @@
 import type { ReactNode } from 'react';
 import { useStore } from '../../store/useStore';
 import { InfoTooltip } from '../ControlsCard/InfoTooltip';
+import { Switch } from '@/components/ui/switch';
 
 interface DeadbandInstrumentProps {
   label: string;
@@ -101,15 +102,12 @@ export function DeadbandControls() {
   return (
     <details className="border-b border-[var(--border-color)]" open>
       <summary className="flex items-center gap-2 px-4 py-3 cursor-pointer list-none [&::-webkit-details-marker]:hidden">
-        <label className="relative inline-block w-8 h-[18px] flex-shrink-0 cursor-pointer" onClick={e => e.stopPropagation()}>
-          <input
-            type="checkbox"
-            className="sr-only peer"
+        <div onClick={e => e.stopPropagation()}>
+          <Switch
             checked={pid.deadbandEnabled}
-            onChange={e => setPidParam('deadbandEnabled', (e.target as HTMLInputElement).checked)}
+            onCheckedChange={(checked) => setPidParam('deadbandEnabled', checked)}
           />
-          <span className="toggle-switch-mini" />
-        </label>
+        </div>
         <span className="text-sm font-semibold text-[var(--text-primary)]">Deadband</span>
         <InfoTooltip title="Deadband" icon={<span>?</span>} position="sideLeft">
           <p>A <strong>tolerance zone</strong> where PID output is reduced to prevent constant small adjustments.</p>

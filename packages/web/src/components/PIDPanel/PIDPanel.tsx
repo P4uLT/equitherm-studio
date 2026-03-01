@@ -4,6 +4,7 @@ import { GainControls } from './GainControls';
 import { DeadbandControls } from './DeadbandControls';
 import { InfoTooltip } from '../ControlsCard/InfoTooltip';
 import { Card } from '@/components/ui/card';
+import { Switch } from '@/components/ui/switch';
 
 const PIDIcon = () => (
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -19,15 +20,10 @@ export function PIDPanel() {
     <Card className={`flex min-w-0 h-full flex-col ${!pid.enabled ? 'opacity-50' : ''}`}>
       {/* Enable Header */}
       <div className="flex items-center gap-2 flex-wrap px-4 py-3 border-b border-[var(--border-color)]">
-        <label className="relative inline-block w-9 h-5 flex-shrink-0 cursor-pointer">
-          <input
-            type="checkbox"
-            className="sr-only peer"
-            checked={pid.enabled}
-            onChange={e => setPidParam('enabled', (e.target as HTMLInputElement).checked)}
-          />
-          <span className="toggle-switch" />
-        </label>
+        <Switch
+          checked={pid.enabled}
+          onCheckedChange={(checked) => setPidParam('enabled', checked)}
+        />
         <span className="text-sm font-semibold text-[var(--text-primary)]">PID Control</span>
         <InfoTooltip title="PID Control" icon={<PIDIcon />} position="sideLeft">
           <p><strong>Proportional-Integral-Derivative</strong> control adjusts flow temperature based on room temperature error.</p>
