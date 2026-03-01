@@ -1,3 +1,5 @@
-/* src/index.css */
+/* Global styles */
 @import './styles/shadcn.css';
+
+/* Syntax highlighting (keep for highlight.js) */
 @import './styles/highlight.css';
