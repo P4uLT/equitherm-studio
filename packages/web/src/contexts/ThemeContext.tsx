@@ -15,12 +15,36 @@ interface ThemeContextValue {
 
 const STORAGE_KEY = 'equitherm-theme';
 
-// SSR-safe localStorage accessor
+// Migrate old theme names to new format
+const migrateTheme = (oldTheme: string): Theme | null => {
+  const migrations: Record<string, Theme> = {
+    'esphome': 'dark',
+    'esphome-light': 'light',
+  };
+  return migrations[oldTheme] || null;
+};
+
+// SSR-safe localStorage accessor with migration
 const getStoredTheme = (): Theme | null => {
   if (typeof window === 'undefined') return null;
   try {
     const stored = localStorage.getItem(STORAGE_KEY);
-    return THEMES.includes(stored as Theme) ? (stored as Theme) : null;
+    if (!stored) return null;
+
+    // Check if it's a valid new theme
+    if (THEMES.includes(stored as Theme)) {
+      return stored as Theme;
+    }
+
+    // Try to migrate old theme name
+    const migrated = migrateTheme(stored);
+    if (migrated) {
+      // Save migrated theme
+      localStorage.setItem(STORAGE_KEY, migrated);
+      return migrated;
+    }
+
+    return null;
   } catch {
     return null;
   }
