@@ -11,19 +11,19 @@
   transition: all 150ms;
   flex-shrink: 0;
   vertical-align: middle;
-  background: var(--border-color);
-  color: var(--text-muted);
+  background: hsl(var(--border));
+  color: hsl(var(--muted-foreground));
 }
 
 .trigger:hover {
-  background: var(--accent-primary);
-  color: var(--bg-primary);
+  background: hsl(var(--primary));
+  color: hsl(var(--background));
   transform: scale(1.15);
 }
 
 .triggerOpen {
-  background: var(--accent-primary);
-  color: var(--bg-primary);
+  background: hsl(var(--primary));
+  color: hsl(var(--background));
 }
 
 .triggerSmall {
@@ -43,9 +43,9 @@
   padding: 0.875rem;
   width: 17.5rem;
   border-radius: 0.5rem;
-  border: 1px solid var(--border-color);
-  background: var(--bg-card);
-  color: var(--text-secondary);
+  border: 1px solid hsl(var(--border));
+  background: hsl(var(--card));
+  color: hsl(var(--secondary-foreground));
   box-shadow:
     0 8px 32px rgba(0, 0, 0, 0.4),
     0 0 0 1px rgba(255, 255, 255, 0.03) inset;
@@ -64,7 +64,7 @@
   gap: 0.5rem;
   margin-bottom: 0.625rem;
   padding-bottom: 0.625rem;
-  border-bottom: 1px solid var(--border-color);
+  border-bottom: 1px solid hsl(var(--border));
 }
 
 .iconWrapper {
@@ -73,10 +73,14 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: var(--accent-glow);
+  background: hsl(var(--primary) / 0.12);
   border-radius: 0.375rem;
-  color: var(--accent-primary);
+  color: hsl(var(--primary));
   flex-shrink: 0;
+}
+
+:global(.dark) .iconWrapper {
+  background: hsl(var(--primary) / 0.25);
 }
 
 .iconWrapper > svg {
@@ -87,7 +91,7 @@
 .title {
   font-size: 13px;
   font-weight: 600;
-  color: var(--text-primary);
+  color: hsl(var(--foreground));
   letter-spacing: 0.025em;
 }
 
@@ -95,7 +99,7 @@
 .body {
   font-size: 0.75rem;
   line-height: 1.625;
-  color: var(--text-secondary);
+  color: hsl(var(--secondary-foreground));
 }
 
 .body p {
@@ -108,12 +112,12 @@
 }
 
 .body strong {
-  color: var(--accent-primary);
+  color: hsl(var(--primary));
   font-weight: 500;
 }
 
 .body code {
-  background: var(--bg-secondary);
+  background: hsl(var(--secondary));
   padding: 0.125rem 0.375rem;
   border-radius: 0.25rem;
   font-size: 11px;

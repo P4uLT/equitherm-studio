@@ -5,12 +5,12 @@
 .sliderTrack > span:first-child {
   height: 6px;
   border-radius: 3px;
-  background: var(--bg-secondary);
+  background: hsl(var(--secondary));
 }
 
 /* Range (filled portion) - targets SliderPrimitive.Range */
 .sliderTrack > span:first-child > span {
-  background: var(--accent-primary);
+  background: hsl(var(--primary));
 }
 
 /* Thumb - targets SliderPrimitive.Thumb (button with role="slider") */
@@ -18,7 +18,7 @@
   width: 18px;
   height: 18px;
   border-radius: 50%;
-  background: var(--accent-primary);
+  background: hsl(var(--primary));
   border: 0;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
   cursor: pointer;
@@ -26,7 +26,7 @@
 }
 
 .sliderTrack [role="slider"]:hover {
-  background: var(--accent-primary);
+  background: hsl(var(--primary));
 }
 
 .sliderTrack [role="slider"]:focus {
@@ -36,14 +36,14 @@
 
 .sliderTrack [role="slider"]:focus-visible {
   ring: 2px;
-  ring-color: var(--accent-primary);
+  ring-color: hsl(var(--primary));
 }
 
 /* Label styling */
 .label {
   font-size: 0.65rem;
   font-weight: 600;
-  color: var(--text-muted);
+  color: hsl(var(--muted-foreground));
   text-transform: uppercase;
   letter-spacing: 0.1em;
 }
@@ -53,7 +53,7 @@
   font-family: 'IBM Plex Mono', monospace;
   font-size: 1.5rem;
   font-weight: 700;
-  color: var(--accent-primary);
+  color: hsl(var(--primary));
   line-height: 1;
   letter-spacing: -0.02em;
 }
@@ -63,7 +63,7 @@
   font-family: 'IBM Plex Mono', monospace;
   font-size: 0.6rem;
   font-weight: 500;
-  color: var(--text-muted);
+  color: hsl(var(--muted-foreground));
   white-space: nowrap;
   flex-shrink: 0;
   min-width: 1.75rem;
