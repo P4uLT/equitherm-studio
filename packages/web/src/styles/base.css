@@ -51,3 +51,31 @@ body.app-body.no-scroll {
   mix-blend-mode: overlay;
 }
 
+/* Temperature slider with dynamic gradient fill */
+.temp-slider {
+  flex: 1;
+  height: 8px;
+  border-radius: 4px;
+  -webkit-appearance: none;
+  cursor: grab;
+  --range: calc(var(--max) - var(--min));
+  --pct: calc((var(--v) - var(--min)) / var(--range) * 100%);
+  background: linear-gradient(
+    to right,
+    #4fc3f7 0%,
+    #4fc3f7 var(--pct),
+    var(--bg-secondary) var(--pct)
+  );
+}
+
+.temp-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: var(--bg-card);
+  border: 3px solid var(--accent-primary);
+  cursor: grab;
+  box-shadow: 0 0 0 4px var(--accent-glow);
+}
+
