@@ -54,6 +54,7 @@ export default {
       },
       fontFamily: {
         figtree: ['Figtree', 'sans-serif'],
+        mono: ['IBM Plex Mono', 'monospace'],
       },
       transitionDuration: {
         'medium': '300ms',

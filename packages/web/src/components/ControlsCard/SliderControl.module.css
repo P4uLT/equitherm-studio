@@ -50,7 +50,6 @@
 
 /* Hero value display */
 .valueHero {
-  font-family: 'IBM Plex Mono', monospace;
   font-size: 1.5rem;
   font-weight: 700;
   color: hsl(var(--primary));
@@ -60,7 +59,6 @@
 
 /* Anchor values (min/max labels) */
 .anchor {
-  font-family: 'IBM Plex Mono', monospace;
   font-size: 0.6rem;
   font-weight: 500;
   color: hsl(var(--muted-foreground));

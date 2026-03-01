@@ -38,13 +38,13 @@ export function SliderControl({ id, label, min, max, step, value, unit, onChange
       </div>
 
       {/* Row 2: Value (hero) */}
-      <span className={styles.valueHero}>
+      <span className={cn('font-mono', styles.valueHero)}>
         {value}{unit}
       </span>
 
       {/* Row 3: Slider with anchors */}
       <div className="flex items-center gap-2">
-        <span className={styles.anchor}>
+        <span className={cn('font-mono', styles.anchor)}>
           {formatAnchor(min)}
         </span>
         <Slider
@@ -56,7 +56,7 @@ export function SliderControl({ id, label, min, max, step, value, unit, onChange
           onValueChange={handleValueChange}
           className={cn('flex-1 cursor-pointer', styles.sliderTrack)}
         />
-        <span className={cn(styles.anchor, styles.anchorRight)}>
+        <span className={cn('font-mono', styles.anchor, styles.anchorRight)}>
           {formatAnchor(max)}
         </span>
       </div>
