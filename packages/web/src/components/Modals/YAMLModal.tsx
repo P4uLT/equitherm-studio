@@ -12,6 +12,7 @@ import {
   DialogTitle,
 } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
+import { Switch } from '@/components/ui/switch';
 import { cn } from '@/lib/utils';
 import styles from './YAMLModal.module.css';
 
@@ -104,20 +105,16 @@ export function YAMLModal({ isOpen, onClose }: YAMLModalProps) {
         {/* Options Bar */}
         <div className={styles.optionsBar}>
           <label className={styles.optionLabel}>
-            <input
-              type="checkbox"
+            <Switch
               checked={includeSensors}
-              onChange={e => setIncludeSensors(e.target.checked)}
-              className={styles.optionCheckbox}
+              onCheckedChange={setIncludeSensors}
             />
             <span>Diagnostic sensors</span>
           </label>
           <label className={styles.optionLabel}>
-            <input
-              type="checkbox"
+            <Switch
               checked={includeNumbers}
-              onChange={e => setIncludeNumbers(e.target.checked)}
-              className={styles.optionCheckbox}
+              onCheckedChange={setIncludeNumbers}
             />
             <span>Runtime tuning</span>
           </label>
