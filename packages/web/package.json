@@ -12,7 +12,9 @@
   },
   "dependencies": {
     "@equitherm-studio/core": "workspace:*",
+    "@radix-ui/react-slot": "^1.2.4",
     "chart.js": "^4.5.1",
+    "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "highlight.js": "^11.11.1",
     "lucide-react": "^0.575.0",
