@@ -3,7 +3,7 @@ import { useState, useRef, useEffect } from 'react';
 import { useStore } from '../../store/useStore';
 import { loadAllConfigs, loadConfig, saveConfig, deleteConfig } from '../../config/storage';
 import type { SavedConfig } from '../../types';
-import { showToast } from '../Toast/Toast';
+import { showToast } from '@/lib/toast';
 import styles from './PresetsDropdown.module.css';
 
 export function PresetsDropdown() {

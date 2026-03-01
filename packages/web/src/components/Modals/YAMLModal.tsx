@@ -4,7 +4,7 @@ import hljs from 'highlight.js/lib/core';
 import yaml from 'highlight.js/lib/languages/yaml';
 import { useStore } from '../../store/useStore';
 import { generateYAML } from '../../config/yaml';
-import { showToast } from '../Toast/Toast';
+import { showToast } from '@/lib/toast';
 import styles from './Modal.module.css';
 
 // Register YAML language
