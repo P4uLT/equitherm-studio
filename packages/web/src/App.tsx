@@ -6,7 +6,6 @@ import { Header } from './components/Header';
 import { ControlsCard } from './components/ControlsCard';
 import { HeatingChart } from './components/Chart';
 import { PIDPanel } from './components/PIDPanel';
-import { ToastContainer } from './components/Toast';
 import './index.css';
 import styles from './App.module.css';
 
@@ -31,7 +30,6 @@ function App() {
           <div className={styles.chart}><HeatingChart /></div>
           <div className={styles.pid}><PIDPanel /></div>
         </main>
-        <ToastContainer />
       </div>
     </>
   );
