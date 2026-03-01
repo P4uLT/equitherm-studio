@@ -287,6 +287,15 @@ function updateChartAndGetResults(
   }
 
   chart.data.datasets = datasets;
+
+  // Update scale colors for theme change
+  chart.options.scales!.x!.ticks!.color = theme.chartText;
+  chart.options.scales!.x!.title!.color = theme.chartText;
+  chart.options.scales!.x!.grid!.color = theme.chartGrid;
+  chart.options.scales!.y!.ticks!.color = theme.chartText;
+  chart.options.scales!.y!.title!.color = theme.chartText;
+  chart.options.scales!.y!.grid!.color = theme.chartGrid;
+
   chart.update('none');
 
   // Compute status
