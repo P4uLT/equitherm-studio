@@ -6,6 +6,7 @@ import { Header } from './components/Header';
 import { ControlsCard } from './components/ControlsCard';
 import { HeatingChart } from './components/Chart';
 import { PIDPanel } from './components/PIDPanel';
+import { TooltipProvider } from './components/ui/tooltip';
 import './index.css';
 import styles from './App.module.css';
 
@@ -21,7 +22,7 @@ function App() {
   }, [loadConfig]);
 
   return (
-    <>
+    <TooltipProvider>
       <div className="atmosphere" />
       <div className={styles.appContainer}>
         <Header />
@@ -31,7 +32,7 @@ function App() {
           <div className={styles.pid}><PIDPanel /></div>
         </main>
       </div>
-    </>
+    </TooltipProvider>
   );
 }
 
