@@ -1,0 +1,145 @@
+/* YAMLModal.module.css */
+/* Styles for YAMLModal component - VS Code-like code editor */
+
+/* Tab-style header */
+.header {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.75rem;
+  background: hsl(var(--card));
+  border-bottom: 1px solid hsl(var(--border));
+}
+
+.tab {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.375rem 0.75rem;
+  background: hsl(var(--secondary));
+  border-radius: 0.375rem 0.375rem 0 0;
+  border: 1px solid hsl(var(--border));
+  border-bottom: none;
+  margin-bottom: -0.75rem;
+}
+
+.tabTitle {
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+/* Options bar */
+.optionsBar {
+  display: flex;
+  gap: 1rem;
+  padding: 0.5rem 1rem;
+  background: hsl(var(--secondary));
+  border-bottom: 1px solid hsl(var(--border));
+}
+
+.optionLabel {
+  display: flex;
+  align-items: center;
+  gap: 0.375rem;
+  font-size: 0.75rem;
+  color: hsl(var(--secondary-foreground));
+  cursor: pointer;
+}
+
+.optionCheckbox {
+  width: 0.875rem;
+  height: 0.875rem;
+  accent-color: hsl(var(--primary));
+  cursor: pointer;
+}
+
+/* Code area */
+.codeArea {
+  display: flex;
+  flex: 1;
+  min-height: 0;
+  overflow: auto;
+  max-height: 60vh;
+  background: var(--hljs-bg);
+}
+
+.lineNumbers {
+  padding: 1rem;
+  text-align: right;
+  font-family: monospace;
+  font-size: 13px;
+  line-height: 1.625;
+  user-select: none;
+  white-space: pre;
+  min-width: 40px;
+  flex-shrink: 0;
+  background: var(--hljs-bg-gutter);
+  color: var(--hljs-gutter-color);
+}
+
+.codeContent {
+  flex: 1;
+  margin: 0;
+  padding: 1rem;
+  background: transparent;
+  font-family: monospace;
+  font-size: 13px;
+  line-height: 1.625;
+  white-space: pre;
+  overflow: visible;
+}
+
+.codeHighlight {
+  background: transparent !important;
+  padding: 0 !important;
+}
+
+/* Status bar */
+.statusBar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.5rem 1rem;
+  background: hsl(var(--card));
+  border-top: 1px solid hsl(var(--border));
+  font-size: 0.75rem;
+  color: hsl(var(--muted-foreground));
+}
+
+.statusLeft {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.docsLink {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  color: hsl(var(--primary));
+  transition: opacity 150ms;
+}
+
+.docsLink:hover {
+  opacity: 0.8;
+}
+
+.separator {
+  color: hsl(var(--border));
+}
+
+.copyButton {
+  height: 1.75rem;
+  padding: 0 1rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.copyButtonCopied {
+  background: hsl(142 76% 36%);
+}
+
+.copyButtonCopied:hover {
+  background: hsl(142 76% 36%);
+}

@@ -12,6 +12,8 @@ import {
   DialogTitle,
 } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
+import { cn } from '@/lib/utils';
+import styles from './YAMLModal.module.css';
 
 // Register YAML language
 hljs.registerLanguage('yaml', yaml);
@@ -92,65 +94,66 @@ export function YAMLModal({ isOpen, onClose }: YAMLModalProps) {
     <Dialog open={isOpen} onOpenChange={(open) => !open && onClose()}>
       <DialogContent className="sm:max-w-[700px] p-0 gap-0 overflow-hidden">
         {/* Header with Tab Style */}
-        <DialogHeader className="flex flex-row items-center justify-between p-3 bg-card border-b border-border space-y-0">
-          <div className="flex items-center gap-2 px-3 py-1.5 bg-secondary rounded-t-md border border-border border-b-0 -mb-3">
+        <DialogHeader className={styles.header}>
+          <div className={styles.tab}>
             <LayersIcon />
-            <DialogTitle className="text-sm font-medium">equitherm.yaml</DialogTitle>
+            <DialogTitle className={styles.tabTitle}>equitherm.yaml</DialogTitle>
           </div>
         </DialogHeader>
 
         {/* Options Bar */}
-        <div className="flex gap-4 px-4 py-2 bg-secondary border-b border-border">
-          <label className="flex items-center gap-1.5 text-xs text-secondary-foreground cursor-pointer">
+        <div className={styles.optionsBar}>
+          <label className={styles.optionLabel}>
             <input
               type="checkbox"
               checked={includeSensors}
               onChange={e => setIncludeSensors(e.target.checked)}
-              className="w-3.5 h-3.5 accent-primary cursor-pointer"
+              className={styles.optionCheckbox}
             />
             <span>Diagnostic sensors</span>
           </label>
-          <label className="flex items-center gap-1.5 text-xs text-secondary-foreground cursor-pointer">
+          <label className={styles.optionLabel}>
             <input
               type="checkbox"
               checked={includeNumbers}
               onChange={e => setIncludeNumbers(e.target.checked)}
-              className="w-3.5 h-3.5 accent-primary cursor-pointer"
+              className={styles.optionCheckbox}
             />
             <span>Runtime tuning</span>
           </label>
         </div>
 
         {/* Code Area */}
-        <div className="flex flex-1 min-h-0 overflow-auto max-h-[60vh] bg-[var(--hljs-bg)]">
-          <div className="p-4 text-right font-mono text-[13px] leading-relaxed select-none whitespace-pre min-w-[40px] flex-shrink-0 bg-[var(--hljs-bg-gutter)] text-[var(--hljs-gutter-color)]">
-            {lineNumbers}
-          </div>
-          <pre className="flex-1 m-0 p-4 bg-transparent font-mono text-[13px] leading-relaxed whitespace-pre overflow-visible">
-            <code className="language-yaml hljs !bg-transparent !p-0" dangerouslySetInnerHTML={{ __html: highlightedYaml }} />
+        <div className={styles.codeArea}>
+          <div className={styles.lineNumbers}>{lineNumbers}</div>
+          <pre className={styles.codeContent}>
+            <code
+              className={cn('language-yaml', 'hljs', styles.codeHighlight)}
+              dangerouslySetInnerHTML={{ __html: highlightedYaml }}
+            />
           </pre>
         </div>
 
         {/* Status Bar */}
-        <div className="flex items-center justify-between px-4 py-2 bg-card border-t border-border text-xs text-muted-foreground">
-          <div className="flex items-center gap-2">
+        <div className={styles.statusBar}>
+          <div className={styles.statusLeft}>
             <a
               href="https://esphome.io/components/climate/equitherm.html"
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-1 text-primary hover:opacity-80 transition-opacity"
+              className={styles.docsLink}
             >
               <BookIcon />
               Docs
             </a>
-            <span className="text-border">|</span>
+            <span className={styles.separator}>|</span>
             <span>YAML</span>
-            <span className="text-border">|</span>
+            <span className={styles.separator}>|</span>
             <span>{lineCount} lines</span>
           </div>
           <Button
             size="sm"
-            className={`h-7 px-4 text-xs font-semibold ${copied ? 'bg-green-600 hover:bg-green-600' : ''}`}
+            className={cn(styles.copyButton, copied && styles.copyButtonCopied)}
             onClick={handleCopy}
           >
             {copied ? 'Copied!' : 'Copy'}
