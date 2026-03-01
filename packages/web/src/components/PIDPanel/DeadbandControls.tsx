@@ -28,11 +28,11 @@ function DeadbandInstrument({ label, min, max, step, value, onChange, unit = '°
   return (
     <div className="flex flex-col gap-1">
       <div className="flex items-baseline justify-between">
-        <span className="text-[0.6rem] font-semibold text-[var(--text-muted)] uppercase tracking-wider">{label}</span>
-        <span className="font-mono text-lg font-bold text-[var(--accent-primary)] leading-none">{value.toFixed(1)}{unit}</span>
+        <span className="text-[0.6rem] font-semibold text-muted-foreground uppercase tracking-wider">{label}</span>
+        <span className="font-mono text-lg font-bold text-primary leading-none">{value.toFixed(1)}{unit}</span>
       </div>
       <div className="flex items-center gap-2">
-        <span className="font-mono text-[0.55rem] font-medium text-[var(--text-muted)] whitespace-nowrap flex-shrink-0 min-w-[1.5rem]">{formatAnchor(min)}</span>
+        <span className="font-mono text-[0.55rem] font-medium text-muted-foreground whitespace-nowrap flex-shrink-0 min-w-[1.5rem]">{formatAnchor(min)}</span>
         <input
           type="range"
           min={min}
@@ -43,7 +43,7 @@ function DeadbandInstrument({ label, min, max, step, value, onChange, unit = '°
           style={{ '--pct': `${pct}%` } as React.CSSProperties}
           className="flex-1 h-[5px] rounded outline-none appearance-none cursor-pointer range-slider-primary"
         />
-        <span className="font-mono text-[0.55rem] font-medium text-[var(--text-muted)] whitespace-nowrap flex-shrink-0 min-w-[1.5rem] text-right">{formatAnchor(max)}</span>
+        <span className="font-mono text-[0.55rem] font-medium text-muted-foreground whitespace-nowrap flex-shrink-0 min-w-[1.5rem] text-right">{formatAnchor(max)}</span>
       </div>
     </div>
   );
@@ -67,18 +67,18 @@ function TimeDomainInstrument({ label, min, max, step, value, onChange, tooltipC
     <div className="flex flex-col gap-0.5 opacity-85">
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-1.5">
-          <span className="text-[0.6rem] font-semibold text-[var(--text-muted)] uppercase tracking-wider">{label}</span>
-          <span className="text-[0.45rem] font-bold text-[var(--text-muted)] bg-[var(--bg-secondary)] py-0.5 px-1 rounded-[2px] uppercase tracking-wider border border-[var(--border-color)]">YAML</span>
+          <span className="text-[0.6rem] font-semibold text-muted-foreground uppercase tracking-wider">{label}</span>
+          <span className="text-[0.45rem] font-bold text-muted-foreground bg-secondary py-0.5 px-1 rounded-[2px] uppercase tracking-wider border border-border">YAML</span>
           {tooltipContent && (
             <InfoTooltip title="Time-domain parameter" position="sideLeft" size="small">
               {tooltipContent}
             </InfoTooltip>
           )}
         </div>
-        <span className="font-mono text-sm font-semibold text-[var(--text-secondary)]">{value.toFixed(2)}</span>
+        <span className="font-mono text-sm font-semibold text-secondary-foreground">{value.toFixed(2)}</span>
       </div>
       <div className="flex items-center gap-2">
-        <span className="font-mono text-[0.55rem] font-medium text-[var(--text-muted)] whitespace-nowrap flex-shrink-0 min-w-[1.5rem]">{min}</span>
+        <span className="font-mono text-[0.55rem] font-medium text-muted-foreground whitespace-nowrap flex-shrink-0 min-w-[1.5rem]">{min}</span>
         <input
           type="range"
           min={min}
@@ -89,7 +89,7 @@ function TimeDomainInstrument({ label, min, max, step, value, onChange, tooltipC
           style={{ '--pct': `${pct}%` } as React.CSSProperties}
           className="flex-1 h-[5px] rounded outline-none appearance-none cursor-pointer range-slider-ghost opacity-70 hover:opacity-100"
         />
-        <span className="font-mono text-[0.55rem] font-medium text-[var(--text-muted)] whitespace-nowrap flex-shrink-0 min-w-[1.5rem] text-right">{max}</span>
+        <span className="font-mono text-[0.55rem] font-medium text-muted-foreground whitespace-nowrap flex-shrink-0 min-w-[1.5rem] text-right">{max}</span>
       </div>
     </div>
   );
@@ -100,7 +100,7 @@ export function DeadbandControls() {
   const setPidParam = useStore(s => s.setPidParam);
 
   return (
-    <details className="border-b border-[var(--border-color)]" open>
+    <details className="border-b border-border" open>
       <summary className="flex items-center gap-2 px-4 py-3 cursor-pointer list-none [&::-webkit-details-marker]:hidden">
         <div onClick={e => e.stopPropagation()}>
           <Switch
@@ -108,17 +108,17 @@ export function DeadbandControls() {
             onCheckedChange={(checked) => setPidParam('deadbandEnabled', checked)}
           />
         </div>
-        <span className="text-sm font-semibold text-[var(--text-primary)]">Deadband</span>
+        <span className="text-sm font-semibold text-foreground">Deadband</span>
         <InfoTooltip title="Deadband" icon={<span>?</span>} position="sideLeft">
           <p>A <strong>tolerance zone</strong> where PID output is reduced to prevent constant small adjustments.</p>
           <p>When room temp error is within [Low, High], gains are multiplied by their reduction factors.</p>
         </InfoTooltip>
       </summary>
 
-      <div className="px-4 py-3 border-t border-[var(--border-color)]">
+      <div className="px-4 py-3 border-t border-border">
         {/* Instantaneous - affects curve */}
         <div className="mb-3">
-          <span className="block text-[0.55rem] font-semibold text-[var(--text-muted)] uppercase tracking-widest mb-2 opacity-80">Thresholds & Kp</span>
+          <span className="block text-[0.55rem] font-semibold text-muted-foreground uppercase tracking-widest mb-2 opacity-80">Thresholds & Kp</span>
           <div className="flex flex-col gap-2">
             <DeadbandInstrument
               label="High"
@@ -149,9 +149,9 @@ export function DeadbandControls() {
         </div>
 
         {/* Time-domain - YAML export only */}
-        <div className="mt-3 pt-3 border-t border-dashed border-[var(--border-color)]">
+        <div className="mt-3 pt-3 border-t border-dashed border-border">
           <div className="flex items-center gap-1.5 mb-2">
-            <span className="text-[0.55rem] font-semibold text-[var(--text-muted)] uppercase tracking-widest opacity-80">Ki / Kd Multipliers</span>
+            <span className="text-[0.55rem] font-semibold text-muted-foreground uppercase tracking-widest opacity-80">Ki / Kd Multipliers</span>
             <InfoTooltip title="Time-domain parameters" icon={<span>⏱</span>} position="sideLeft" size="small">
               <p><strong>Export only</strong> — These values require real-time sensor data over time.</p>
               <p>Ki (integral) accumulates error. Kd (derivative) measures rate of change.</p>

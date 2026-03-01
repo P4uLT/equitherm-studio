@@ -19,12 +19,12 @@ export function PIDPanel() {
   return (
     <Card className={`flex min-w-0 h-full flex-col ${!pid.enabled ? 'opacity-50' : ''}`}>
       {/* Enable Header */}
-      <div className="flex items-center gap-2 flex-wrap px-4 py-3 border-b border-[var(--border-color)]">
+      <div className="flex items-center gap-2 flex-wrap px-4 py-3 border-b border-border">
         <Switch
           checked={pid.enabled}
           onCheckedChange={(checked) => setPidParam('enabled', checked)}
         />
-        <span className="text-sm font-semibold text-[var(--text-primary)]">PID Control</span>
+        <span className="text-sm font-semibold text-foreground">PID Control</span>
         <InfoTooltip title="PID Control" icon={<PIDIcon />} position="sideLeft">
           <p><strong>Proportional-Integral-Derivative</strong> control adjusts flow temperature based on room temperature error.</p>
           <p>Room temp can be an offset from setpoint or absolute value.</p>
@@ -32,10 +32,10 @@ export function PIDPanel() {
       </div>
 
       {/* Mode Toggle Row */}
-      <div className={`px-4 py-2 border-b border-[var(--border-color)] ${!pid.enabled ? 'pointer-events-none' : ''}`}>
-        <div className="flex gap-1 bg-[var(--bg-secondary)] p-0.5 rounded-md border border-[var(--border-color)] w-full">
+      <div className={`px-4 py-2 border-b border-border ${!pid.enabled ? 'pointer-events-none' : ''}`}>
+        <div className="flex gap-1 bg-secondary p-0.5 rounded-md border border-border w-full">
           <button
-            className={`flex-1 py-1 px-2 bg-transparent border-none rounded text-xs cursor-pointer transition-all duration-150 whitespace-nowrap ${pid.mode === 'offset' ? 'bg-[var(--bg-card)] text-[var(--accent-primary)]' : 'text-[var(--text-muted)] hover:text-[var(--text-secondary)]'}`}
+            className={`flex-1 py-1 px-2 bg-transparent border-none rounded text-xs cursor-pointer transition-all duration-150 whitespace-nowrap ${pid.mode === 'offset' ? 'bg-card text-primary' : 'text-muted-foreground hover:text-secondary-foreground'}`}
             onClick={() => {
               setPidParam('mode', 'offset');
               setPidParam('roomTemp', 0);
@@ -44,7 +44,7 @@ export function PIDPanel() {
             Offset
           </button>
           <button
-            className={`flex-1 py-1 px-2 bg-transparent border-none rounded text-xs cursor-pointer transition-all duration-150 whitespace-nowrap ${pid.mode === 'absolute' ? 'bg-[var(--bg-card)] text-[var(--accent-primary)]' : 'text-[var(--text-muted)] hover:text-[var(--text-secondary)]'}`}
+            className={`flex-1 py-1 px-2 bg-transparent border-none rounded text-xs cursor-pointer transition-all duration-150 whitespace-nowrap ${pid.mode === 'absolute' ? 'bg-card text-primary' : 'text-muted-foreground hover:text-secondary-foreground'}`}
             onClick={() => {
               setPidParam('mode', 'absolute');
               setPidParam('roomTemp', 21);
