@@ -1,0 +1,74 @@
+/* SliderControl.module.css */
+/* Complex selectors for shadcn Slider component overrides */
+
+/* Track styling - targets SliderPrimitive.Track (first span child) */
+.sliderTrack > span:first-child {
+  height: 6px;
+  border-radius: 3px;
+  background: var(--bg-secondary);
+}
+
+/* Range (filled portion) - targets SliderPrimitive.Range */
+.sliderTrack > span:first-child > span {
+  background: var(--accent-primary);
+}
+
+/* Thumb - targets SliderPrimitive.Thumb (button with role="slider") */
+.sliderTrack [role="slider"] {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--accent-primary);
+  border: 0;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+  cursor: pointer;
+  transition: none;
+}
+
+.sliderTrack [role="slider"]:hover {
+  background: var(--accent-primary);
+}
+
+.sliderTrack [role="slider"]:focus {
+  ring: 0;
+  ring-offset: 0;
+}
+
+.sliderTrack [role="slider"]:focus-visible {
+  ring: 2px;
+  ring-color: var(--accent-primary);
+}
+
+/* Label styling */
+.label {
+  font-size: 0.65rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+/* Hero value display */
+.valueHero {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--accent-primary);
+  line-height: 1;
+  letter-spacing: -0.02em;
+}
+
+/* Anchor values (min/max labels) */
+.anchor {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.6rem;
+  font-weight: 500;
+  color: var(--text-muted);
+  white-space: nowrap;
+  flex-shrink: 0;
+  min-width: 1.75rem;
+}
+
+.anchorRight {
+  text-align: right;
+}
