@@ -8,7 +8,6 @@ import { HeatingChart } from './components/Chart';
 import { PIDPanel } from './components/PIDPanel';
 import { TooltipProvider } from './components/ui/tooltip';
 import './index.css';
-import styles from './App.module.css';
 
 function App() {
   const loadConfig = useStore(s => s.loadConfig);
@@ -24,12 +23,12 @@ function App() {
   return (
     <TooltipProvider>
       <div className="atmosphere" />
-      <div className={styles.appContainer}>
+      <div className="min-h-screen max-w-[1600px] mx-auto px-6 py-4">
         <Header />
-        <main className={styles.mainLayout}>
-          <div className={styles.controls}><ControlsCard /></div>
-          <div className={styles.chart}><HeatingChart /></div>
-          <div className={styles.pid}><PIDPanel /></div>
+        <main className="grid grid-cols-[minmax(240px,280px)_1fr_minmax(240px,280px)] grid-rows-[minmax(0,1fr)] gap-4 min-h-0 max-[1100px]:grid-cols-[minmax(240px,280px)_1fr] max-[1100px]:grid-rows-[auto_auto]">
+          <div className="col-start-1 row-start-1 max-[1100px]:row-span-2"><ControlsCard /></div>
+          <div className="col-start-2 row-start-1 min-h-[300px]"><HeatingChart /></div>
+          <div className="col-start-3 row-start-1 max-[1100px]:col-start-2 max-[1100px]:row-start-2"><PIDPanel /></div>
         </main>
       </div>
     </TooltipProvider>
