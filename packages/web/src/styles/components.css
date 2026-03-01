@@ -1,0 +1,101 @@
+/* ═══════════════════════════════════════════════════════════════════════════
+   Components - Custom UI component styles
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+@layer base {
+  /* Temperature slider with dynamic gradient fill */
+  .temp-slider {
+    flex: 1;
+    height: 8px;
+    border-radius: 4px;
+    -webkit-appearance: none;
+    cursor: grab;
+    --range: calc(var(--max) - var(--min));
+    --pct: calc((var(--v) - var(--min)) / var(--range) * 100%);
+    background: linear-gradient(
+      to right,
+      #4fc3f7 0%,
+      #4fc3f7 var(--pct),
+      var(--bg-secondary) var(--pct)
+    );
+  }
+
+  .temp-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: var(--bg-card);
+    border: 3px solid var(--accent-primary);
+    cursor: grab;
+    box-shadow: 0 0 0 4px var(--accent-glow);
+  }
+}
+
+@layer components {
+  /* Toggle switch component */
+  .toggle-switch {
+    position: absolute;
+    cursor: pointer;
+    inset: 0;
+    background: var(--bg-secondary);
+    border-radius: 10px;
+    border: 1px solid var(--border-color);
+    transition: all 0.15s;
+  }
+
+  .toggle-switch::before {
+    content: '';
+    position: absolute;
+    width: 14px;
+    height: 14px;
+    left: 2px;
+    top: 2px;
+    background: var(--text-muted);
+    border-radius: 50%;
+    transition: all 0.15s;
+  }
+
+  .peer:checked ~ .toggle-switch {
+    background: var(--accent-glow);
+    border-color: var(--accent-primary);
+  }
+
+  .peer:checked ~ .toggle-switch::before {
+    transform: translateX(16px);
+    background: var(--accent-primary);
+  }
+
+  /* Mini toggle (smaller variant) */
+  .toggle-switch-mini {
+    position: absolute;
+    cursor: pointer;
+    inset: 0;
+    background: var(--bg-secondary);
+    border-radius: 10px;
+    border: 1px solid var(--border-color);
+    transition: all 0.15s;
+  }
+
+  .toggle-switch-mini::before {
+    content: '';
+    position: absolute;
+    width: 12px;
+    height: 12px;
+    left: 2px;
+    top: 2px;
+    background: var(--text-muted);
+    border-radius: 50%;
+    transition: all 0.15s;
+  }
+
+  .peer:checked ~ .toggle-switch-mini {
+    background: var(--accent-glow);
+    border-color: var(--accent-primary);
+  }
+
+  .peer:checked ~ .toggle-switch-mini::before {
+    transform: translateX(14px);
+    background: var(--accent-primary);
+  }
+}
