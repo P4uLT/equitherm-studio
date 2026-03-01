@@ -5,7 +5,6 @@ import { useTheme } from '../../contexts/ThemeContext';
 import { computeFlowTemperature, createPIDState, computePID, getRoomTempActual } from '@equitherm-studio/core';
 import type { CurveState, PIDStoreSlice, ComputedStatus } from '../../types';
 import Chart, { type TooltipItem } from 'chart.js/auto';
-import styles from './Chart.module.css';
 
 // Type for the chart instance
 type ChartInstance = Chart<'line', { x: number; y: number }[], unknown>;
@@ -98,8 +97,8 @@ export function HeatingChart() {
   }, []);
 
   return (
-    <section className={styles.container}>
-      <canvas ref={canvasRef} />
+    <section className="bg-card rounded-xl p-4 border border-border min-h-[400px]">
+      <canvas ref={canvasRef} className="!w-full !h-full" />
     </section>
   );
 }
