@@ -39,25 +39,7 @@
     --radius: 0.5rem;
 
     /* --- App-specific theme variables --- */
-    --bg-primary: #f8f9fa;
-    --bg-secondary: #f2f4f6;
-    --bg-card: #ffffff;
-    --bg-card-hover: #f2f4f6;
-    --text-primary: #1a1a1a;
-    --text-secondary: #6b7280;
-    --text-muted: #9ca3af;
-    --accent-primary: #0288d1;
     --accent-secondary: #5dade2;
-    --accent-tertiary: #00979d;
-    --accent-glow: rgba(2, 136, 209, 0.12);
-    --border-color: #e5e7eb;
-    --success: #689f38;
-    --warning: #ffa000;
-    --chart-line: #0288d1;
-    --chart-fill: rgba(24, 188, 242, 0.12);
-    --chart-point: #5dade2;
-    --chart-grid: rgba(24, 188, 242, 0.06);
-    --font-display: 'Figtree', sans-serif;
     --font-body: 'Figtree', sans-serif;
     --atmosphere-1: radial-gradient(ellipse at 10% 0%, rgba(2, 136, 209, 0.06) 0%, transparent 50%);
     --atmosphere-2: radial-gradient(ellipse at 90% 100%, rgba(93, 173, 226, 0.04) 0%, transparent 40%);
@@ -111,25 +93,7 @@
     --ring: 198 90% 53%;
 
     /* --- App-specific theme variables --- */
-    --bg-primary: #1c2028;
-    --bg-secondary: #23272e;
-    --bg-card: #282d36;
-    --bg-card-hover: #2e343e;
-    --text-primary: #eff0f3;
-    --text-secondary: #b4b8c1;
-    --text-muted: #6b7280;
-    --accent-primary: #18bcf2;
     --accent-secondary: #5dade2;
-    --accent-tertiary: #00979d;
-    --accent-glow: rgba(24, 188, 242, 0.25);
-    --border-color: #3a404a;
-    --success: #7cb342;
-    --warning: #ffcc32;
-    --chart-line: #18bcf2;
-    --chart-fill: rgba(24, 188, 242, 0.08);
-    --chart-point: #5dade2;
-    --chart-grid: rgba(24, 188, 242, 0.08);
-    --font-display: 'Figtree', sans-serif;
     --font-body: 'Figtree', sans-serif;
     --atmosphere-1: radial-gradient(ellipse at 10% 0%, rgba(24, 188, 242, 0.08) 0%, transparent 50%);
     --atmosphere-2: radial-gradient(ellipse at 90% 100%, rgba(93, 173, 226, 0.06) 0%, transparent 40%);
