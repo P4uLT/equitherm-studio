@@ -26,6 +26,6 @@
 /* 600px: Compact header */
 @media (max-width: 600px) {
   .app-container {
-    padding: var(--space-2) var(--space-3);
+    padding: 0.625rem 0.875rem;
   }
 }

@@ -47,6 +47,16 @@ export default {
         md: 'calc(var(--radius) - 2px)',
         sm: 'calc(var(--radius) - 4px)',
       },
+      transitionDuration: {
+        'medium': '300ms',
+        'slow': '500ms',
+      },
+      zIndex: {
+        'dropdown': '100',
+        'sticky': '500',
+        'modal': '1000',
+        'tooltip': '9999',
+      },
     },
   },
   plugins: [],

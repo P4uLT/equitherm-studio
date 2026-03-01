@@ -25,7 +25,7 @@ body {
   background-color: var(--bg-primary);
   color: var(--text-primary);
   line-height: 1.5;
-  transition: background-color var(--transition-medium), color var(--transition-medium);
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 /* Scroll lock for modals */
@@ -39,7 +39,7 @@ body.app-body.no-scroll {
   background: var(--atmosphere-1), var(--atmosphere-2);
   pointer-events: none;
   z-index: 0;
-  transition: background var(--transition-slow);
+  transition: background 0.5s ease;
 }
 
 .atmosphere::after {
