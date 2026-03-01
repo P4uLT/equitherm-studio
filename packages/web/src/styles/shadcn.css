@@ -77,10 +77,9 @@
   }
 
   /* ═════════════════════════════════════════════════════════════════════════
-     LIGHT THEME (esphome-light)
+     LIGHT THEME (default)
      ═════════════════════════════════════════════════════════════════════════ */
-  :root,
-  [data-theme="esphome-light"] {
+  :root {
     /* --- shadcn/ui Tailwind HSL variables --- */
     --background: 210 40% 98%;        /* #f8f9fa */
     --foreground: 0 0% 10%;           /* #1a1a1a */
@@ -155,10 +154,9 @@
   }
 
   /* ═════════════════════════════════════════════════════════════════════════
-     DARK THEME (esphome) - Default
+     DARK THEME
      ═════════════════════════════════════════════════════════════════════════ */
-  .dark,
-  [data-theme="esphome"] {
+  .dark {
     /* --- shadcn/ui Tailwind HSL variables --- */
     --background: 220 15% 14%;        /* #1c2028 */
     --foreground: 240 5% 94%;         /* #eff0f3 */
