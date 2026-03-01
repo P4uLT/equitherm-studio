@@ -7,6 +7,7 @@ import { showToast } from '@/lib/toast';
 import {
   DropdownMenu,
   DropdownMenuContent,
+  DropdownMenuItem,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
@@ -101,7 +102,7 @@ export function PresetsDropdown() {
           >
             <Save className="h-3 w-3" />
             <span>Presets</span>
-            <ChevronDown className="h-2.5 w-2.5 transition-transform duration-150 data-[state=open]:rotate-180" />
+            <ChevronDown className={`h-2.5 w-2.5 transition-transform duration-150 ${isOpen ? 'rotate-180' : ''}`} />
           </Button>
         </DropdownMenuTrigger>
 
@@ -139,22 +140,22 @@ export function PresetsDropdown() {
                     key={c.name}
                     className={`group flex items-center gap-1 rounded-sm px-2 py-1.5 text-sm transition-colors ${
                       confirmDelete === c.name
-                        ? 'bg-destructive/10 text-destructive'
-                        : 'hover:bg-accent'
+                        ? 'bg-destructive/10'
+                        : ''
                     }`}
                   >
-                    <button
-                      className="flex-1 text-left truncate text-sm hover:text-primary transition-colors"
+                    <DropdownMenuItem
+                      className={`flex-1 cursor-pointer gap-2 px-2 py-1 focus:bg-accent focus:text-accent-foreground ${
+                        confirmDelete === c.name ? 'text-destructive' : ''
+                      }`}
                       onClick={() => handleLoad(c.name)}
                     >
-                      <span className="flex items-center gap-2">
-                        <FolderOpen className="h-3 w-3 shrink-0 opacity-50" />
-                        <span className="truncate">{c.name}</span>
-                        <span className="text-xs text-muted-foreground shrink-0">
-                          {new Date(c.timestamp).toLocaleDateString()}
-                        </span>
+                      <FolderOpen className="h-3 w-3 shrink-0 opacity-50" />
+                      <span className="truncate flex-1">{c.name}</span>
+                      <span className="text-xs text-muted-foreground shrink-0">
+                        {new Date(c.timestamp).toLocaleDateString()}
                       </span>
-                    </button>
+                    </DropdownMenuItem>
                     {confirmDelete === c.name ? (
                       <Button
                         variant="destructive"
