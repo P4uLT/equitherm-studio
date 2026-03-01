@@ -2,7 +2,6 @@
 import type { ReactNode } from 'react';
 import { useStore } from '../../store/useStore';
 import { InfoTooltip } from '../ControlsCard/InfoTooltip';
-import styles from './PIDPanel.module.css';
 
 interface DeadbandInstrumentProps {
   label: string;
@@ -16,16 +15,6 @@ interface DeadbandInstrumentProps {
   tooltipContent?: ReactNode;
 }
 
-interface DeadbandInstrumentProps {
-  label: string;
-  min: number;
-  max: number;
-  step: number;
-  value: number;
-  onChange: (value: number) => void;
-  unit?: string;
-}
-
 // Standard instrument control (affects curve)
 function DeadbandInstrument({ label, min, max, step, value, onChange, unit = '°' }: DeadbandInstrumentProps) {
   const pct = ((value - min) / (max - min)) * 100;
@@ -36,13 +25,13 @@ function DeadbandInstrument({ label, min, max, step, value, onChange, unit = '°
   };
 
   return (
-    <div className={styles.gainInstrument}>
-      <div className={styles.gainHeader}>
-        <span className={styles.gainLabelText}>{label}</span>
-        <span className={styles.gainHeroValue}>{value.toFixed(1)}{unit}</span>
+    <div className="flex flex-col gap-1">
+      <div className="flex items-baseline justify-between">
+        <span className="text-[0.6rem] font-semibold text-[var(--text-muted)] uppercase tracking-wider">{label}</span>
+        <span className="font-mono text-lg font-bold text-[var(--accent-primary)] leading-none">{value.toFixed(1)}{unit}</span>
       </div>
-      <div className={styles.gainSliderRow}>
-        <span className={styles.gainAnchor}>{formatAnchor(min)}</span>
+      <div className="flex items-center gap-2">
+        <span className="font-mono text-[0.55rem] font-medium text-[var(--text-muted)] whitespace-nowrap flex-shrink-0 min-w-[1.5rem]">{formatAnchor(min)}</span>
         <input
           type="range"
           min={min}
@@ -51,8 +40,9 @@ function DeadbandInstrument({ label, min, max, step, value, onChange, unit = '°
           value={value}
           onChange={e => onChange(parseFloat((e.target as HTMLInputElement).value))}
           style={{ '--pct': `${pct}%` } as React.CSSProperties}
+          className="flex-1 h-[5px] rounded outline-none appearance-none cursor-pointer range-slider-primary"
         />
-        <span className={styles.gainAnchor}>{formatAnchor(max)}</span>
+        <span className="font-mono text-[0.55rem] font-medium text-[var(--text-muted)] whitespace-nowrap flex-shrink-0 min-w-[1.5rem] text-right">{formatAnchor(max)}</span>
       </div>
     </div>
   );
@@ -73,21 +63,21 @@ function TimeDomainInstrument({ label, min, max, step, value, onChange, tooltipC
   const pct = ((value - min) / (max - min)) * 100;
 
   return (
-    <div className={styles.timeDomainInstrument}>
-      <div className={styles.timeDomainHeader}>
-        <div className={styles.timeDomainLabelRow}>
-          <span className={styles.gainLabelText}>{label}</span>
-          <span className={styles.yamlBadge}>YAML</span>
+    <div className="flex flex-col gap-0.5 opacity-85">
+      <div className="flex items-center justify-between">
+        <div className="flex items-center gap-1.5">
+          <span className="text-[0.6rem] font-semibold text-[var(--text-muted)] uppercase tracking-wider">{label}</span>
+          <span className="text-[0.45rem] font-bold text-[var(--text-muted)] bg-[var(--bg-secondary)] py-0.5 px-1 rounded-[2px] uppercase tracking-wider border border-[var(--border-color)]">YAML</span>
           {tooltipContent && (
             <InfoTooltip title="Time-domain parameter" position="sideLeft" size="small">
               {tooltipContent}
             </InfoTooltip>
           )}
         </div>
-        <span className={styles.timeDomainValue}>{value.toFixed(2)}</span>
+        <span className="font-mono text-sm font-semibold text-[var(--text-secondary)]">{value.toFixed(2)}</span>
       </div>
-      <div className={styles.timeDomainSliderRow}>
-        <span className={styles.gainAnchor}>{min}</span>
+      <div className="flex items-center gap-2">
+        <span className="font-mono text-[0.55rem] font-medium text-[var(--text-muted)] whitespace-nowrap flex-shrink-0 min-w-[1.5rem]">{min}</span>
         <input
           type="range"
           min={min}
@@ -96,8 +86,9 @@ function TimeDomainInstrument({ label, min, max, step, value, onChange, tooltipC
           value={value}
           onChange={e => onChange(parseFloat((e.target as HTMLInputElement).value))}
           style={{ '--pct': `${pct}%` } as React.CSSProperties}
+          className="flex-1 h-[5px] rounded outline-none appearance-none cursor-pointer range-slider-ghost opacity-70 hover:opacity-100"
         />
-        <span className={styles.gainAnchor}>{max}</span>
+        <span className="font-mono text-[0.55rem] font-medium text-[var(--text-muted)] whitespace-nowrap flex-shrink-0 min-w-[1.5rem] text-right">{max}</span>
       </div>
     </div>
   );
@@ -108,28 +99,29 @@ export function DeadbandControls() {
   const setPidParam = useStore(s => s.setPidParam);
 
   return (
-    <details className={styles.deadbandSection} open>
-      <summary className={styles.deadbandHeader}>
-        <label className={`${styles.toggle} ${styles.toggleMini}`} onClick={e => e.stopPropagation()}>
+    <details className="border-b border-[var(--border-color)]" open>
+      <summary className="flex items-center gap-2 px-4 py-3 cursor-pointer list-none [&::-webkit-details-marker]:hidden">
+        <label className="relative inline-block w-8 h-[18px] flex-shrink-0 cursor-pointer" onClick={e => e.stopPropagation()}>
           <input
             type="checkbox"
+            className="sr-only peer"
             checked={pid.deadbandEnabled}
             onChange={e => setPidParam('deadbandEnabled', (e.target as HTMLInputElement).checked)}
           />
-          <span className={styles.toggleSlider} />
+          <span className="toggle-switch-mini" />
         </label>
-        <span className={styles.sectionLabel}>Deadband</span>
+        <span className="text-sm font-semibold text-[var(--text-primary)]">Deadband</span>
         <InfoTooltip title="Deadband" icon={<span>?</span>} position="sideLeft">
           <p>A <strong>tolerance zone</strong> where PID output is reduced to prevent constant small adjustments.</p>
           <p>When room temp error is within [Low, High], gains are multiplied by their reduction factors.</p>
         </InfoTooltip>
       </summary>
 
-      <div className={styles.deadbandContent}>
+      <div className="px-4 py-3 border-t border-[var(--border-color)]">
         {/* Instantaneous - affects curve */}
-        <div className={styles.deadbandSubsection}>
-          <span className={styles.subsectionLabel}>Thresholds & Kp</span>
-          <div className={styles.gainInstruments}>
+        <div className="mb-3">
+          <span className="block text-[0.55rem] font-semibold text-[var(--text-muted)] uppercase tracking-widest mb-2 opacity-80">Thresholds & Kp</span>
+          <div className="flex flex-col gap-2">
             <DeadbandInstrument
               label="High"
               min={0}
@@ -159,16 +151,16 @@ export function DeadbandControls() {
         </div>
 
         {/* Time-domain - YAML export only */}
-        <div className={styles.timeDomainSubsection}>
-          <div className={styles.timeDomainSectionHeader}>
-            <span className={styles.subsectionLabel}>Ki / Kd Multipliers</span>
+        <div className="mt-3 pt-3 border-t border-dashed border-[var(--border-color)]">
+          <div className="flex items-center gap-1.5 mb-2">
+            <span className="text-[0.55rem] font-semibold text-[var(--text-muted)] uppercase tracking-widest opacity-80">Ki / Kd Multipliers</span>
             <InfoTooltip title="Time-domain parameters" icon={<span>⏱</span>} position="sideLeft" size="small">
               <p><strong>Export only</strong> — These values require real-time sensor data over time.</p>
               <p>Ki (integral) accumulates error. Kd (derivative) measures rate of change.</p>
               <p>They won't affect the curve preview but will be included in your ESPHome YAML.</p>
             </InfoTooltip>
           </div>
-          <div className={styles.timeDomainInstruments}>
+          <div className="flex flex-col gap-2">
             <TimeDomainInstrument
               label="Ki ×"
               min={0}

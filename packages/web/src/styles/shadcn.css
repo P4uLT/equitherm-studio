@@ -74,3 +74,149 @@
     --ring: 198 90% 53%;
   }
 }
+
+/* Range slider utilities for PIDPanel */
+@layer utilities {
+  /* Primary slider - filled accent style */
+  .range-slider-primary {
+    --slider-color: var(--accent-primary);
+    --slider-bg: var(--bg-secondary);
+    background: linear-gradient(
+      to right,
+      var(--slider-color) 0%,
+      var(--slider-color) var(--pct),
+      var(--slider-bg) var(--pct),
+      var(--slider-bg) 100%
+    );
+  }
+
+  .range-slider-primary::-webkit-slider-thumb {
+    appearance: none;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: var(--accent-primary);
+    cursor: pointer;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+  }
+
+  .range-slider-primary::-moz-range-thumb {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: var(--accent-primary);
+    cursor: pointer;
+    border: none;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+  }
+
+  /* Ghost slider - outlined style for time-domain params */
+  .range-slider-ghost {
+    --slider-color: var(--text-muted);
+    --slider-bg: var(--bg-secondary);
+    background: linear-gradient(
+      to right,
+      var(--slider-color) 0%,
+      var(--slider-color) var(--pct),
+      var(--slider-bg) var(--pct),
+      var(--slider-bg) 100%
+    );
+  }
+
+  .range-slider-ghost::-webkit-slider-thumb {
+    appearance: none;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: var(--bg-card);
+    border: 2px solid var(--text-muted);
+    cursor: pointer;
+    box-shadow: none;
+  }
+
+  .range-slider-ghost:hover::-webkit-slider-thumb {
+    border-color: var(--text-secondary);
+  }
+
+  .range-slider-ghost::-moz-range-thumb {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: var(--bg-card);
+    border: 2px solid var(--text-muted);
+    cursor: pointer;
+    box-shadow: none;
+  }
+
+  .range-slider-ghost:hover::-moz-range-thumb {
+    border-color: var(--text-secondary);
+  }
+}
+
+/* Toggle switch component */
+@layer components {
+  .toggle-switch {
+    position: absolute;
+    cursor: pointer;
+    inset: 0;
+    background: var(--bg-secondary);
+    border-radius: 10px;
+    border: 1px solid var(--border-color);
+    transition: all 0.15s;
+  }
+
+  .toggle-switch::before {
+    content: '';
+    position: absolute;
+    width: 14px;
+    height: 14px;
+    left: 2px;
+    top: 2px;
+    background: var(--text-muted);
+    border-radius: 50%;
+    transition: all 0.15s;
+  }
+
+  .peer:checked ~ .toggle-switch {
+    background: var(--accent-glow);
+    border-color: var(--accent-primary);
+  }
+
+  .peer:checked ~ .toggle-switch::before {
+    transform: translateX(16px);
+    background: var(--accent-primary);
+  }
+
+  /* Mini toggle (smaller variant) */
+  .toggle-switch-mini {
+    position: absolute;
+    cursor: pointer;
+    inset: 0;
+    background: var(--bg-secondary);
+    border-radius: 10px;
+    border: 1px solid var(--border-color);
+    transition: all 0.15s;
+  }
+
+  .toggle-switch-mini::before {
+    content: '';
+    position: absolute;
+    width: 12px;
+    height: 12px;
+    left: 2px;
+    top: 2px;
+    background: var(--text-muted);
+    border-radius: 50%;
+    transition: all 0.15s;
+  }
+
+  .peer:checked ~ .toggle-switch-mini {
+    background: var(--accent-glow);
+    border-color: var(--accent-primary);
+  }
+
+  .peer:checked ~ .toggle-switch-mini::before {
+    transform: translateX(14px);
+    background: var(--accent-primary);
+  }
+}
