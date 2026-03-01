@@ -1,0 +1,70 @@
+/* shadcn/ui CSS variables mapped to ESPHome theme colors */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Light theme (esphome-light) */
+    --background: 210 40% 98%;        /* #f8f9fa */
+    --foreground: 0 0% 10%;           /* #1a1a1a */
+
+    --card: 0 0% 100%;                /* #ffffff */
+    --card-foreground: 0 0% 10%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 10%;
+
+    --primary: 199 98% 41%;           /* #0288d1 */
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 210 40% 96%;
+    --secondary-foreground: 0 0% 10%;
+
+    --muted: 210 40% 96%;
+    --muted-foreground: 215 16% 47%;
+
+    --accent: 199 98% 41%;
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 84 55% 53%;        /* #689f38 (success green for this app) */
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 214 32% 91%;            /* #e5e7eb */
+    --input: 214 32% 91%;
+    --ring: 199 98% 41%;
+
+    --radius: 0.5rem;
+  }
+
+  .dark {
+    /* Dark theme (esphome) */
+    --background: 220 15% 14%;        /* #1c2028 */
+    --foreground: 240 5% 94%;         /* #eff0f3 */
+
+    --card: 220 15% 19%;              /* #282d36 */
+    --card-foreground: 240 5% 94%;
+
+    --popover: 220 15% 19%;
+    --popover-foreground: 240 5% 94%;
+
+    --primary: 198 90% 53%;           /* #18bcf2 */
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 220 15% 24%;
+    --secondary-foreground: 240 5% 94%;
+
+    --muted: 220 15% 24%;
+    --muted-foreground: 215 20% 70%;
+
+    --accent: 198 90% 53%;
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 84 49% 53%;        /* #7cb342 (success green) */
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 220 13% 30%;            /* #3a404a */
+    --input: 220 13% 30%;
+    --ring: 198 90% 53%;
+  }
+}
