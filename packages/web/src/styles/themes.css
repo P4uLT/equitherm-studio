@@ -35,6 +35,8 @@
     --success: 76 48% 42%;            /* #689f38 (green for positive states) */
     --success-foreground: 0 0% 100%;
 
+    --hot: 24 100% 65%;               /* #ff8a50 (hot temperature indicator) */
+
     --border: 214 32% 91%;            /* #e5e7eb */
     --input: 214 32% 91%;
     --ring: 199 98% 41%;
@@ -93,6 +95,8 @@
 
     --success: 76 46% 48%;            /* #7cb342 (green for positive states) */
     --success-foreground: 0 0% 100%;
+
+    --hot: 24 100% 65%;               /* #ff8a50 (hot temperature indicator) */
 
     --border: 220 13% 30%;            /* #3a404a */
     --input: 220 13% 30%;

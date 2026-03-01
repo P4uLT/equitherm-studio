@@ -19,7 +19,7 @@ export function ResultDisplay() {
           <span className="font-[Figtree,sans-serif] text-xl font-bold text-foreground">{tCurrent}°C</span>
         </div>
         <div className="flex items-center gap-3">
-          <span className="text-[0.7rem] min-w-[2.5rem] text-center text-[#4fc3f7]">-30°</span>
+          <span className="text-[0.7rem] min-w-[2.5rem] text-center text-primary">-30°</span>
           <input
             type="range"
             min="-30"
@@ -30,7 +30,7 @@ export function ResultDisplay() {
             className="temp-slider"
             style={{ '--v': tCurrent, '--min': -30, '--max': 25 } as React.CSSProperties}
           />
-          <span className="text-[0.7rem] min-w-[2.5rem] text-center text-[#ff8a50]">25°</span>
+          <span className="text-[0.7rem] min-w-[2.5rem] text-center text-hot">25°</span>
         </div>
       </div>
 
@@ -45,7 +45,7 @@ export function ResultDisplay() {
       {pidEnabled && (
         <div className="flex flex-col items-center gap-1 min-w-[70px]">
           <span className="text-[0.65rem] font-medium text-muted-foreground uppercase tracking-widest">PID</span>
-          <span className={`font-[Figtree,sans-serif] text-xl font-semibold ${pidOutput >= 0 ? 'text-[#4caf50]' : 'text-[#f44336]'}`}>
+          <span className={`font-[Figtree,sans-serif] text-xl font-semibold ${pidOutput >= 0 ? 'text-success' : 'text-destructive'}`}>
             {pidSign}{pidOutput.toFixed(1)}°
           </span>
         </div>
