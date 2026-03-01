@@ -4,7 +4,15 @@ import { useStore } from '../../store/useStore';
 import { saveConfig, loadAllConfigs, loadConfig, deleteConfig } from '../../config/storage';
 import type { SavedConfig } from '../../types';
 import { showToast } from '@/lib/toast';
-import styles from './Modal.module.css';
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogFooter,
+} from '@/components/ui/dialog';
+import { Input } from '@/components/ui/input';
+import { Button } from '@/components/ui/button';
 
 interface SaveModalProps {
   isOpen: boolean;
@@ -71,74 +79,77 @@ export function SaveModal({ isOpen, onClose }: SaveModalProps) {
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') handleSave();
-    if (e.key === 'Escape') onClose();
   };
 
-  if (!isOpen) return null;
-
   return (
-    <div className={styles.overlay} onClick={onClose}>
-      <div className={styles.modal} onClick={e => e.stopPropagation()}>
-        <h3 className={styles.title}>Save Configuration</h3>
+    <Dialog open={isOpen} onOpenChange={(open) => !open && onClose()}>
+      <DialogContent className="sm:max-w-[400px]">
+        <DialogHeader>
+          <DialogTitle>Save Configuration</DialogTitle>
+        </DialogHeader>
 
         {confirmOverwrite ? (
           <>
-            <p className={styles.confirmText}>
-              Overwrite "<strong>{confirmOverwrite}</strong>"?
+            <p className="text-sm text-muted-foreground text-center">
+              Overwrite "<strong className="text-foreground">{confirmOverwrite}</strong>"?
             </p>
-            <div className={styles.actions}>
-              <button className={styles.cancelBtn} onClick={() => setConfirmOverwrite(null)}>
+            <DialogFooter>
+              <Button variant="outline" onClick={() => setConfirmOverwrite(null)}>
                 Cancel
-              </button>
-              <button className={styles.deleteBtn} onClick={handleConfirmOverwrite}>
+              </Button>
+              <Button variant="destructive" onClick={handleConfirmOverwrite}>
                 Overwrite
-              </button>
-            </div>
+              </Button>
+            </DialogFooter>
           </>
         ) : (
           <>
-            <input
-              type="text"
-              className={styles.input}
+            <Input
               placeholder="Configuration name..."
               value={name}
-              onChange={e => setName((e.target as HTMLInputElement).value)}
+              onChange={e => setName(e.target.value)}
               onKeyDown={handleKeyDown}
               autoFocus
             />
-            <div className={styles.actions}>
-              <button className={styles.cancelBtn} onClick={onClose}>Cancel</button>
-              <button className={styles.saveBtn} onClick={handleSave}>Save</button>
-            </div>
+            <DialogFooter>
+              <Button variant="outline" onClick={onClose}>
+                Cancel
+              </Button>
+              <Button onClick={handleSave}>Save</Button>
+            </DialogFooter>
           </>
         )}
 
         {/* Saved configs list */}
         {configs.length > 0 && (
-          <div className={styles.configList}>
-            <div className={styles.configListHeader}>Saved Configs</div>
-            {configs.map(c => (
-              <div
-                key={c.name}
-                className={styles.configItem}
-                onClick={() => handleLoad(c.name)}
-              >
-                <span className={styles.configName}>{c.name}</span>
-                <span className={styles.configDate}>
-                  {new Date(c.timestamp).toLocaleDateString()}
-                </span>
-                <button
-                  className={styles.configDelete}
-                  onClick={e => handleDelete(e, c.name)}
-                  title="Delete"
+          <div className="mt-4 pt-4 border-t">
+            <div className="text-xs font-semibold text-muted-foreground uppercase tracking-wide mb-2">
+              Saved Configs
+            </div>
+            <div className="space-y-1">
+              {configs.map(c => (
+                <div
+                  key={c.name}
+                  className="flex items-center gap-2 px-3 py-2 bg-secondary rounded-md cursor-pointer hover:bg-secondary/80 transition-colors"
+                  onClick={() => handleLoad(c.name)}
                 >
-                  ×
-                </button>
-              </div>
-            ))}
+                  <span className="flex-1 text-sm">{c.name}</span>
+                  <span className="text-xs text-muted-foreground">
+                    {new Date(c.timestamp).toLocaleDateString()}
+                  </span>
+                  <button
+                    className="text-muted-foreground hover:text-destructive transition-colors text-lg px-1"
+                    onClick={e => handleDelete(e, c.name)}
+                    title="Delete"
+                  >
+                    ×
+                  </button>
+                </div>
+              ))}
+            </div>
           </div>
         )}
-      </div>
-    </div>
+      </DialogContent>
+    </Dialog>
   );
 }
