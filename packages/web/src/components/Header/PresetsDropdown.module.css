@@ -1,0 +1,136 @@
+/* PresetsDropdown.module.css */
+/* Styles for PresetsDropdown component */
+
+/* Trigger button */
+.trigger {
+  height: 1.75rem;
+  gap: 0.375rem;
+  padding: 0 0.5rem;
+  font-size: 0.75rem;
+  color: hsl(var(--muted-foreground));
+  border-color: hsl(var(--border));
+}
+
+.trigger:hover {
+  color: hsl(var(--foreground));
+  border-color: hsl(var(--primary));
+  background: hsl(var(--secondary) / 0.8);
+}
+
+.trigger[data-state="open"] {
+  border-color: hsl(var(--primary));
+  color: hsl(var(--primary));
+}
+
+/* Dropdown content */
+.dropdownContent {
+  width: 15rem;
+  padding: 0.5rem;
+}
+
+/* Save section */
+.saveSection {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.saveInput {
+  height: 2rem;
+  font-size: 0.875rem;
+}
+
+.saveButton {
+  height: 2rem;
+  padding: 0 0.75rem;
+  flex-shrink: 0;
+}
+
+/* Config list */
+.configList {
+  max-height: 13rem;
+  overflow-y: auto;
+  margin: 0 -0.25rem;
+  padding: 0 0.25rem;
+}
+
+.configItem {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  border-radius: 0.125rem;
+  padding: 0.375rem 0.5rem;
+  font-size: 0.875rem;
+  transition: background-color 150ms;
+}
+
+.configItemConfirming {
+  background: hsl(var(--destructive) / 0.1);
+}
+
+.configMenuItem {
+  flex: 1;
+  cursor: pointer;
+  gap: 0.5rem;
+  padding: 0.25rem 0.5rem;
+}
+
+.configMenuItem:focus {
+  background: hsl(var(--accent));
+  color: hsl(var(--accent-foreground));
+}
+
+.configMenuItemConfirming {
+  color: hsl(var(--destructive));
+}
+
+.configName {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  flex: 1;
+}
+
+.configDate {
+  font-size: 0.75rem;
+  color: hsl(var(--muted-foreground));
+  flex-shrink: 0;
+}
+
+/* Delete button */
+.deleteButton {
+  height: 1.5rem;
+  width: 1.5rem;
+  padding: 0;
+  opacity: 0;
+  transition: all 150ms;
+}
+
+.configItem:hover .deleteButton,
+.deleteButton:focus {
+  opacity: 1;
+}
+
+.deleteButton:hover {
+  background: hsl(var(--destructive) / 0.1);
+  color: hsl(var(--destructive));
+}
+
+.deleteButton:focus {
+  opacity: 1;
+}
+
+/* Confirm delete button */
+.confirmDeleteButton {
+  height: 1.5rem;
+  width: 1.5rem;
+  padding: 0;
+}
+
+/* Empty state */
+.emptyState {
+  padding: 0.75rem 0;
+  text-align: center;
+  font-size: 0.75rem;
+  color: hsl(var(--muted-foreground));
+}
