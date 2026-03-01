@@ -5,7 +5,7 @@ import { useTheme } from '../../contexts/ThemeContext';
 import { ResultDisplay } from '../ResultDisplay';
 import { YAMLModal } from '../Modals/YAMLModal';
 import { PresetsDropdown } from './PresetsDropdown';
-import { showToast } from '../Toast/Toast';
+import { showToast } from '@/lib/toast';
 import styles from './Header.module.css';
 
 export function Header() {
@@ -58,8 +58,8 @@ export function Header() {
 
         <div className={styles.themeSelector}>
           <button
-            className={`${styles.themeBtn} ${theme === 'esphome' ? styles.active : ''}`}
-            onClick={() => setTheme('esphome')}
+            className={`${styles.themeBtn} ${theme === 'dark' ? styles.active : ''}`}
+            onClick={() => setTheme('dark')}
             title="ESPHome Dark"
           >
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -67,8 +67,8 @@ export function Header() {
             </svg>
           </button>
           <button
-            className={`${styles.themeBtn} ${theme === 'esphome-light' ? styles.active : ''}`}
-            onClick={() => setTheme('esphome-light')}
+            className={`${styles.themeBtn} ${theme === 'light' ? styles.active : ''}`}
+            onClick={() => setTheme('light')}
             title="ESPHome Light"
           >
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
