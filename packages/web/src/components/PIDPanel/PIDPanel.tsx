@@ -5,6 +5,7 @@ import { DeadbandControls } from './DeadbandControls';
 import { InfoTooltip } from '../ControlsCard/InfoTooltip';
 import { Card } from '@/components/ui/card';
 import { Switch } from '@/components/ui/switch';
+import { cn } from '@/lib/utils';
 
 const PIDIcon = () => (
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -17,7 +18,7 @@ export function PIDPanel() {
   const setPidParam = useStore(s => s.setPidParam);
 
   return (
-    <Card className={`flex min-w-0 h-full flex-col ${!pid.enabled ? 'opacity-50' : ''}`}>
+    <Card className={cn('flex min-w-0 h-full flex-col', !pid.enabled && 'opacity-50')}>
       {/* Enable Header */}
       <div className="flex items-center gap-2 flex-wrap px-4 py-3 border-b border-border">
         <Switch

@@ -7,6 +7,7 @@ import { showToast } from '@/lib/toast';
 import {
   DropdownMenu,
   DropdownMenuContent,
+  DropdownMenuGroup,
   DropdownMenuItem,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
@@ -118,7 +119,6 @@ export function PresetsDropdown() {
               onChange={e => setSaveName(e.target.value)}
               onKeyDown={handleKeyDown}
               className={styles.saveInput}
-              autoFocus
             />
             <Button
               size="sm"
@@ -134,7 +134,7 @@ export function PresetsDropdown() {
           {configs.length > 0 && (
             <>
               <DropdownMenuSeparator className="my-1.5" />
-              <div className={styles.configList}>
+              <DropdownMenuGroup className={styles.configList}>
                 {configs.map(c => (
                   <div
                     key={c.name}
@@ -179,7 +179,7 @@ export function PresetsDropdown() {
                     )}
                   </div>
                 ))}
-              </div>
+              </DropdownMenuGroup>
             </>
           )}
 
