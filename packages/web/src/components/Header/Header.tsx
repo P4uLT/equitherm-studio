@@ -112,17 +112,17 @@ export function Header() {
           >
             <ToggleGroupItem
               value="dark"
-              className="w-9 h-9 data-[state=on]:text-accent data-[state=on]:shadow-[inset_0_0_0_1px_hsl(var(--accent))]"
+              className="w-8 h-8 data-[state=on]:text-accent data-[state=on]:shadow-[inset_0_0_0_1px_hsl(var(--accent))]"
               title="ESPHome Dark"
             >
-              <MoonIcon className="w-[18px] h-[18px]" />
+              <MoonIcon className="w-[16px] h-[16px]" />
             </ToggleGroupItem>
             <ToggleGroupItem
               value="light"
-              className="w-9 h-9 data-[state=on]:text-accent data-[state=on]:shadow-[inset_0_0_0_1px_hsl(var(--accent))]"
+              className="w-8 h-8 data-[state=on]:text-accent data-[state=on]:shadow-[inset_0_0_0_1px_hsl(var(--accent))]"
               title="ESPHome Light"
             >
-              <SunIcon className="w-[18px] h-[18px]" />
+              <SunIcon className="w-[16px] h-[16px]" />
             </ToggleGroupItem>
           </ToggleGroup>
         </div>
