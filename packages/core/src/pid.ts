@@ -1,26 +1,5 @@
 // src/core/pid.ts
-import { DEFAULT_PID_PARAMS } from './constants';
-import type { DefaultPIDParams, DeadbandConfig, PIDResult } from './types';
-
-// PID state for computation
-interface PIDComputeState {
-  mode: string;
-  roomTemp: number;
-  kp: number;
-  ki: number;
-  kd: number;
-  deadband?: DeadbandConfig;
-}
-
-/**
- * Create a fresh PID state object
- */
-export function createPIDState(overrides: Partial<DefaultPIDParams> = {}): DefaultPIDParams {
-  return {
-    ...DEFAULT_PID_PARAMS,
-    ...overrides,
-  };
-}
+import type { DeadbandConfig, PIDResult, PIDState } from './types';
 
 /**
  * Check if error is within deadband
@@ -35,7 +14,7 @@ export function isInDeadband(error: number, deadband: DeadbandConfig | undefined
  * Compute PID output
  */
 export function computePID(
-  state: PIDComputeState,
+  state: PIDState,
   setpoint: number,
   processValue: number
 ): PIDResult {
@@ -70,14 +49,4 @@ export function computePID(
     i: iTerm,
     d: dTerm
   };
-}
-
-/**
- * Get actual room temperature based on mode
- */
-export function getRoomTempActual(state: { mode: string; roomTemp: number }, tTarget: number): number {
-  if (state.mode === 'offset') {
-    return tTarget + state.roomTemp;
-  }
-  return state.roomTemp;
 }
