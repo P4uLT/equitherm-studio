@@ -95,23 +95,23 @@ export function YAMLModal({ isOpen, onClose }: YAMLModalProps) {
     <Dialog open={isOpen} onOpenChange={(open) => !open && onClose()}>
       <DialogContent className="sm:max-w-[700px] p-0 gap-0 overflow-hidden">
         {/* Header with Tab Style */}
-        <DialogHeader className={styles.header}>
-          <div className={styles.tab}>
+        <DialogHeader className="flex flex-row items-center justify-between p-3 bg-card border-b border-border">
+          <div className="flex items-center gap-2 px-3 py-1.5 bg-secondary rounded-t-md border border-border border-b-0 -mb-3">
             <LayersIcon />
-            <DialogTitle className={styles.tabTitle}>equitherm.yaml</DialogTitle>
+            <DialogTitle className="text-sm font-medium">equitherm.yaml</DialogTitle>
           </div>
         </DialogHeader>
 
         {/* Options Bar */}
-        <div className={styles.optionsBar}>
-          <label className={styles.optionLabel}>
+        <div className="flex gap-4 px-4 py-2 bg-secondary border-b border-border">
+          <label className="flex items-center gap-2 text-xs text-secondary-foreground cursor-pointer">
             <Switch
               checked={includeSensors}
               onCheckedChange={setIncludeSensors}
             />
             <span>Diagnostic sensors</span>
           </label>
-          <label className={styles.optionLabel}>
+          <label className="flex items-center gap-2 text-xs text-secondary-foreground cursor-pointer">
             <Switch
               checked={includeNumbers}
               onCheckedChange={setIncludeNumbers}
@@ -132,25 +132,28 @@ export function YAMLModal({ isOpen, onClose }: YAMLModalProps) {
         </div>
 
         {/* Status Bar */}
-        <div className={styles.statusBar}>
-          <div className={styles.statusLeft}>
+        <div className="flex items-center justify-between px-4 py-2 bg-card border-t border-border text-xs text-muted-foreground">
+          <div className="flex items-center gap-2">
             <a
               href="https://esphome.io/components/climate/equitherm.html"
               target="_blank"
               rel="noopener noreferrer"
-              className={styles.docsLink}
+              className="flex items-center gap-1 text-primary hover:opacity-80 transition-colors"
             >
               <BookIcon />
               Docs
             </a>
-            <span className={styles.separator}>|</span>
+            <span className="text-border">|</span>
             <span>YAML</span>
-            <span className={styles.separator}>|</span>
+            <span className="text-border">|</span>
             <span>{lineCount} lines</span>
           </div>
           <Button
             size="sm"
-            className={cn(styles.copyButton, copied && styles.copyButtonCopied)}
+            className={cn(
+              'h-7 px-4 text-xs font-semibold',
+              copied && 'bg-success text-success-foreground hover:bg-success'
+            )}
             onClick={handleCopy}
           >
             {copied ? 'Copied!' : 'Copy'}

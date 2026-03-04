@@ -1,51 +1,5 @@
 /* YAMLModal.module.css */
-/* Styles for YAMLModal component - VS Code-like code editor */
-
-/* Tab-style header */
-.header {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0.75rem;
-  background: hsl(var(--card));
-  border-bottom: 1px solid hsl(var(--border));
-}
-
-.tab {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  padding: 0.375rem 0.75rem;
-  background: hsl(var(--secondary));
-  border-radius: 0.375rem 0.375rem 0 0;
-  border: 1px solid hsl(var(--border));
-  border-bottom: none;
-  margin-bottom: -0.75rem;
-}
-
-.tabTitle {
-  font-size: 0.875rem;
-  font-weight: 500;
-}
-
-/* Options bar */
-.optionsBar {
-  display: flex;
-  gap: 1rem;
-  padding: 0.5rem 1rem;
-  background: hsl(var(--secondary));
-  border-bottom: 1px solid hsl(var(--border));
-}
-
-.optionLabel {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  font-size: 0.75rem;
-  color: hsl(var(--secondary-foreground));
-  cursor: pointer;
-}
+/* Code area styles - kept as CSS module for complex nested selectors */
 
 /* Code area */
 .codeArea {
@@ -86,54 +40,4 @@
 .codeHighlight {
   background: transparent !important;
   padding: 0 !important;
-}
-
-/* Status bar */
-.statusBar {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0.5rem 1rem;
-  background: hsl(var(--card));
-  border-top: 1px solid hsl(var(--border));
-  font-size: 0.75rem;
-  color: hsl(var(--muted-foreground));
-}
-
-.statusLeft {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-}
-
-.docsLink {
-  display: flex;
-  align-items: center;
-  gap: 0.25rem;
-  color: hsl(var(--primary));
-  transition: opacity 150ms;
-}
-
-.docsLink:hover {
-  opacity: 0.8;
-}
-
-.separator {
-  color: hsl(var(--border));
-}
-
-.copyButton {
-  height: 1.75rem;
-  padding: 0 1rem;
-  font-size: 0.75rem;
-  font-weight: 600;
-}
-
-.copyButtonCopied {
-  background: hsl(var(--success));
-  color: hsl(var(--success-foreground));
-}
-
-.copyButtonCopied:hover {
-  background: hsl(var(--success));
 }
