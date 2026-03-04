@@ -56,6 +56,9 @@ export default {
         figtree: ['Figtree', 'sans-serif'],
         mono: ['IBM Plex Mono', 'monospace'],
       },
+      fontSize: {
+        '2xs': ['0.6875rem', { lineHeight: '1rem' }],
+      },
       transitionDuration: {
         'medium': '300ms',
         'slow': '500ms',
