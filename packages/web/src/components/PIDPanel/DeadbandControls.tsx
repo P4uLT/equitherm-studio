@@ -15,11 +15,12 @@ interface DeadbandInstrumentProps {
   unit?: string;
   tooltipTitle?: string;
   tooltipContent?: ReactNode;
+  tooltipIcon?: ReactNode;
   reverseLabels?: boolean;
 }
 
 // Standard instrument control (affects curve)
-function DeadbandInstrument({ label, min, max, step, value, onChange, unit = '°', reverseLabels }: DeadbandInstrumentProps) {
+function DeadbandInstrument({ label, min, max, step, value, onChange, unit = '°', reverseLabels, tooltipTitle, tooltipContent, tooltipIcon }: DeadbandInstrumentProps) {
   const formatAnchor = (val: number) => {
     if (val < 0) return `${val}${unit}`;
     return `${val}${unit}`;
@@ -31,7 +32,14 @@ function DeadbandInstrument({ label, min, max, step, value, onChange, unit = '°
   return (
     <div className="flex flex-col gap-1">
       <div className="flex items-baseline justify-between">
-        <span className="text-[0.6rem] font-semibold text-muted-foreground uppercase tracking-wider">{label}</span>
+        <div className="flex items-center gap-1">
+          <span className="text-[0.6rem] font-semibold text-muted-foreground uppercase tracking-wider">{label}</span>
+          {tooltipTitle && (
+            <InfoTooltip title={tooltipTitle} icon={tooltipIcon} position="sideLeft" size="small">
+              {tooltipContent}
+            </InfoTooltip>
+          )}
+        </div>
         <span className="font-mono text-lg font-bold text-primary leading-none">{value.toFixed(1)}{unit}</span>
       </div>
       <div className="flex items-center gap-2">
@@ -58,22 +66,24 @@ interface TimeDomainInstrumentProps {
   step: number;
   value: number;
   onChange: (value: number) => void;
+  tooltipTitle?: string;
   tooltipContent?: React.ReactNode;
+  tooltipIcon?: React.ReactNode;
 }
 
 // Time-domain instrument (YAML export only, no curve impact)
-function TimeDomainInstrument({ label, min, max, step, value, onChange, tooltipContent }: TimeDomainInstrumentProps) {
+function TimeDomainInstrument({ label, min, max, step, value, onChange, tooltipTitle, tooltipContent, tooltipIcon }: TimeDomainInstrumentProps) {
   return (
     <div className="flex flex-col gap-0.5 opacity-85">
-      <div className="flex items-center justify-between">
-        <div className="flex items-center gap-1.5">
+      <div className="flex items-baseline justify-between">
+        <div className="flex items-center gap-1">
           <span className="text-[0.6rem] font-semibold text-muted-foreground uppercase tracking-wider">{label}</span>
-          <span className="text-[0.45rem] font-bold text-muted-foreground bg-secondary py-0.5 px-1 rounded-[2px] uppercase tracking-wider border border-border">YAML</span>
           {tooltipContent && (
-            <InfoTooltip title="Time-domain parameter" position="sideLeft" size="small">
+            <InfoTooltip title={tooltipTitle || 'Time-domain parameter'} icon={tooltipIcon} position="sideLeft" size="small">
               {tooltipContent}
             </InfoTooltip>
           )}
+          <span className="text-[0.45rem] font-bold text-muted-foreground bg-secondary py-0.5 px-1 rounded-[2px] uppercase tracking-wider border border-border">YAML</span>
         </div>
         <span className="font-mono text-sm font-semibold text-secondary-foreground">{value.toFixed(2)}</span>
       </div>
@@ -126,6 +136,14 @@ export function DeadbandControls() {
               step={0.1}
               value={pid.deadbandThresholdHigh}
               onChange={v => setPidParam('deadbandThresholdHigh', v)}
+              tooltipTitle="High Threshold"
+              tooltipIcon={<span>↑</span>}
+              tooltipContent={
+                <>
+                  <p><strong>Upper bound</strong> of the deadband zone.</p>
+                  <p>When room temp error is below this value (and above Low), gains are reduced.</p>
+                </>
+              }
             />
             <DeadbandInstrument
               label="Low"
@@ -135,6 +153,14 @@ export function DeadbandControls() {
               value={pid.deadbandThresholdLow}
               onChange={v => setPidParam('deadbandThresholdLow', v)}
               reverseLabels
+              tooltipTitle="Low Threshold"
+              tooltipIcon={<span>↓</span>}
+              tooltipContent={
+                <>
+                  <p><strong>Lower bound</strong> of the deadband zone.</p>
+                  <p>When room temp error is above this value (and below High), gains are reduced.</p>
+                </>
+              }
             />
             <DeadbandInstrument
               label="Kp ÷"
@@ -144,6 +170,14 @@ export function DeadbandControls() {
               value={pid.deadbandKpMultiplier}
               onChange={v => setPidParam('deadbandKpMultiplier', v)}
               unit=""
+              tooltipTitle="Kp Multiplier"
+              tooltipIcon={<span>Kp</span>}
+              tooltipContent={
+                <>
+                  <p><strong>Divisor</strong> for proportional gain when in deadband.</p>
+                  <p>Lower values reduce Kp response near setpoint.</p>
+                </>
+              }
             />
           </div>
         </div>
@@ -166,8 +200,13 @@ export function DeadbandControls() {
               step={0.05}
               value={pid.deadbandKiMultiplier}
               onChange={v => setPidParam('deadbandKiMultiplier', v)}
+              tooltipTitle="Ki Multiplier"
+              tooltipIcon={<span>Ki</span>}
               tooltipContent={
-                <p>Multiplier for integral gain in deadband. Often 0 to prevent windup.</p>
+                <>
+                  <p><strong>Multiplier</strong> for integral gain in deadband.</p>
+                  <p>Often 0 to prevent windup.</p>
+                </>
               }
             />
             <TimeDomainInstrument
@@ -177,8 +216,13 @@ export function DeadbandControls() {
               step={0.05}
               value={pid.deadbandKdMultiplier}
               onChange={v => setPidParam('deadbandKdMultiplier', v)}
+              tooltipTitle="Kd Multiplier"
+              tooltipIcon={<span>Kd</span>}
               tooltipContent={
-                <p>Multiplier for derivative gain in deadband. Reduces D-term response near setpoint.</p>
+                <>
+                  <p><strong>Multiplier</strong> for derivative gain in deadband.</p>
+                  <p>Reduces D-term response near setpoint.</p>
+                </>
               }
             />
           </div>

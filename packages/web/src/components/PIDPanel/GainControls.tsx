@@ -18,10 +18,11 @@ interface GainInstrumentProps {
   unit?: string;
   tooltipTitle?: string;
   tooltipContent?: React.ReactNode;
+  tooltipIcon?: React.ReactNode;
 }
 
 // Instantaneous control (affects curve)
-function GainInstrument({ label, min, max, step, value, onChange, unit = '', tooltipTitle, tooltipContent }: GainInstrumentProps) {
+function GainInstrument({ label, min, max, step, value, onChange, unit = '', tooltipTitle, tooltipContent, tooltipIcon }: GainInstrumentProps) {
   const formatAnchor = (val: number) => {
     if (val < 0) return `${val}${unit}`;
     if (unit === '°') return `${val}°`;
@@ -34,7 +35,7 @@ function GainInstrument({ label, min, max, step, value, onChange, unit = '', too
         <div className="flex items-center gap-1">
           <span className="text-[0.6rem] font-semibold text-muted-foreground uppercase tracking-wider">{label}</span>
           {tooltipTitle && (
-            <InfoTooltip title={tooltipTitle} position="sideLeft" size="small">
+            <InfoTooltip title={tooltipTitle} icon={tooltipIcon} position="sideLeft" size="small">
               {tooltipContent}
             </InfoTooltip>
           )}
@@ -65,11 +66,13 @@ interface TimeDomainInstrumentProps {
   step: number;
   value: number;
   onChange: (value: number) => void;
+  tooltipTitle?: string;
   tooltipContent?: React.ReactNode;
+  tooltipIcon?: React.ReactNode;
 }
 
 // Time-domain instrument (YAML export only, no curve impact)
-function TimeDomainInstrument({ label, min, max, step, value, onChange, tooltipContent }: TimeDomainInstrumentProps) {
+function TimeDomainInstrument({ label, min, max, step, value, onChange, tooltipTitle, tooltipContent, tooltipIcon }: TimeDomainInstrumentProps) {
   const formatAnchor = (val: number) => {
     if (val < 0) return `${val}`;
     return `${val}`;
@@ -77,15 +80,15 @@ function TimeDomainInstrument({ label, min, max, step, value, onChange, tooltipC
 
   return (
     <div className="flex flex-col gap-0.5 opacity-85">
-      <div className="flex items-center justify-between">
-        <div className="flex items-center gap-1.5">
+      <div className="flex items-baseline justify-between">
+        <div className="flex items-center gap-1">
           <span className="text-[0.6rem] font-semibold text-muted-foreground uppercase tracking-wider">{label}</span>
-          <span className="text-[0.45rem] font-bold text-muted-foreground bg-secondary py-0.5 px-1 rounded-[2px] uppercase tracking-wider border border-border">YAML</span>
           {tooltipContent && (
-            <InfoTooltip title="Time-domain parameter" position="sideLeft" size="small">
+            <InfoTooltip title={tooltipTitle || 'Time-domain parameter'} icon={tooltipIcon} position="sideLeft" size="small">
               {tooltipContent}
             </InfoTooltip>
           )}
+          <span className="text-[0.45rem] font-bold text-muted-foreground bg-secondary py-0.5 px-1 rounded-[2px] uppercase tracking-wider border border-border">YAML</span>
         </div>
         <span className="font-mono text-sm font-semibold text-secondary-foreground">{value.toFixed(2)}</span>
       </div>
@@ -134,7 +137,8 @@ export function GainControls() {
           step={0.1}
           value={pid.kp}
           onChange={v => setPidParam('kp', v)}
-          tooltipTitle="Proportional Gain (Kp)"
+          tooltipTitle="Proportional Gain"
+          tooltipIcon={<span>Kp</span>}
           tooltipContent={
             <>
               <p>How strongly the system reacts to the <strong>current error</strong> (room vs setpoint).</p>
@@ -163,6 +167,8 @@ export function GainControls() {
             step={0.01}
             value={pid.ki}
             onChange={v => setPidParam('ki', v)}
+            tooltipTitle="Integral Gain"
+            tooltipIcon={<span>Ki</span>}
             tooltipContent={
               <>
                 <p>Accumulates error over time to eliminate <strong>steady-state offset</strong>.</p>
@@ -178,6 +184,8 @@ export function GainControls() {
             step={0.05}
             value={pid.kd}
             onChange={v => setPidParam('kd', v)}
+            tooltipTitle="Derivative Gain"
+            tooltipIcon={<span>Kd</span>}
             tooltipContent={
               <>
                 <p>Predicts future error by measuring the <strong>rate of change</strong>.</p>
