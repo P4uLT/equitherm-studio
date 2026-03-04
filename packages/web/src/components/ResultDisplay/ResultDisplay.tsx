@@ -1,6 +1,7 @@
 // src/components/ResultDisplay/ResultDisplay.tsx
 import { useStore } from '../../store/useStore';
 import { Card } from '@/components/ui/card';
+import { SliderVariant } from '@/components/ui/slider-variants';
 
 export function ResultDisplay() {
   const tCurrent = useStore(s => s.ui.tCurrent);
@@ -20,15 +21,14 @@ export function ResultDisplay() {
         </div>
         <div className="flex items-center gap-3">
           <span className="text-[0.7rem] min-w-[2.5rem] text-center text-primary">-30°</span>
-          <input
-            type="range"
-            min="-30"
-            max="25"
-            step="1"
-            value={tCurrent}
-            onChange={e => setTCurrent(parseInt((e.target as HTMLInputElement).value))}
-            className="temp-slider"
-            style={{ '--v': tCurrent, '--min': -30, '--max': 25 } as React.CSSProperties}
+          <SliderVariant
+            variant="temp"
+            min={-30}
+            max={25}
+            step={1}
+            value={[tCurrent]}
+            onValueChange={(vals) => setTCurrent(vals[0])}
+            className="flex-1 cursor-grab"
           />
           <span className="text-[0.7rem] min-w-[2.5rem] text-center text-hot">25°</span>
         </div>
