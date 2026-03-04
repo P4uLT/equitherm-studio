@@ -2,36 +2,6 @@
    Components - Custom UI component styles
    ═══════════════════════════════════════════════════════════════════════════ */
 
-@layer base {
-  /* Temperature slider with dynamic gradient fill */
-  .temp-slider {
-    flex: 1;
-    height: 8px;
-    border-radius: 4px;
-    -webkit-appearance: none;
-    cursor: grab;
-    --range: calc(var(--max) - var(--min));
-    --pct: calc((var(--v) - var(--min)) / var(--range) * 100%);
-    background: linear-gradient(
-      to right,
-      hsl(var(--primary)) 0%,
-      hsl(var(--primary)) var(--pct),
-      hsl(var(--secondary)) var(--pct)
-    );
-  }
-
-  .temp-slider::-webkit-slider-thumb {
-    -webkit-appearance: none;
-    width: 22px;
-    height: 22px;
-    border-radius: 50%;
-    background: hsl(var(--card));
-    border: 3px solid hsl(var(--primary));
-    cursor: grab;
-    box-shadow: 0 0 0 4px hsl(var(--primary) / 0.12);
-  }
-
-  :global(.dark) .temp-slider::-webkit-slider-thumb {
-    box-shadow: 0 0 0 4px hsl(var(--primary) / 0.25);
-  }
-}
+/* NOTE: temp-slider styles removed.
+   Temperature slider styling now handled by SliderVariant component with
+   variant="temp" in: packages/web/src/components/ui/slider-variants.module.css */
