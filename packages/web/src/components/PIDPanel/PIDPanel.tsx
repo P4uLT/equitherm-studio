@@ -5,6 +5,7 @@ import { DeadbandControls } from './DeadbandControls';
 import { InfoTooltip } from '../ControlsCard/InfoTooltip';
 import { Card } from '@/components/ui/card';
 import { Switch } from '@/components/ui/switch';
+import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group';
 import { cn } from '@/lib/utils';
 
 const PIDIcon = () => (
@@ -34,36 +35,30 @@ export function PIDPanel() {
 
       {/* Mode Toggle Row */}
       <div className={cn('px-4 py-2 border-b border-border', !pid.enabled && 'pointer-events-none')}>
-        <div className="flex gap-1 bg-secondary p-0.5 rounded-md border border-border w-full">
-          <button
-            className={cn(
-              'flex-1 py-1 px-2 bg-transparent border-none rounded text-xs cursor-pointer transition-all duration-150 whitespace-nowrap',
-              pid.mode === 'offset'
-                ? 'bg-card text-primary'
-                : 'text-muted-foreground hover:text-secondary-foreground'
-            )}
-            onClick={() => {
-              setPidParam('mode', 'offset');
-              setPidParam('roomTemp', 0);
-            }}
+        <ToggleGroup
+          type="single"
+          value={pid.mode}
+          onValueChange={(value) => {
+            if (value) {
+              setPidParam('mode', value as 'offset' | 'absolute');
+              setPidParam('roomTemp', value === 'offset' ? 0 : 21);
+            }
+          }}
+          className="bg-secondary p-0.5 rounded-md border border-border w-full justify-stretch"
+        >
+          <ToggleGroupItem
+            value="offset"
+            className="flex-1 text-xs data-[state=on]:bg-card data-[state=on]:text-primary"
           >
             Offset
-          </button>
-          <button
-            className={cn(
-              'flex-1 py-1 px-2 bg-transparent border-none rounded text-xs cursor-pointer transition-all duration-150 whitespace-nowrap',
-              pid.mode === 'absolute'
-                ? 'bg-card text-primary'
-                : 'text-muted-foreground hover:text-secondary-foreground'
-            )}
-            onClick={() => {
-              setPidParam('mode', 'absolute');
-              setPidParam('roomTemp', 21);
-            }}
+          </ToggleGroupItem>
+          <ToggleGroupItem
+            value="absolute"
+            className="flex-1 text-xs data-[state=on]:bg-card data-[state=on]:text-primary"
           >
             Absolute
-          </button>
-        </div>
+          </ToggleGroupItem>
+        </ToggleGroup>
       </div>
 
       {/* Gains Section */}
