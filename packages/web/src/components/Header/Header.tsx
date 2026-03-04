@@ -4,7 +4,6 @@ import { useStore } from '../../store/useStore';
 import { useTheme } from '../../contexts/ThemeContext';
 import { ResultDisplay } from '../ResultDisplay';
 import { YAMLModal } from '../Modals/YAMLModal';
-import { PresetsDropdown } from './PresetsDropdown';
 import { showToast } from '@/lib/toast';
 import { Button } from '@/components/ui/button';
 import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group';
@@ -68,20 +67,24 @@ export function Header() {
   return (
     <>
       <header className="flex flex-wrap items-center gap-3 px-4 py-3 bg-card border border-border rounded-xl mb-4">
+        {/* Title */}
         <div className="flex-none">
           <h1 className="text-lg font-bold font-figtree text-foreground whitespace-nowrap">
             Equitherm Calculator
           </h1>
         </div>
 
-        {/* Spacer pushes theme toggle right on mobile */}
-        <div className="flex-1 md:hidden" />
+        {/* Result display — grows to fill available space */}
+        <div className="flex-1 min-w-[200px]">
+          <ResultDisplay />
+        </div>
 
-        <div className="flex gap-2 w-full md:w-auto flex-none">
+        {/* Action buttons + theme toggle */}
+        <div className="flex items-center gap-2 flex-none">
           <Button
             variant="outline"
             size="sm"
-            className="text-2xs gap-1.5"
+            className="gap-1.5"
             onClick={() => setYamlOpen(true)}
           >
             <CopyIcon className="w-3.5 h-3.5" />
@@ -90,20 +93,12 @@ export function Header() {
           <Button
             variant="outline"
             size="sm"
-            className="text-2xs gap-1.5"
+            className="gap-1.5"
             onClick={handleShare}
           >
             <LinkIcon className="w-3.5 h-3.5" />
             Share
           </Button>
-          <PresetsDropdown />
-        </div>
-
-        <div className="w-full md:flex-1 md:min-w-0">
-          <ResultDisplay />
-        </div>
-
-        <div className="flex-none md:order-last">
           <ToggleGroup
             type="single"
             value={theme}
@@ -115,14 +110,14 @@ export function Header() {
               className="w-8 h-8 data-[state=on]:text-accent data-[state=on]:shadow-[inset_0_0_0_1px_hsl(var(--accent))]"
               title="ESPHome Dark"
             >
-              <MoonIcon className="w-[16px] h-[16px]" />
+              <MoonIcon className="w-4 h-4" />
             </ToggleGroupItem>
             <ToggleGroupItem
               value="light"
               className="w-8 h-8 data-[state=on]:text-accent data-[state=on]:shadow-[inset_0_0_0_1px_hsl(var(--accent))]"
               title="ESPHome Light"
             >
-              <SunIcon className="w-[16px] h-[16px]" />
+              <SunIcon className="w-4 h-4" />
             </ToggleGroupItem>
           </ToggleGroup>
         </div>
