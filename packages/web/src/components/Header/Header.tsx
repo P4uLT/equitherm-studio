@@ -67,14 +67,17 @@ export function Header() {
 
   return (
     <>
-      <header className="flex items-center justify-between gap-6 px-4 py-3 bg-card border border-border rounded-xl mb-4">
-        <div>
+      <header className="flex flex-wrap items-center gap-3 px-4 py-3 bg-card border border-border rounded-xl mb-4">
+        <div className="flex-none">
           <h1 className="text-lg font-bold font-figtree text-foreground whitespace-nowrap">
             Equitherm Calculator
           </h1>
         </div>
 
-        <div className="flex gap-2">
+        {/* Spacer pushes theme toggle right on mobile */}
+        <div className="flex-1 md:hidden" />
+
+        <div className="flex gap-2 w-full md:w-auto flex-none">
           <Button
             variant="outline"
             size="sm"
@@ -96,29 +99,33 @@ export function Header() {
           <PresetsDropdown />
         </div>
 
-        <ResultDisplay />
+        <div className="w-full md:flex-1 md:min-w-0">
+          <ResultDisplay />
+        </div>
 
-        <ToggleGroup
-          type="single"
-          value={theme}
-          onValueChange={(value) => value && setTheme(value as 'light' | 'dark')}
-          className="bg-secondary p-1 rounded-lg border border-border"
-        >
-          <ToggleGroupItem
-            value="dark"
-            className="w-9 h-9 data-[state=on]:text-accent data-[state=on]:shadow-[inset_0_0_0_1px_hsl(var(--accent))]"
-            title="ESPHome Dark"
+        <div className="flex-none md:order-last">
+          <ToggleGroup
+            type="single"
+            value={theme}
+            onValueChange={(value) => value && setTheme(value as 'light' | 'dark')}
+            className="bg-secondary p-1 rounded-lg border border-border"
           >
-            <MoonIcon className="w-[18px] h-[18px]" />
-          </ToggleGroupItem>
-          <ToggleGroupItem
-            value="light"
-            className="w-9 h-9 data-[state=on]:text-accent data-[state=on]:shadow-[inset_0_0_0_1px_hsl(var(--accent))]"
-            title="ESPHome Light"
-          >
-            <SunIcon className="w-[18px] h-[18px]" />
-          </ToggleGroupItem>
-        </ToggleGroup>
+            <ToggleGroupItem
+              value="dark"
+              className="w-9 h-9 data-[state=on]:text-accent data-[state=on]:shadow-[inset_0_0_0_1px_hsl(var(--accent))]"
+              title="ESPHome Dark"
+            >
+              <MoonIcon className="w-[18px] h-[18px]" />
+            </ToggleGroupItem>
+            <ToggleGroupItem
+              value="light"
+              className="w-9 h-9 data-[state=on]:text-accent data-[state=on]:shadow-[inset_0_0_0_1px_hsl(var(--accent))]"
+              title="ESPHome Light"
+            >
+              <SunIcon className="w-[18px] h-[18px]" />
+            </ToggleGroupItem>
+          </ToggleGroup>
+        </div>
       </header>
 
       <YAMLModal isOpen={yamlOpen} onClose={() => setYamlOpen(false)} />
