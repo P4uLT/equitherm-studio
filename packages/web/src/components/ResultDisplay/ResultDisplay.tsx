@@ -12,9 +12,9 @@ export function ResultDisplay() {
   const pidSign = pidOutput >= 0 ? '+' : '';
 
   return (
-    <Card className="flex items-center gap-8 flex-1 justify-center p-6">
+    <Card className="flex items-center gap-3 md:gap-8 flex-1 justify-center p-3 md:p-6">
       {/* Outdoor temperature input */}
-      <div className="flex flex-col gap-2 min-w-[200px]">
+      <div className="flex flex-col gap-2 min-w-[150px] md:min-w-[200px] flex-1 md:flex-none">
         <div className="flex justify-between px-1">
           <span className="text-xs font-medium text-muted-foreground uppercase tracking-widest">Outdoor</span>
           <span className="font-figtree text-xl font-bold text-foreground">{tCurrent}°C</span>
@@ -35,15 +35,15 @@ export function ResultDisplay() {
       </div>
 
       {/* Arrow transform */}
-      <div className="w-10">
-        <svg className="w-7 h-7 text-muted-foreground opacity-50" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+      <div className="w-6 md:w-10">
+        <svg className="w-5 h-5 md:w-7 md:h-7 text-muted-foreground opacity-50" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
           <path d="M5 12h14M12 5l7 7-7 7"/>
         </svg>
       </div>
 
       {/* PID correction display */}
       {pidEnabled && (
-        <div className="flex flex-col items-center gap-1 min-w-[70px]">
+        <div className="flex flex-col items-center gap-1 min-w-[60px] md:min-w-[70px]">
           <span className="text-[0.65rem] font-medium text-muted-foreground uppercase tracking-widest">PID</span>
           <span className={`font-figtree text-xl font-semibold ${pidOutput >= 0 ? 'text-success' : 'text-destructive'}`}>
             {pidSign}{pidOutput.toFixed(1)}°
@@ -53,15 +53,15 @@ export function ResultDisplay() {
 
       {/* Arrow transform (when PID enabled) */}
       {pidEnabled && (
-        <div className="w-10">
-          <svg className="w-7 h-7 text-muted-foreground opacity-50" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+        <div className="w-6 md:w-10">
+          <svg className="w-5 h-5 md:w-7 md:h-7 text-muted-foreground opacity-50" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
             <path d="M5 12h14M12 5l7 7-7 7"/>
           </svg>
         </div>
       )}
 
       {/* Flow output */}
-      <div className="flex flex-col items-center gap-1.5 min-w-[90px]">
+      <div className="flex flex-col items-center gap-1.5 min-w-[80px] md:min-w-[90px]">
         <span className="text-xs font-medium text-muted-foreground uppercase tracking-widest">Flow</span>
         <span className="relative font-figtree text-4xl font-bold text-primary pr-[0.7em]">
           {computed.flowTemp?.toFixed(1) ?? '--'}
