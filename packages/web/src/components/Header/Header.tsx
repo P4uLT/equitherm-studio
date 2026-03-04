@@ -81,7 +81,7 @@ export function Header() {
           <Button
             variant="outline"
             size="sm"
-            className="text-[0.7rem] gap-1.5"
+            className="text-2xs gap-1.5"
             onClick={() => setYamlOpen(true)}
           >
             <CopyIcon className="w-3.5 h-3.5" />
@@ -90,7 +90,7 @@ export function Header() {
           <Button
             variant="outline"
             size="sm"
-            className="text-[0.7rem] gap-1.5"
+            className="text-2xs gap-1.5"
             onClick={handleShare}
           >
             <LinkIcon className="w-3.5 h-3.5" />
