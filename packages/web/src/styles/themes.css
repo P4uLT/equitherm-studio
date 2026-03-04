@@ -4,6 +4,29 @@
 
 @layer base {
   /* ═════════════════════════════════════════════════════════════════════════
+     FLUID TYPOGRAPHY SCALE
+     Uses clamp() for smooth scaling between viewport widths.
+     Formula: clamp(min, preferred, max)
+     - Min: smallest size at 320px viewport
+     - Preferred: viewport-relative scaling (vi = 1% of viewport inline size)
+     - Max: largest size at 1440px viewport
+     ═════════════════════════════════════════════════════════════════════════ */
+  :root {
+    /* Fluid font sizes - scale from mobile (320px) to desktop (1440px) */
+    --font-size-fluid-xs: clamp(0.6875rem, 0.625rem + 0.25vi, 0.75rem);      /* 11px → 12px */
+    --font-size-fluid-sm: clamp(0.8125rem, 0.75rem + 0.25vi, 0.875rem);     /* 13px → 14px */
+    --font-size-fluid-base: clamp(0.875rem, 0.8125rem + 0.25vi, 1rem);      /* 14px → 16px */
+    --font-size-fluid-lg: clamp(1rem, 0.9375rem + 0.25vi, 1.125rem);        /* 16px → 18px */
+    --font-size-fluid-xl: clamp(1.125rem, 1rem + 0.5vi, 1.25rem);           /* 18px → 20px */
+    --font-size-fluid-2xl: clamp(1.25rem, 1.125rem + 0.5vi, 1.5rem);        /* 20px → 24px */
+    --font-size-fluid-3xl: clamp(1.5rem, 1.25rem + 1vi, 1.875rem);          /* 24px → 30px */
+
+    /* Container query units reference (for documentation) */
+    /* cqw = 1% of container width, cqh = 1% of container height */
+    /* Usage: font-size: clamp(1rem, 0.5rem + 2cqw, 2rem); */
+  }
+
+  /* ═════════════════════════════════════════════════════════════════════════
      LIGHT THEME (default)
      ═════════════════════════════════════════════════════════════════════════ */
   :root {
