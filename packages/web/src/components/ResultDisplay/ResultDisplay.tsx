@@ -1,6 +1,5 @@
 // src/components/ResultDisplay/ResultDisplay.tsx
 import { useStore } from '../../store/useStore';
-import { Card } from '@/components/ui/card';
 import { SliderVariant } from '@/components/ui/slider-variants';
 import { cn } from '@/lib/utils';
 
@@ -13,9 +12,9 @@ export function ResultDisplay() {
   const pidSign = pidOutput >= 0 ? '+' : '';
 
   return (
-    <Card className="flex items-center gap-3 md:gap-8 flex-1 justify-center p-3 md:p-6">
+    <div className="flex items-center gap-3 flex-1 min-w-0">
       {/* Outdoor temperature input */}
-      <div className="flex flex-col gap-2 min-w-[150px] md:min-w-[200px] flex-1 md:flex-none">
+      <div className="flex flex-col gap-2 flex-1 min-w-0">
         <div className="flex justify-between px-1">
           <span className="text-xs font-medium text-muted-foreground uppercase tracking-widest">Outdoor</span>
           <span className="font-figtree text-xl font-bold text-foreground">{tCurrent}°C</span>
@@ -36,7 +35,7 @@ export function ResultDisplay() {
       </div>
 
       {/* Arrow transform */}
-      <div className="w-6 md:w-10">
+      <div className="w-6 shrink-0">
         <svg className="w-5 h-5 md:w-7 md:h-7 text-muted-foreground opacity-50" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
           <path d="M5 12h14M12 5l7 7-7 7"/>
         </svg>
@@ -44,7 +43,7 @@ export function ResultDisplay() {
 
       {/* PID correction display */}
       {pidEnabled && (
-        <div className="flex flex-col items-center gap-1 min-w-[60px] md:min-w-[70px]">
+        <div className="flex flex-col items-center gap-1 min-w-[60px] shrink-0">
           <span className="text-[0.65rem] font-medium text-muted-foreground uppercase tracking-widest">PID</span>
           <span className={cn(
             'font-figtree text-xl font-semibold',
@@ -57,7 +56,7 @@ export function ResultDisplay() {
 
       {/* Arrow transform (when PID enabled) */}
       {pidEnabled && (
-        <div className="w-6 md:w-10">
+        <div className="w-6 shrink-0">
           <svg className="w-5 h-5 md:w-7 md:h-7 text-muted-foreground opacity-50" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
             <path d="M5 12h14M12 5l7 7-7 7"/>
           </svg>
@@ -65,7 +64,7 @@ export function ResultDisplay() {
       )}
 
       {/* Flow output */}
-      <div className="flex flex-col items-center gap-1.5 min-w-[80px] md:min-w-[90px]">
+      <div className="flex flex-col items-center gap-1.5 min-w-[80px] shrink-0">
         <span className="text-xs font-medium text-muted-foreground uppercase tracking-widest">Flow</span>
         <span className="relative font-figtree text-4xl font-bold text-primary pr-[0.7em]">
           {computed.flowTemp?.toFixed(1) ?? '--'}
@@ -76,6 +75,6 @@ export function ResultDisplay() {
           <span className="text-2xs text-muted-foreground uppercase">{computed.status}</span>
         </div>
       </div>
-    </Card>
+    </div>
   );
 }
