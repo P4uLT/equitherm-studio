@@ -2,6 +2,7 @@
 import { useStore } from '../../store/useStore';
 import { Card } from '@/components/ui/card';
 import { SliderVariant } from '@/components/ui/slider-variants';
+import { cn } from '@/lib/utils';
 
 export function ResultDisplay() {
   const tCurrent = useStore(s => s.ui.tCurrent);
@@ -45,7 +46,10 @@ export function ResultDisplay() {
       {pidEnabled && (
         <div className="flex flex-col items-center gap-1 min-w-[60px] md:min-w-[70px]">
           <span className="text-[0.65rem] font-medium text-muted-foreground uppercase tracking-widest">PID</span>
-          <span className={`font-figtree text-xl font-semibold ${pidOutput >= 0 ? 'text-success' : 'text-destructive'}`}>
+          <span className={cn(
+            'font-figtree text-xl font-semibold',
+            pidOutput >= 0 ? 'text-success' : 'text-destructive'
+          )}>
             {pidSign}{pidOutput.toFixed(1)}°
           </span>
         </div>
