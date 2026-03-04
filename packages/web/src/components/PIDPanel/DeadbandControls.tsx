@@ -3,6 +3,7 @@ import type { ReactNode } from 'react';
 import { useStore } from '../../store/useStore';
 import { InfoTooltip } from '../ControlsCard/InfoTooltip';
 import { Switch } from '@/components/ui/switch';
+import { SliderVariant } from '@/components/ui/slider-variants';
 
 interface DeadbandInstrumentProps {
   label: string;
@@ -14,16 +15,18 @@ interface DeadbandInstrumentProps {
   unit?: string;
   tooltipTitle?: string;
   tooltipContent?: ReactNode;
+  reverseLabels?: boolean;
 }
 
 // Standard instrument control (affects curve)
-function DeadbandInstrument({ label, min, max, step, value, onChange, unit = '°' }: DeadbandInstrumentProps) {
-  const pct = ((value - min) / (max - min)) * 100;
-
+function DeadbandInstrument({ label, min, max, step, value, onChange, unit = '°', reverseLabels }: DeadbandInstrumentProps) {
   const formatAnchor = (val: number) => {
     if (val < 0) return `${val}${unit}`;
     return `${val}${unit}`;
   };
+
+  const leftVal = reverseLabels ? max : min;
+  const rightVal = reverseLabels ? min : max;
 
   return (
     <div className="flex flex-col gap-1">
@@ -32,18 +35,17 @@ function DeadbandInstrument({ label, min, max, step, value, onChange, unit = '°
         <span className="font-mono text-lg font-bold text-primary leading-none">{value.toFixed(1)}{unit}</span>
       </div>
       <div className="flex items-center gap-2">
-        <span className="font-mono text-[0.55rem] font-medium text-muted-foreground whitespace-nowrap flex-shrink-0 min-w-[1.5rem]">{formatAnchor(min)}</span>
-        <input
-          type="range"
+        <span className="font-mono text-[0.55rem] font-medium text-muted-foreground whitespace-nowrap flex-shrink-0 min-w-[1.5rem]">{formatAnchor(leftVal)}</span>
+        <SliderVariant
+          variant="primary"
           min={min}
           max={max}
           step={step}
-          value={value}
-          onChange={e => onChange(parseFloat((e.target as HTMLInputElement).value))}
-          style={{ '--pct': `${pct}%` } as React.CSSProperties}
-          className="flex-1 h-[5px] rounded outline-none appearance-none cursor-pointer range-slider-primary"
+          value={[value]}
+          onValueChange={(vals) => onChange(vals[0])}
+          className="flex-1 cursor-pointer"
         />
-        <span className="font-mono text-[0.55rem] font-medium text-muted-foreground whitespace-nowrap flex-shrink-0 min-w-[1.5rem] text-right">{formatAnchor(max)}</span>
+        <span className="font-mono text-[0.55rem] font-medium text-muted-foreground whitespace-nowrap flex-shrink-0 min-w-[1.5rem] text-right">{formatAnchor(rightVal)}</span>
       </div>
     </div>
   );
@@ -61,8 +63,6 @@ interface TimeDomainInstrumentProps {
 
 // Time-domain instrument (YAML export only, no curve impact)
 function TimeDomainInstrument({ label, min, max, step, value, onChange, tooltipContent }: TimeDomainInstrumentProps) {
-  const pct = ((value - min) / (max - min)) * 100;
-
   return (
     <div className="flex flex-col gap-0.5 opacity-85">
       <div className="flex items-center justify-between">
@@ -79,15 +79,14 @@ function TimeDomainInstrument({ label, min, max, step, value, onChange, tooltipC
       </div>
       <div className="flex items-center gap-2">
         <span className="font-mono text-[0.55rem] font-medium text-muted-foreground whitespace-nowrap flex-shrink-0 min-w-[1.5rem]">{min}</span>
-        <input
-          type="range"
+        <SliderVariant
+          variant="ghost"
           min={min}
           max={max}
           step={step}
-          value={value}
-          onChange={e => onChange(parseFloat((e.target as HTMLInputElement).value))}
-          style={{ '--pct': `${pct}%` } as React.CSSProperties}
-          className="flex-1 h-[5px] rounded outline-none appearance-none cursor-pointer range-slider-ghost opacity-70 hover:opacity-100"
+          value={[value]}
+          onValueChange={(vals) => onChange(vals[0])}
+          className="flex-1 cursor-pointer opacity-70 hover:opacity-100"
         />
         <span className="font-mono text-[0.55rem] font-medium text-muted-foreground whitespace-nowrap flex-shrink-0 min-w-[1.5rem] text-right">{max}</span>
       </div>
@@ -130,11 +129,12 @@ export function DeadbandControls() {
             />
             <DeadbandInstrument
               label="Low"
-              min={0}
-              max={-2}
+              min={-2}
+              max={0}
               step={0.1}
               value={pid.deadbandThresholdLow}
               onChange={v => setPidParam('deadbandThresholdLow', v)}
+              reverseLabels
             />
             <DeadbandInstrument
               label="Kp ÷"
