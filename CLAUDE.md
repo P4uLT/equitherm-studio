@@ -42,10 +42,12 @@ equitherm-studio/
 │   └── web/                     # @equitherm-studio/web
 │       ├── src/
 │       │   ├── components/      # React UI components
+│       │   │   └── ui/          # shadcn/ui primitives
 │       │   ├── store/           # Zustand state management
 │       │   ├── config/          # Storage, YAML generator
 │       │   ├── contexts/        # ThemeContext
-│       │   ├── styles/          # CSS modules, themes
+│       │   ├── lib/             # Utilities (cn, toast)
+│       │   ├── styles/          # Tailwind base, themes
 │       │   └── types/           # Web-specific types
 │       └── package.json
 │
@@ -59,10 +61,11 @@ equitherm-studio/
 |-------|------------|
 | Package Manager | pnpm 9 (workspaces) |
 | Build | Vite 5.x |
-| UI | React 19 |
+| UI | React 19 + shadcn/ui (Radix primitives) |
 | State | Zustand |
-| Charts | Chart.js |
-| Styling | CSS Modules + CSS Custom Properties |
+| Charts | Recharts |
+| Styling | Tailwind CSS 3.x + CSS Custom Properties |
+| Icons | Lucide React |
 | Testing | Vitest |
 
 ## Package Details
@@ -129,9 +132,10 @@ t_flow = t_target + shift + hc × (t_target - t_outdoor)^(1/n)
 
 1. **Workspace imports**: Web package imports core via `@equitherm-studio/core`
 2. **Selector pattern**: Use Zustand selectors to minimize re-renders
-3. **CSS Modules**: All component styles use `.module.css`
-4. **Co-located tests**: Test files live next to source (`*.test.ts`)
-5. **Index re-exports**: Each component folder has `index.ts`
+3. **Tailwind CSS**: Use Tailwind utility classes; `cn()` for conditional merging
+4. **shadcn/ui**: UI primitives in `components/ui/`; use Radix-based components
+5. **Co-located tests**: Test files live next to source (`*.test.ts`)
+6. **Index re-exports**: Each component folder has `index.ts`
 
 ## Testing
 

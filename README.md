@@ -6,11 +6,12 @@ Companion tools for the [ESPHome](https://esphome.io) `equitherm` climate compon
 
 ## Features
 
-- Real-time Chart.js visualization of heating curves
+- Real-time Recharts visualization of heating curves
 - PID control simulation with deadband support
 - ESPHome YAML configuration generator
 - Dark/light theme (ESPHome style)
 - URL parameter sharing for configurations
+- shadcn/ui components with Tailwind CSS
 
 ## Packages
 
@@ -85,9 +86,10 @@ const correction = computePID(pidState, 22, 20); // setpoint, actual
 ## Tech Stack
 
 - **Build**: Vite 5.x, pnpm workspaces
-- **UI**: React 19
+- **UI**: React 19, shadcn/ui (Radix primitives)
 - **State**: Zustand
-- **Charts**: Chart.js 4.x
+- **Styling**: Tailwind CSS 3.x
+- **Charts**: Recharts
 - **Testing**: Vitest
 
 ## Related
