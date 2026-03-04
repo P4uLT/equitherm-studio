@@ -1,6 +1,7 @@
 // src/components/PIDPanel/GainControls.tsx
 import { useStore } from '../../store/useStore';
 import { InfoTooltip } from '../ControlsCard/InfoTooltip';
+import { SliderVariant } from '@/components/ui/slider-variants';
 
 const ROOM_TEMP_CONFIG = {
   offset:   { min: -5, max: 5, step: 0.1, label: 'Room Offset' },
@@ -21,8 +22,6 @@ interface GainInstrumentProps {
 
 // Instantaneous control (affects curve)
 function GainInstrument({ label, min, max, step, value, onChange, unit = '', tooltipTitle, tooltipContent }: GainInstrumentProps) {
-  const pct = ((value - min) / (max - min)) * 100;
-
   const formatAnchor = (val: number) => {
     if (val < 0) return `${val}${unit}`;
     if (unit === '°') return `${val}°`;
@@ -44,15 +43,14 @@ function GainInstrument({ label, min, max, step, value, onChange, unit = '', too
       </div>
       <div className="flex items-center gap-2">
         <span className="font-mono text-[0.55rem] font-medium text-muted-foreground whitespace-nowrap flex-shrink-0 min-w-[1.5rem]">{formatAnchor(min)}</span>
-        <input
-          type="range"
+        <SliderVariant
+          variant="primary"
           min={min}
           max={max}
           step={step}
-          value={value}
-          onChange={e => onChange(parseFloat((e.target as HTMLInputElement).value))}
-          style={{ '--pct': `${pct}%` } as React.CSSProperties}
-          className="flex-1 h-[5px] rounded outline-none appearance-none cursor-pointer range-slider-primary"
+          value={[value]}
+          onValueChange={(vals) => onChange(vals[0])}
+          className="flex-1 cursor-pointer"
         />
         <span className="font-mono text-[0.55rem] font-medium text-muted-foreground whitespace-nowrap flex-shrink-0 min-w-[1.5rem] text-right">{formatAnchor(max)}</span>
       </div>
@@ -72,8 +70,6 @@ interface TimeDomainInstrumentProps {
 
 // Time-domain instrument (YAML export only, no curve impact)
 function TimeDomainInstrument({ label, min, max, step, value, onChange, tooltipContent }: TimeDomainInstrumentProps) {
-  const pct = ((value - min) / (max - min)) * 100;
-
   const formatAnchor = (val: number) => {
     if (val < 0) return `${val}`;
     return `${val}`;
@@ -95,15 +91,14 @@ function TimeDomainInstrument({ label, min, max, step, value, onChange, tooltipC
       </div>
       <div className="flex items-center gap-2">
         <span className="font-mono text-[0.55rem] font-medium text-muted-foreground whitespace-nowrap flex-shrink-0 min-w-[1.5rem]">{formatAnchor(min)}</span>
-        <input
-          type="range"
+        <SliderVariant
+          variant="ghost"
           min={min}
           max={max}
           step={step}
-          value={value}
-          onChange={e => onChange(parseFloat((e.target as HTMLInputElement).value))}
-          style={{ '--pct': `${pct}%` } as React.CSSProperties}
-          className="flex-1 h-[5px] rounded outline-none appearance-none cursor-pointer range-slider-ghost opacity-70 hover:opacity-100"
+          value={[value]}
+          onValueChange={(vals) => onChange(vals[0])}
+          className="flex-1 cursor-pointer opacity-70 hover:opacity-100"
         />
         <span className="font-mono text-[0.55rem] font-medium text-muted-foreground whitespace-nowrap flex-shrink-0 min-w-[1.5rem] text-right">{formatAnchor(max)}</span>
       </div>
