@@ -24,7 +24,6 @@ import {
 } from '@/components/ui/dialog';
 import { Save, ChevronDown, Trash2, FolderOpen } from 'lucide-react';
 import { cn } from '@/lib/utils';
-import styles from './PresetsDropdown.module.css';
 
 export function PresetsDropdown() {
   const [isOpen, setIsOpen] = useState(false);
@@ -101,7 +100,11 @@ export function PresetsDropdown() {
           <Button
             variant="outline"
             size="sm"
-            className={cn(styles.trigger, isOpen && styles.triggerOpen)}
+            className={cn(
+              'h-7 gap-1.5 px-2 text-xs text-muted-foreground border-border',
+              'hover:text-foreground hover:border-primary hover:bg-secondary/80',
+              isOpen && 'border-primary text-primary'
+            )}
             data-state={isOpen ? 'open' : 'closed'}
           >
             <Save className="h-3 w-3" />
@@ -110,21 +113,21 @@ export function PresetsDropdown() {
           </Button>
         </DropdownMenuTrigger>
 
-        <DropdownMenuContent align="end" className={styles.dropdownContent}>
+        <DropdownMenuContent align="end" className="w-60 p-2">
           {/* Save section */}
-          <div className={styles.saveSection}>
+          <div className="flex gap-2 mb-2">
             <Input
               placeholder="New preset name..."
               value={saveName}
               onChange={e => setSaveName(e.target.value)}
               onKeyDown={handleKeyDown}
-              className={styles.saveInput}
+              className="h-8 text-sm"
             />
             <Button
               size="sm"
               onClick={handleSave}
               disabled={!saveName.trim()}
-              className={styles.saveButton}
+              className="h-8 px-3 shrink-0"
             >
               Save
             </Button>
@@ -134,25 +137,25 @@ export function PresetsDropdown() {
           {configs.length > 0 && (
             <>
               <DropdownMenuSeparator className="my-1.5" />
-              <DropdownMenuGroup className={styles.configList}>
+              <DropdownMenuGroup className="max-h-52 overflow-y-auto -mx-1 px-1">
                 {configs.map(c => (
                   <div
                     key={c.name}
                     className={cn(
-                      styles.configItem,
-                      confirmDelete === c.name && styles.configItemConfirming
+                      'group flex items-center gap-1 rounded-sm px-2 py-1.5 text-sm transition-colors',
+                      confirmDelete === c.name && 'bg-destructive/10'
                     )}
                   >
                     <DropdownMenuItem
                       className={cn(
-                        styles.configMenuItem,
-                        confirmDelete === c.name && styles.configMenuItemConfirming
+                        'flex-1 cursor-pointer gap-2 px-2 py-1 focus:bg-accent focus:text-accent-foreground',
+                        confirmDelete === c.name && 'text-destructive'
                       )}
                       onClick={() => handleLoad(c.name)}
                     >
                       <FolderOpen className="h-3 w-3 shrink-0 opacity-50" />
-                      <span className={styles.configName}>{c.name}</span>
-                      <span className={styles.configDate}>
+                      <span className="overflow-hidden text-ellipsis whitespace-nowrap flex-1">{c.name}</span>
+                      <span className="text-xs text-muted-foreground shrink-0">
                         {new Date(c.timestamp).toLocaleDateString()}
                       </span>
                     </DropdownMenuItem>
@@ -160,7 +163,7 @@ export function PresetsDropdown() {
                       <Button
                         variant="destructive"
                         size="sm"
-                        className={styles.confirmDeleteButton}
+                        className="h-6 w-6 p-0"
                         onClick={() => handleDelete(c.name)}
                         title="Confirm delete"
                       >
@@ -170,7 +173,7 @@ export function PresetsDropdown() {
                       <Button
                         variant="ghost"
                         size="sm"
-                        className={styles.deleteButton}
+                        className="h-6 w-6 p-0 opacity-0 transition-all hover:bg-destructive/10 hover:text-destructive focus:opacity-100 group-hover:opacity-100"
                         onClick={() => setConfirmDelete(c.name)}
                         title="Delete"
                       >
@@ -185,7 +188,7 @@ export function PresetsDropdown() {
 
           {/* Empty state */}
           {configs.length === 0 && (
-            <div className={styles.emptyState}>No saved presets</div>
+            <div className="py-3 text-center text-xs text-muted-foreground">No saved presets</div>
           )}
         </DropdownMenuContent>
       </DropdownMenu>
