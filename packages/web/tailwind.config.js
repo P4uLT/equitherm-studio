@@ -1,11 +1,18 @@
+import fluid, { extract, screens, fontSize } from 'fluid-tailwind'
+
 /** @type {import('tailwindcss').Config} */
 export default {
   darkMode: 'class',
-  content: [
-    './index.html',
-    './src/**/*.{js,ts,jsx,tsx}',
-  ],
+  content: {
+    files: [
+      './index.html',
+      './src/**/*.{js,ts,jsx,tsx}',
+    ],
+    extract,
+  },
   theme: {
+    screens, // Use rem-based screens from fluid-tailwind
+    fontSize, // Use rem-based fontSize from fluid-tailwind
     extend: {
       colors: {
         border: 'hsl(var(--border))',
@@ -58,14 +65,6 @@ export default {
       },
       fontSize: {
         '2xs': ['0.6875rem', { lineHeight: '1rem' }],
-        // Fluid typography scale using CSS custom properties
-        'fluid-xs': ['var(--font-size-fluid-xs)', { lineHeight: '1.25rem' }],
-        'fluid-sm': ['var(--font-size-fluid-sm)', { lineHeight: '1.375rem' }],
-        'fluid-base': ['var(--font-size-fluid-base)', { lineHeight: '1.5rem' }],
-        'fluid-lg': ['var(--font-size-fluid-lg)', { lineHeight: '1.75rem' }],
-        'fluid-xl': ['var(--font-size-fluid-xl)', { lineHeight: '1.875rem' }],
-        'fluid-2xl': ['var(--font-size-fluid-2xl)', { lineHeight: '2rem' }],
-        'fluid-3xl': ['var(--font-size-fluid-3xl)', { lineHeight: '2.25rem' }],
       },
       transitionDuration: {
         'medium': '300ms',
@@ -104,7 +103,7 @@ export default {
       },
       // Touch target sizing helpers (minimum 44x44 for accessibility)
       spacing: {
-        'touch': '2.75rem', // 44px - minimum touch target size
+        'touch': '2.75rem', // 44px
       },
       minWidth: {
         'touch': '2.75rem',
@@ -115,6 +114,7 @@ export default {
     },
   },
   plugins: [
+    fluid, // Add fluid-tailwind plugin
     require('@tailwindcss/container-queries'),
   ],
 }
