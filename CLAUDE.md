@@ -32,8 +32,7 @@ equitherm-studio/
 │   ├── core/                    # @equitherm-studio/core
 │   │   ├── src/
 │   │   │   ├── curve.ts         # computeFlowTemperature()
-│   │   │   ├── pid.ts           # computePID(), createPIDState()
-│   │   │   ├── constants.ts     # CURVE_LIMITS, DEFAULT_PID_PARAMS
+│   │   │   ├── pid.ts           # computePID(), isInDeadband()
 │   │   │   ├── types.ts         # Core type definitions
 │   │   │   ├── index.ts         # Public exports
 │   │   │   └── *.test.ts        # Unit tests
@@ -42,11 +41,17 @@ equitherm-studio/
 │   └── web/                     # @equitherm-studio/web
 │       ├── src/
 │       │   ├── components/      # React UI components
+│       │   │   ├── Chart/       # HeatingChart, useChartData, useComputedFlow
+│       │   │   ├── ControlsCard/# ControlsCard, SliderControl, InfoTooltip
+│       │   │   ├── PIDPanel/    # PIDPanel, GainControls, DeadbandControls
+│       │   │   ├── Header/      # Header, PresetsDropdown
+│       │   │   ├── ResultDisplay/
+│       │   │   ├── Modals/      # YAMLModal
 │       │   │   └── ui/          # shadcn/ui primitives
 │       │   ├── store/           # Zustand state management
-│       │   ├── config/          # Storage, YAML generator
+│       │   ├── config/          # storage.ts, yaml.ts, URL parsing
 │       │   ├── contexts/        # ThemeContext
-│       │   ├── lib/             # Utilities (cn, toast)
+│       │   ├── lib/             # Utilities (cn, toast, pid helpers)
 │       │   ├── styles/          # Tailwind base, themes
 │       │   └── types/           # Web-specific types
 │       └── package.json
@@ -79,11 +84,7 @@ Pure calculation library with zero DOM/framework dependencies. Can be used in an
 import {
   computeFlowTemperature,  // Main curve calculation
   computePID,              // PID output calculation
-  createPIDState,          // Create PID state object
   isInDeadband,            // Check if error in deadband
-  getRoomTempActual,       // Resolve room temp from mode
-  CURVE_LIMITS,            // Parameter constraints
-  DEFAULT_PID_PARAMS       // Default PID configuration
 } from '@equitherm-studio/core';
 ```
 
@@ -94,9 +95,6 @@ import type {
   PIDState,
   PIDResult,
   DeadbandConfig,
-  DefaultPIDParams,
-  CurveLimits,
-  ParamLimit
 } from '@equitherm-studio/core';
 ```
 
@@ -116,17 +114,89 @@ t_flow = t_target + shift + hc × (t_target - t_outdoor)^(1/n)
 ## Architecture
 
 ```
-┌─────────────────────────────────────────────────────┐
-│               Web Components (React)                │
-│         Subscribes to store via selectors           │
-├─────────────────────────────────────────────────────┤
-│                 Zustand Store                       │
-│           Typed state + generic setters             │
-├─────────────────────────────────────────────────────┤
-│           @equitherm-studio/core                    │
-│        Pure functions (no DOM dependencies)         │
-└─────────────────────────────────────────────────────┘
+┌─────────────────────────────────────────────────────────────┐
+│                    UI Components (React)                     │
+│  ┌──────────┐  ┌──────────┐  ┌──────────┐  ┌──────────────┐ │
+│  │ Header   │  │Controls  │  │  Chart   │  │  PID Panel   │ │
+│  │          │  │  Card    │  │          │  │              │ │
+│  └────┬─────┘  └────┬─────┘  └────┬─────┘  └──────┬───────┘ │
+│       │             │             │               │         │
+│       └─────────────┴──────┬──────┴───────────────┘         │
+│                            │                                 │
+│                   ┌────────▼────────┐                       │
+│                   │  Zustand Store  │                       │
+│                   │  - curve state  │                       │
+│                   │  - pid state    │                       │
+│                   │  - ui state     │                       │
+│                   │  - computed     │                       │
+│                   └────────┬────────┘                       │
+└────────────────────────────┼────────────────────────────────┘
+                             │
+┌────────────────────────────▼────────────────────────────────┐
+│                  @equitherm-studio/core                      │
+│  ┌──────────────────┐  ┌──────────────────┐                 │
+│  │computeFlowTemp() │  │   computePID()   │                 │
+│  │   Pure function  │  │   Pure function  │                 │
+│  └──────────────────┘  └──────────────────┘                 │
+└─────────────────────────────────────────────────────────────┘
 ```
+
+## State Management
+
+### Store Structure
+
+```typescript
+interface StoreState {
+  // Heating curve parameters
+  curve: {
+    tTarget: number;      // 21
+    hc: number;           // 0.9
+    n: number;            // 1.25
+    shift: number;        // 0
+    minFlow: number;      // 20
+    maxFlow: number;      // 70
+    tOutMin: number;      // -20
+    tOutMax: number;      // 20
+  };
+
+  // PID parameters (flat structure)
+  pid: {
+    enabled: boolean;
+    mode: 'offset' | 'absolute';
+    roomTemp: number;
+    kp: number;
+    ki: number;
+    kd: number;
+    deadbandEnabled: boolean;
+    deadbandThresholdHigh: number;
+    deadbandThresholdLow: number;
+    deadbandKpMultiplier: number;
+    deadbandKiMultiplier: number;
+    deadbandKdMultiplier: number;
+  };
+
+  // UI state
+  ui: {
+    tCurrent: number;     // Current outdoor temp slider
+  };
+
+  // Computed values
+  computed: {
+    flowTemp: number | null;
+    pidRawOutput: number | null;
+    pidScaledOutput: number | null;
+    status: 'heating' | 'standby' | 'cooling' | 'high-load';
+  };
+}
+```
+
+### Actions
+
+- `setCurveParam<K>(key, value)` - Typed curve parameter setter
+- `setPidParam<K>(key, value)` - Typed PID parameter setter
+- `setTCurrent(value)` - Set current outdoor temp
+- `setComputed(partial)` - Update computed values
+- `loadConfig(config)` - Load partial config
 
 ## Key Conventions
 
@@ -136,6 +206,7 @@ t_flow = t_target + shift + hc × (t_target - t_outdoor)^(1/n)
 4. **shadcn/ui**: UI primitives in `components/ui/`; use Radix-based components
 5. **Co-located tests**: Test files live next to source (`*.test.ts`)
 6. **Index re-exports**: Each component folder has `index.ts`
+7. **Custom hooks**: Complex computations in hooks (useComputedFlow, useChartData)
 
 ## Testing
 
@@ -146,20 +217,51 @@ pnpm test              # Run all tests
 pnpm --filter @equitherm-studio/core test:watch  # Watch mode
 ```
 
-## ESPHome Integration
+## Core Features
+
+### Heating Curve Calculator
+
+| Parameter | Range | Default | Description |
+|-----------|-------|---------|-------------|
+| `tTarget` | 16-26°C | 21°C | Room setpoint temperature |
+| `hc` | 0.5-3.0 | 0.9 | Heat curve coefficient (steepness) |
+| `n` | 1.0-2.0 | 1.25 | Curve exponent (non-linearity) |
+| `shift` | -15 to +15°C | 0°C | Constant temperature offset |
+| `minFlow` | 15-35°C | 20°C | Minimum flow temperature |
+| `maxFlow` | 50-90°C | 70°C | Maximum flow temperature |
+| `tOutMin` | -30 to 5°C | -20°C | Outdoor temp range minimum |
+| `tOutMax` | 0-30°C | 20°C | Outdoor temp range maximum |
+
+### PID Control System
+
+**Modes**:
+- **Offset Mode**: `roomTemp` is an offset from setpoint (-5 to +5°C)
+- **Absolute Mode**: `roomTemp` is actual room temperature (10-30°C)
+
+| Parameter | Range | Default | Affects Curve |
+|-----------|-------|---------|---------------|
+| `kp` | 0-5 | 1.0 | ✅ Instantaneous |
+| `ki` | 0-0.5 | 0.0 | ❌ YAML export only |
+| `kd` | 0-2 | 0.0 | ❌ YAML export only |
+
+**Deadband Configuration**:
+- `thresholdHigh`: 0-2°C (upper bound)
+- `thresholdLow`: -2-0°C (lower bound)
+- `kpMultiplier`: 0-1 (Kp reduction factor)
+
+### ESPHome YAML Generator
 
 `packages/web/src/config/yaml.ts` generates ESPHome climate component YAML:
 
 - Only non-zero values included
 - Smart formatting (trailing zeros stripped)
 - Optional diagnostic sensors
+- Optional runtime tuning numbers
 
-## URL Parameter Scheme
-
-Configs can be shared via URL query params:
+### URL Parameter Sharing
 
 ```
-?t=21&hc=0.9&n=1.25&s=0&min=20&max=70&tmin=-20&tmax=20&tcur=5&pid=1&kp=1&ki=0&kd=0&db=1&th=0.3&tl=-0.3
+?t=21&hc=0.9&n=1.25&s=0&min=20&max=70&tmin=-20&tmax=20&tcur=5&pid=1&kp=1&ki=0&kd=0&db=1&th=0.3&tl=-0.3&kpm=0.1
 ```
 
 | Param | Maps To | Description |
@@ -169,5 +271,37 @@ Configs can be shared via URL query params:
 | `n` | n | Exponent |
 | `s` | shift | Temperature offset |
 | `min`/`max` | minFlow/maxFlow | Flow temp limits |
+| `tmin`/`tmax` | tOutMin/tOutMax | Outdoor temp range |
+| `tcur` | tCurrent | Current outdoor temp |
 | `pid` | enabled | PID enabled (1/0) |
 | `kp`/`ki`/`kd` | kp/ki/kd | PID gains |
+| `db` | deadbandEnabled | Deadband (1/0) |
+| `th`/`tl` | thresholdHigh/Low | Deadband thresholds |
+| `kpm` | kpMultiplier | Deadband Kp factor |
+
+### Presets System
+
+**Storage**: LocalStorage (`equitherm-config-*` keys, max 10 configs)
+
+**Features**:
+- Save/Load/Delete named configurations
+- Overwrite confirmation dialog
+- Timestamp display for each preset
+
+### Theme System
+
+**Themes**:
+- **Dark**: ESPHome-inspired dark theme (default)
+- **Light**: ESPHome-inspired light theme
+
+**Implementation**:
+- CSS Custom Properties for theming
+- Tailwind CSS with semantic color tokens
+- Persisted in LocalStorage
+
+## Technical Debt & Limitations
+
+1. **Ki/Kd don't affect curve** - Time-domain parameters only exported to YAML
+2. **No input validation** - Invalid combinations allowed (e.g., minFlow > maxFlow)
+3. **No undo/redo** - Can't revert accidental changes
+4. **Limited mobile layout** - Chart can be cramped on small screens
