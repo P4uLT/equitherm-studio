@@ -130,9 +130,10 @@
 }
 
 .copyButtonCopied {
-  background: hsl(142 76% 36%);
+  background: hsl(var(--success));
+  color: hsl(var(--success-foreground));
 }
 
 .copyButtonCopied:hover {
-  background: hsl(142 76% 36%);
+  background: hsl(var(--success));
 }
