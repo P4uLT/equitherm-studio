@@ -33,10 +33,15 @@ export function PIDPanel() {
       </div>
 
       {/* Mode Toggle Row */}
-      <div className={`px-4 py-2 border-b border-border ${!pid.enabled ? 'pointer-events-none' : ''}`}>
+      <div className={cn('px-4 py-2 border-b border-border', !pid.enabled && 'pointer-events-none')}>
         <div className="flex gap-1 bg-secondary p-0.5 rounded-md border border-border w-full">
           <button
-            className={`flex-1 py-1 px-2 bg-transparent border-none rounded text-xs cursor-pointer transition-all duration-150 whitespace-nowrap ${pid.mode === 'offset' ? 'bg-card text-primary' : 'text-muted-foreground hover:text-secondary-foreground'}`}
+            className={cn(
+              'flex-1 py-1 px-2 bg-transparent border-none rounded text-xs cursor-pointer transition-all duration-150 whitespace-nowrap',
+              pid.mode === 'offset'
+                ? 'bg-card text-primary'
+                : 'text-muted-foreground hover:text-secondary-foreground'
+            )}
             onClick={() => {
               setPidParam('mode', 'offset');
               setPidParam('roomTemp', 0);
@@ -45,7 +50,12 @@ export function PIDPanel() {
             Offset
           </button>
           <button
-            className={`flex-1 py-1 px-2 bg-transparent border-none rounded text-xs cursor-pointer transition-all duration-150 whitespace-nowrap ${pid.mode === 'absolute' ? 'bg-card text-primary' : 'text-muted-foreground hover:text-secondary-foreground'}`}
+            className={cn(
+              'flex-1 py-1 px-2 bg-transparent border-none rounded text-xs cursor-pointer transition-all duration-150 whitespace-nowrap',
+              pid.mode === 'absolute'
+                ? 'bg-card text-primary'
+                : 'text-muted-foreground hover:text-secondary-foreground'
+            )}
             onClick={() => {
               setPidParam('mode', 'absolute');
               setPidParam('roomTemp', 21);
