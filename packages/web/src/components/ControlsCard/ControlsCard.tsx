@@ -2,7 +2,6 @@
 import { useStore } from '../../store/useStore';
 import { SliderControl } from './SliderControl';
 import { InfoTooltip } from './InfoTooltip';
-import { Card } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 
 // Tooltip icons as SVG components
@@ -55,8 +54,7 @@ export function ControlsCard() {
   const setCurveParam = useStore(s => s.setCurveParam);
 
   return (
-    <aside>
-      <Card className="p-4">
+    <div className="p-4">
       <Tabs defaultValue="basic" className="w-full">
         <TabsList className="w-full">
           <TabsTrigger value="basic" className="flex-1">Basic</TabsTrigger>
@@ -208,7 +206,6 @@ export function ControlsCard() {
       <div className="bg-secondary rounded-md p-2 text-center mt-4">
         <code className="font-mono text-xs text-secondary-foreground">t_flow = t_target + shift + hc × ΔT<sup>1/n</sup></code>
       </div>
-      </Card>
-    </aside>
+    </div>
   );
 }
