@@ -87,15 +87,15 @@ export function PresetsPanel() {
               value={saveName}
               onChange={e => setSaveName(e.target.value)}
               onKeyDown={handleKeyDown}
-              className="h-8 text-sm"
+              className="h-10 text-sm"
             />
             <Button
               size="sm"
               onClick={handleSave}
               disabled={!saveName.trim()}
-              className="h-8 px-3 shrink-0 gap-1.5"
+              className="h-10 px-4 shrink-0 gap-1.5"
             >
-              <Save className="h-3 w-3" />
+              <Save className="h-4 w-4" />
               Save
             </Button>
           </div>
@@ -112,18 +112,18 @@ export function PresetsPanel() {
                 <div
                   key={c.name}
                   className={cn(
-                    'group flex items-center gap-1 rounded-md px-2 py-1.5 text-sm transition-colors hover:bg-secondary',
+                    'group flex items-center gap-1 rounded-md px-2 py-2 text-sm transition-colors hover:bg-secondary min-h-touch',
                     confirmDelete === c.name && 'bg-destructive/10'
                   )}
                 >
                   <button
                     className={cn(
-                      'flex-1 flex items-center gap-2 text-left cursor-pointer min-w-0',
+                      'flex-1 flex items-center gap-2 text-left cursor-pointer min-w-0 min-h-touch',
                       confirmDelete === c.name && 'text-destructive'
                     )}
                     onClick={() => handleLoad(c.name)}
                   >
-                    <FolderOpen className="h-3 w-3 shrink-0 opacity-50" />
+                    <FolderOpen className="h-4 w-4 shrink-0 opacity-50" />
                     <span className="overflow-hidden text-ellipsis whitespace-nowrap flex-1 text-sm">
                       {c.name}
                     </span>
@@ -135,7 +135,7 @@ export function PresetsPanel() {
                     <Button
                       variant="destructive"
                       size="sm"
-                      className="h-6 w-6 p-0 shrink-0"
+                      className="h-9 w-9 p-0 shrink-0"
                       onClick={() => handleDelete(c.name)}
                       title="Confirm delete"
                     >
@@ -145,11 +145,11 @@ export function PresetsPanel() {
                     <Button
                       variant="ghost"
                       size="sm"
-                      className="h-6 w-6 p-0 shrink-0 opacity-0 transition-all hover:bg-destructive/10 hover:text-destructive focus:opacity-100 group-hover:opacity-100"
+                      className="h-9 w-9 p-0 shrink-0 opacity-0 transition-all hover:bg-destructive/10 hover:text-destructive focus:opacity-100 group-hover:opacity-100"
                       onClick={() => setConfirmDelete(c.name)}
                       title="Delete"
                     >
-                      <Trash2 className="h-3 w-3" />
+                      <Trash2 className="h-4 w-4" />
                     </Button>
                   )}
                 </div>
