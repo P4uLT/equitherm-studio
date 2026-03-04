@@ -75,7 +75,7 @@ export function Header() {
         </div>
 
         {/* Result display — grows to fill available space */}
-        <div className="flex-1 min-w-[200px]">
+        <div className="flex-1 min-w-0 @sm:min-w-[200px]">
           <ResultDisplay />
         </div>
 
@@ -84,20 +84,20 @@ export function Header() {
           <Button
             variant="outline"
             size="sm"
-            className="gap-1.5"
+            className="gap-1.5 min-h-touch"
             onClick={() => setYamlOpen(true)}
           >
             <CopyIcon className="w-3.5 h-3.5" />
-            YAML
+            <span className="hidden @sm:inline">YAML</span>
           </Button>
           <Button
             variant="outline"
             size="sm"
-            className="gap-1.5"
+            className="gap-1.5 min-h-touch"
             onClick={handleShare}
           >
             <LinkIcon className="w-3.5 h-3.5" />
-            Share
+            <span className="hidden @sm:inline">Share</span>
           </Button>
           <ToggleGroup
             type="single"
