@@ -20,7 +20,7 @@ export function ResultDisplay() {
           <span className="font-figtree text-xl font-bold text-foreground">{tCurrent}°C</span>
         </div>
         <div className="flex items-center gap-3">
-          <span className="text-[0.7rem] min-w-[2.5rem] text-center text-primary">-30°</span>
+          <span className="text-2xs min-w-[2.5rem] text-center text-primary">-30°</span>
           <SliderVariant
             variant="temp"
             min={-30}
@@ -30,7 +30,7 @@ export function ResultDisplay() {
             onValueChange={(vals) => setTCurrent(vals[0])}
             className="flex-1 cursor-grab"
           />
-          <span className="text-[0.7rem] min-w-[2.5rem] text-center text-hot">25°</span>
+          <span className="text-2xs min-w-[2.5rem] text-center text-hot">25°</span>
         </div>
       </div>
 
@@ -69,7 +69,7 @@ export function ResultDisplay() {
         </span>
         <div className="flex items-center gap-2 px-2.5 py-1 bg-secondary rounded border border-border">
           <span className="w-2 h-2 rounded-full bg-success" />
-          <span className="text-[0.7rem] text-muted-foreground uppercase">{computed.status}</span>
+          <span className="text-2xs text-muted-foreground uppercase">{computed.status}</span>
         </div>
       </div>
     </Card>
