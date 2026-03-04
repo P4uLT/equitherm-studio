@@ -93,7 +93,7 @@ export function YAMLModal({ isOpen, onClose }: YAMLModalProps) {
 
   return (
     <Dialog open={isOpen} onOpenChange={(open) => !open && onClose()}>
-      <DialogContent className="sm:max-w-[700px] p-0 gap-0 overflow-hidden">
+      <DialogContent className="max-w-[95vw] sm:max-w-[700px] p-0 gap-0 overflow-hidden max-h-[90dvh] flex flex-col">
         {/* Header with Tab Style */}
         <DialogHeader className="flex flex-row items-center justify-between p-3 bg-card border-b border-border">
           <div className="flex items-center gap-2 px-3 py-1.5 bg-secondary rounded-t-md border border-border border-b-0 -mb-3">
@@ -103,7 +103,7 @@ export function YAMLModal({ isOpen, onClose }: YAMLModalProps) {
         </DialogHeader>
 
         {/* Options Bar */}
-        <div className="flex gap-4 px-4 py-2 bg-secondary border-b border-border">
+        <div className="flex flex-wrap gap-4 px-4 py-2 bg-secondary border-b border-border">
           <label className="flex items-center gap-2 text-xs text-secondary-foreground cursor-pointer">
             <Switch
               checked={includeSensors}
