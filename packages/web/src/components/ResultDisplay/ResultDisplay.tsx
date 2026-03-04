@@ -17,7 +17,7 @@ export function ResultDisplay() {
       <div className="flex flex-col gap-2 flex-1 min-w-0">
         <div className="flex justify-between px-1">
           <span className="text-xs font-medium text-muted-foreground uppercase tracking-widest">Outdoor</span>
-          <span className="font-figtree text-xl font-bold text-foreground">{tCurrent}°C</span>
+          <span className="font-figtree ~text-lg/xl font-bold text-foreground">{tCurrent}°C</span>
         </div>
         <div className="flex items-center gap-3">
           <span className="text-2xs min-w-[2.5rem] text-center text-primary">-30°</span>
@@ -28,7 +28,7 @@ export function ResultDisplay() {
             step={1}
             value={[tCurrent]}
             onValueChange={(vals) => setTCurrent(vals[0])}
-            className="flex-1 cursor-grab"
+            className="flex-1 cursor-grab min-h-touch"
           />
           <span className="text-2xs min-w-[2.5rem] text-center text-hot">25°</span>
         </div>
@@ -36,17 +36,17 @@ export function ResultDisplay() {
 
       {/* Arrow transform */}
       <div className="w-6 shrink-0">
-        <svg className="w-5 h-5 md:w-7 md:h-7 text-muted-foreground opacity-50" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+        <svg className="~w-5/7 ~h-5/7 text-muted-foreground opacity-50" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
           <path d="M5 12h14M12 5l7 7-7 7"/>
         </svg>
       </div>
 
       {/* PID correction display */}
       {pidEnabled && (
-        <div className="flex flex-col items-center gap-1 min-w-[60px] shrink-0">
+        <div className="flex flex-col items-center gap-1 min-w-0 @sm:min-w-[60px] shrink-0">
           <span className="text-[0.65rem] font-medium text-muted-foreground uppercase tracking-widest">PID</span>
           <span className={cn(
-            'font-figtree text-xl font-semibold',
+            'font-figtree ~text-lg/xl font-semibold',
             pidOutput >= 0 ? 'text-success' : 'text-destructive'
           )}>
             {pidSign}{pidOutput.toFixed(1)}°
@@ -57,16 +57,16 @@ export function ResultDisplay() {
       {/* Arrow transform (when PID enabled) */}
       {pidEnabled && (
         <div className="w-6 shrink-0">
-          <svg className="w-5 h-5 md:w-7 md:h-7 text-muted-foreground opacity-50" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+          <svg className="~w-5/7 ~h-5/7 text-muted-foreground opacity-50" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
             <path d="M5 12h14M12 5l7 7-7 7"/>
           </svg>
         </div>
       )}
 
       {/* Flow output */}
-      <div className="flex flex-col items-center gap-1.5 min-w-[80px] shrink-0">
+      <div className="flex flex-col items-center gap-1.5 min-w-0 @sm:min-w-[80px] shrink-0">
         <span className="text-xs font-medium text-muted-foreground uppercase tracking-widest">Flow</span>
-        <span className="relative font-figtree text-4xl font-bold text-primary pr-[0.7em]">
+        <span className="relative font-figtree ~text-3xl/5xl font-bold text-primary pr-[0.7em]">
           {computed.flowTemp?.toFixed(1) ?? '--'}
           <span className="absolute right-0 top-[0.1em] text-[0.4em] opacity-70">°C</span>
         </span>
