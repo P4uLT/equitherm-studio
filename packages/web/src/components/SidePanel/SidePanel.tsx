@@ -7,8 +7,8 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 
 export function SidePanel() {
   return (
-    <Card className="p-0 overflow-hidden flex flex-col max-h-[70vh] md:max-h-none">
-      <Tabs defaultValue="curve" className="flex flex-col flex-1 min-h-0">
+    <Card className="p-0 overflow-hidden flex flex-col max-h-[70dvh] md:max-h-none">
+      <Tabs defaultValue="curve" className="@container flex flex-col flex-1 min-h-0">
         <TabsList className="w-full rounded-none border-b border-border bg-secondary/50 shrink-0">
           <TabsTrigger value="curve" className="flex-1 text-xs">Curve</TabsTrigger>
           <TabsTrigger value="pid" className="flex-1 text-xs">PID</TabsTrigger>
