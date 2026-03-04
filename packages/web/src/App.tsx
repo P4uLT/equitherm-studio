@@ -19,9 +19,9 @@ function App() {
   return (
     <TooltipProvider>
       <div className="atmosphere" />
-      <div className="min-h-screen max-w-[1600px] mx-auto px-3.5 py-2.5 sm:px-6 sm:py-4">
+      <div className="min-h-dvh max-w-screen-2xl mx-auto px-3.5 py-2.5 sm:px-6 sm:py-4">
         <Header />
-        <main className="grid grid-cols-1 gap-4 md:grid-cols-[minmax(280px,320px)_1fr]">
+        <main className="@container grid grid-cols-1 gap-4 md:grid-cols-[minmax(280px,320px)_1fr]">
           <SidePanel />
           <div className="min-h-[300px] md:min-h-0">
             <HeatingChart />
