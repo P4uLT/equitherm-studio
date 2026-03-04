@@ -59,8 +59,8 @@ export function HeatingChart() {
     : (currentPoint?.equitherm ?? equithermFlow);
 
   return (
-    <section className="bg-card rounded-xl p-4 border border-border min-h-[400px]">
-      <ChartContainer config={chartConfig} className="h-[350px] w-full">
+    <section className="@container bg-card rounded-xl p-4 border border-border h-full min-h-[300px] @lg:min-h-[400px] @xl:min-h-[500px] flex flex-col">
+      <ChartContainer config={chartConfig} className="flex-1 w-full min-h-0">
         <LineChart data={chartData} accessibilityLayer>
           <CartesianGrid
             stroke="hsl(var(--border))"
