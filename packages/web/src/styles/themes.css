@@ -43,6 +43,10 @@
 
     --radius: 0.5rem;
 
+    /* --- Chart theme variables --- */
+    --chart-1: 199 98% 41%;    /* primary cyan - main chart line */
+    --chart-2: 199 98% 60%;    /* lighter cyan - dashed equitherm line */
+
     /* --- App-specific theme variables --- */
     --accent-secondary: #5dade2;
     --font-body: 'Figtree', sans-serif;
@@ -101,6 +105,10 @@
     --border: 220 13% 30%;            /* #3a404a */
     --input: 220 13% 30%;
     --ring: 198 90% 53%;
+
+    /* --- Chart theme variables --- */
+    --chart-1: 198 90% 53%;    /* dark mode primary */
+    --chart-2: 198 90% 70%;    /* dark mode lighter */
 
     /* --- App-specific theme variables --- */
     --accent-secondary: #5dade2;
