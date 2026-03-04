@@ -66,21 +66,19 @@ export function Header() {
 
   return (
     <>
-      <header className="flex flex-wrap items-center gap-3 px-4 py-3 bg-card border border-border rounded-xl mb-4">
-        {/* Title */}
-        <div className="flex-none">
-          <h1 className="text-lg font-bold font-figtree text-foreground whitespace-nowrap">
-            Equitherm Calculator
-          </h1>
-        </div>
+      <header className="flex items-center gap-3 px-4 py-3 bg-card border border-border rounded-xl mb-4">
+        {/* Title - hidden on smaller screens */}
+        <h1 className="hidden lg:block text-lg font-bold font-figtree text-foreground whitespace-nowrap flex-none">
+          Equitherm Calculator
+        </h1>
 
         {/* Result display — grows to fill available space */}
-        <div className="flex-1 min-w-0 @sm:min-w-[200px]">
+        <div className="flex-1 min-w-0">
           <ResultDisplay />
         </div>
 
         {/* Action buttons + theme toggle */}
-        <div className="flex items-center gap-2 flex-none">
+        <div className="flex items-center gap-2 flex-none shrink-0">
           <Button
             variant="outline"
             size="sm"
@@ -88,7 +86,7 @@ export function Header() {
             onClick={() => setYamlOpen(true)}
           >
             <CopyIcon className="w-3.5 h-3.5" />
-            <span className="hidden @sm:inline">YAML</span>
+            <span className="hidden md:inline">YAML</span>
           </Button>
           <Button
             variant="outline"
@@ -97,7 +95,7 @@ export function Header() {
             onClick={handleShare}
           >
             <LinkIcon className="w-3.5 h-3.5" />
-            <span className="hidden @sm:inline">Share</span>
+            <span className="hidden md:inline">Share</span>
           </Button>
           <ToggleGroup
             type="single"
