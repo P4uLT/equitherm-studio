@@ -41,18 +41,20 @@ export function MobileBottomSheet({ activeTab, onTabChange }: MobileBottomSheetP
     }
   };
 
-  const renderContent = () => {
-    switch (activeTab) {
-      case 'curve':
-        return <ControlsCard />;
-      case 'pid':
-        return <PIDPanel />;
-      case 'presets':
-        return <PresetsPanel />;
-      default:
-        return null;
-    }
-  };
+  // Render all panels to preserve state, hide non-active with CSS
+  const renderContent = () => (
+    <>
+      <div className={cn(activeTab !== 'curve' && 'hidden')}>
+        <ControlsCard />
+      </div>
+      <div className={cn(activeTab !== 'pid' && 'hidden')}>
+        <PIDPanel />
+      </div>
+      <div className={cn(activeTab !== 'presets' && 'hidden')}>
+        <PresetsPanel />
+      </div>
+    </>
+  );
 
   return (
     <div className="md:hidden fixed bottom-0 left-0 right-0 z-50">
