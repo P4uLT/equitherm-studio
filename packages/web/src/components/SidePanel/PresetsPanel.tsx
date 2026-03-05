@@ -1,8 +1,8 @@
 // src/components/SidePanel/PresetsPanel.tsx
 import { useState, useEffect } from 'react';
-import { useStore } from '../../store/useStore';
-import { loadAllConfigs, loadConfig, saveConfig, deleteConfig } from '../../config/storage';
-import type { SavedConfig } from '../../types';
+import { useStore } from '@/store/useStore';
+import { loadAllConfigs, loadConfig, saveConfig, deleteConfig } from '@/config/storage';
+import type { SavedConfig } from '@/types';
 import { showToast } from '@/lib/toast';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';

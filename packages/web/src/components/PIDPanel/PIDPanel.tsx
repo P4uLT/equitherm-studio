@@ -1,5 +1,5 @@
 // src/components/PIDPanel/PIDPanel.tsx
-import { useStore } from '../../store/useStore';
+import { useStore } from '@/store/useStore';
 import { GainControls } from './GainControls';
 import { DeadbandControls } from './DeadbandControls';
 import { InfoTooltip } from '../ControlsCard/InfoTooltip';

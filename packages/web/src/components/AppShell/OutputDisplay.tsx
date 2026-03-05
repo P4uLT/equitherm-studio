@@ -1,5 +1,5 @@
 // src/components/AppShell/OutputDisplay.tsx
-import { useStore } from '../../store/useStore';
+import { useStore } from '@/store/useStore';
 import { DigitalDisplay } from './DigitalDisplay';
 import { StatusIndicator } from './StatusIndicator';
 import { SliderVariant } from '@/components/ui/slider-variants';

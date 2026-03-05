@@ -6,7 +6,7 @@ import {
   ChartContainer,
   ChartTooltip,
 } from '@/components/ui/chart';
-import { useStore } from '../../store/useStore';
+import { useStore } from '@/store/useStore';
 import { useComputedFlow } from './useComputedFlow';
 import { useChartData } from './useChartData';
 

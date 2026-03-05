@@ -1,6 +1,6 @@
 // src/components/PIDPanel/DeadbandControls.tsx
 import { useState, type ReactNode } from 'react';
-import { useStore } from '../../store/useStore';
+import { useStore } from '@/store/useStore';
 import { InfoTooltip } from '../ControlsCard/InfoTooltip';
 import { Switch } from '@/components/ui/switch';
 import { SliderVariant } from '@/components/ui/slider-variants';

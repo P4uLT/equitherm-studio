@@ -2,8 +2,8 @@
 import { useState, useEffect, useMemo } from 'react';
 import hljs from 'highlight.js/lib/core';
 import yaml from 'highlight.js/lib/languages/yaml';
-import { useStore } from '../../store/useStore';
-import { generateYAML } from '../../config/yaml';
+import { useStore } from '@/store/useStore';
+import { generateYAML } from '@/config/yaml';
 import { showToast } from '@/lib/toast';
 import {
   Dialog,

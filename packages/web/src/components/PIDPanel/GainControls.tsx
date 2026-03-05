@@ -1,5 +1,5 @@
 // src/components/PIDPanel/GainControls.tsx
-import { useStore } from '../../store/useStore';
+import { useStore } from '@/store/useStore';
 import { InfoTooltip } from '../ControlsCard/InfoTooltip';
 import { SliderVariant } from '@/components/ui/slider-variants';
 

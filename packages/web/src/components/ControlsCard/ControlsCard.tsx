@@ -1,6 +1,6 @@
 // src/components/ControlsCard/ControlsCard.tsx
 import { useState } from 'react';
-import { useStore } from '../../store/useStore';
+import { useStore } from '@/store/useStore';
 import { SliderControl } from './SliderControl';
 import { InfoTooltip } from './InfoTooltip';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';

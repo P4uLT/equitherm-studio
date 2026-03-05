@@ -1,9 +1,9 @@
 // src/components/AppShell/Header.tsx
-import { useTheme } from '../../contexts/ThemeContext';
+import { useTheme } from '@/contexts/ThemeContext';
 import { OutputDisplay, OutdoorSlider } from './OutputDisplay';
 import { ExportSheet } from './ExportSheet';
 import { showToast } from '@/lib/toast';
-import { useStore } from '../../store/useStore';
+import { useStore } from '@/store/useStore';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 
