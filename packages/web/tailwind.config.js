@@ -2,7 +2,7 @@ import fluid, { extract, screens, fontSize } from 'fluid-tailwind'
 
 /** @type {import('tailwindcss').Config} */
 export default {
-  darkMode: ['class', 'class'],
+  darkMode: 'class',
   content: {
     files: [
       './index.html',
