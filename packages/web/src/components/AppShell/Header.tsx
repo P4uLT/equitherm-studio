@@ -1,6 +1,6 @@
 // src/components/AppShell/Header.tsx
 import { useTheme } from '../../contexts/ThemeContext';
-import { OutputDisplay } from './OutputDisplay';
+import { OutputDisplay, OutdoorSlider } from './OutputDisplay';
 import { ExportSheet } from './ExportSheet';
 import { showToast } from '@/lib/toast';
 import { useStore } from '../../store/useStore';
@@ -104,7 +104,7 @@ export function Header() {
 
       {/* Row 2: Outdoor Slider (mobile only, full width) */}
       <div className="sm:hidden">
-        {/* TODO: OutdoorSlider component (Task 2) */}
+        <OutdoorSlider />
       </div>
     </header>
   );
