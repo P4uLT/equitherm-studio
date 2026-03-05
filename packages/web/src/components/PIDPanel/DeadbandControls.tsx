@@ -3,10 +3,13 @@ import { useState, type ReactNode } from 'react';
 import { useStore } from '@/store/useStore';
 import { InfoTooltip } from '../ControlsCard/InfoTooltip';
 import { Switch } from '@/components/ui/switch';
+import { Badge } from '@/components/ui/badge';
 import { SliderVariant } from '@/components/ControlsCard/slider-variants';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import { ChevronDown } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { isInDeadband } from '@equitherm-studio/core';
+import { getRoomTempActual } from '@/lib/pid';
 
 interface DeadbandInstrumentProps {
   label: string;
@@ -61,8 +64,22 @@ function DeadbandInstrument({ label, min, max, step, value, onChange, unit = '°
 
 export function DeadbandControls() {
   const pid = useStore(s => s.pid);
+  const curve = useStore(s => s.curve);
   const setPidParam = useStore(s => s.setPidParam);
   const [isOpen, setIsOpen] = useState(true);
+
+  // Calculate deadband status
+  const roomTempActual = getRoomTempActual(pid, curve.tTarget);
+  const error = curve.tTarget - roomTempActual;
+  const deadbandConfig = pid.deadbandEnabled
+    ? {
+        enabled: true,
+        thresholdHigh: pid.deadbandThresholdHigh,
+        thresholdLow: pid.deadbandThresholdLow,
+        kpMultiplier: pid.deadbandKpMultiplier,
+      }
+    : undefined;
+  const inDeadband = isInDeadband(error, deadbandConfig);
 
   return (
     <Collapsible open={isOpen} onOpenChange={setIsOpen} className="border-b border-border">
@@ -73,6 +90,20 @@ export function DeadbandControls() {
         />
         <CollapsibleTrigger className="flex items-center gap-2 flex-1 cursor-pointer">
           <span className="text-sm font-semibold text-foreground">Deadband</span>
+          {/* Deadband status indicator */}
+          {pid.deadbandEnabled && (
+            <Badge
+              variant="secondary"
+              className={cn(
+                "text-[0.6rem] font-mono px-1.5 py-0 h-4 transition-colors",
+                inDeadband
+                  ? "bg-primary/20 text-primary hover:bg-primary/30"
+                  : "bg-secondary text-muted-foreground"
+              )}
+            >
+              {inDeadband ? 'ACTIVE' : 'inactive'}
+            </Badge>
+          )}
           <InfoTooltip title="Deadband" icon={<span>?</span>} position="sideLeft">
             <p>A <strong>tolerance zone</strong> where PID output is reduced to prevent constant small adjustments.</p>
             <p>When room temp error is within [Low, High], gains are multiplied by their reduction factors.</p>

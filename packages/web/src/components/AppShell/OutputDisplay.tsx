@@ -47,9 +47,9 @@ export function OutputDisplay() {
   const pidOutput = computed.pidRawOutput ?? 0;
 
   return (
-    <div className="flex items-stretch gap-4">
+    <div className="flex items-stretch justify-center gap-4">
       {/* Outdoor Slider - desktop only (inline) */}
-      <div className="hidden sm:flex flex-col gap-2 flex-1 min-w-0 justify-center">
+      <div className="hidden sm:flex flex-col gap-2 w-full max-w-[280px] justify-center">
         <div className="flex items-center justify-between px-1">
           <span className="text-[0.65rem] md:text-xs font-ui font-medium text-muted-foreground uppercase tracking-wider">
             Outdoor

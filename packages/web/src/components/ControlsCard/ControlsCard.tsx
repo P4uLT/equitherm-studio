@@ -55,73 +55,73 @@ export function ControlsCard() {
   return (
     <div className="space-y-4">
       <SliderControl
-            id="t_target"
-            label="Room Setpoint"
-            min={16}
-            max={26}
-            step={0.5}
-            value={curve.tTarget}
-            unit="°C"
-            onChange={v => setCurveParam('tTarget', v)}
-            tooltip={
-              <InfoTooltip title="Room Setpoint" icon={<SetpointIcon />}>
-                <p>The <strong>target indoor temperature</strong> you want to maintain.</p>
-                <p>Typical range: 18-22°C for comfort.</p>
-              </InfoTooltip>
-            }
-          />
+        id="t_target"
+        label="Room Setpoint"
+        min={16}
+        max={26}
+        step={0.5}
+        value={curve.tTarget}
+        unit="°C"
+        onChange={v => setCurveParam('tTarget', v)}
+        tooltip={
+          <InfoTooltip title="Room Setpoint" icon={<SetpointIcon />}>
+            <p>The <strong>target indoor temperature</strong> you want to maintain.</p>
+            <p>Typical range: 18-22°C for comfort.</p>
+          </InfoTooltip>
+        }
+      />
 
-          <SliderControl
-            id="hc"
-            label="Heat Curve (hc)"
-            min={0.5}
-            max={3}
-            step={0.05}
-            value={curve.hc}
-            unit=""
-            onChange={v => setCurveParam('hc', v)}
-            tooltip={
-              <InfoTooltip title="Heat Curve Coefficient" icon={<HeatCurveIcon />}>
-                <p>Controls how <strong>aggressively</strong> flow temperature increases as it gets colder outside.</p>
-                <p>Higher = steeper curve. Start with 0.9 and adjust based on system response.</p>
-              </InfoTooltip>
-            }
-          />
+      <SliderControl
+        id="hc"
+        label="Heat Curve (hc)"
+        min={0.5}
+        max={3}
+        step={0.05}
+        value={curve.hc}
+        unit=""
+        onChange={v => setCurveParam('hc', v)}
+        tooltip={
+          <InfoTooltip title="Heat Curve Coefficient" icon={<HeatCurveIcon />}>
+            <p>Controls how <strong>aggressively</strong> flow temperature increases as it gets colder outside.</p>
+            <p>Higher = steeper curve. Start with 0.9 and adjust based on system response.</p>
+          </InfoTooltip>
+        }
+      />
 
-          <SliderControl
-            id="n"
-            label="Exponent (n)"
-            min={1.0}
-            max={2.0}
-            step={0.01}
-            value={curve.n}
-            unit=""
-            onChange={v => setCurveParam('n', v)}
-            tooltip={
-              <InfoTooltip title="Curve Exponent" icon={<span>n</span>}>
-                <p>Controls the <strong>non-linearity</strong> of the heating curve.</p>
-                <p><code>ΔT<sup>1/n</sup></code></p>
-                <p>Lower values (1.0-1.2) = more aggressive at extremes. Higher values (1.5-2.0) = gentler curve. Most systems work well at 1.25.</p>
-              </InfoTooltip>
-            }
-          />
+      <SliderControl
+        id="n"
+        label="Exponent (n)"
+        min={1.0}
+        max={2.0}
+        step={0.01}
+        value={curve.n}
+        unit=""
+        onChange={v => setCurveParam('n', v)}
+        tooltip={
+          <InfoTooltip title="Curve Exponent" icon={<span>n</span>}>
+            <p>Controls the <strong>non-linearity</strong> of the heating curve.</p>
+            <p><code>ΔT<sup>1/n</sup></code></p>
+            <p>Lower values (1.0-1.2) = more aggressive at extremes. Higher values (1.5-2.0) = gentler curve. Most systems work well at 1.25.</p>
+          </InfoTooltip>
+        }
+      />
 
-          <SliderControl
-            id="shift"
-            label="Shift"
-            min={-15}
-            max={15}
-            step={0.5}
-            value={curve.shift}
-            unit="°C"
-            onChange={v => setCurveParam('shift', v)}
-            tooltip={
-              <InfoTooltip title="Temperature Shift" icon={<ShiftIcon />}>
-                <p>A <strong>constant offset</strong> added to the calculated flow temperature.</p>
-                <p>Use to fine-tune the curve up (+) or down (-) without changing its shape.</p>
-              </InfoTooltip>
-            }
-          />
+      <SliderControl
+        id="shift"
+        label="Shift"
+        min={-15}
+        max={15}
+        step={0.5}
+        value={curve.shift}
+        unit="°C"
+        onChange={v => setCurveParam('shift', v)}
+        tooltip={
+          <InfoTooltip title="Temperature Shift" icon={<ShiftIcon />}>
+            <p>A <strong>constant offset</strong> added to the calculated flow temperature.</p>
+            <p>Use to fine-tune the curve up (+) or down (-) without changing its shape.</p>
+          </InfoTooltip>
+        }
+      />
       {/* Limits section divider */}
       <div className="flex items-center gap-2 pt-2">
         <span className="text-[0.6rem] font-ui font-medium text-muted-foreground uppercase tracking-wider shrink-0">
