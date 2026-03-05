@@ -1,6 +1,6 @@
 // src/components/AppShell/StatusIndicator.tsx
 import { cn } from '@/lib/utils';
-import { StatusBadge } from '@/components/ui/status-badge';
+import { StatusBadge } from './status-badge';
 
 type StatusType = 'heating' | 'standby' | 'cooling' | 'high-load';
 
