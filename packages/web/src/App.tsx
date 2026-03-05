@@ -24,7 +24,7 @@ function App() {
       <div className="atmosphere" />
       <div className="min-h-dvh max-w-screen-2xl mx-auto px-3.5 py-2.5 sm:px-6 sm:py-4 pb-20 md:pb-4">
         <Header />
-        <main className="@container grid grid-cols-1 gap-4 md:grid-cols-[minmax(280px,320px)_1fr]">
+        <main className="@container grid grid-cols-1 gap-4 md:grid-cols-[minmax(340px,400px)_1fr]">
           {/* Desktop Sidebar */}
           <div className="hidden md:block">
             <Sidebar activeTab={activeTab} onTabChange={setActiveTab} />

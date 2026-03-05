@@ -1,12 +1,7 @@
 // src/components/ControlsCard/ControlsCard.tsx
-import { useState } from 'react';
 import { useStore } from '@/store/useStore';
 import { SliderControl } from './SliderControl';
 import { InfoTooltip } from './InfoTooltip';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
-import { ChevronDown } from 'lucide-react';
-import { cn } from '@/lib/utils';
 
 // Tooltip icons as SVG components
 const SetpointIcon = () => (
@@ -56,17 +51,10 @@ const OutMaxIcon = () => (
 export function ControlsCard() {
   const curve = useStore(s => s.curve);
   const setCurveParam = useStore(s => s.setCurveParam);
-  const [advancedOpen, setAdvancedOpen] = useState(false);
 
   return (
-    <div className="p-4">
-      <Tabs defaultValue="basic" className="w-full">
-        <TabsList className="w-full">
-          <TabsTrigger value="basic" className="flex-1">Basic</TabsTrigger>
-        </TabsList>
-
-        <TabsContent value="basic" className="mt-4 space-y-4">
-          <SliderControl
+    <div className="space-y-4">
+      <SliderControl
             id="t_target"
             label="Room Setpoint"
             min={16}
@@ -134,90 +122,97 @@ export function ControlsCard() {
               </InfoTooltip>
             }
           />
-        </TabsContent>
-      </Tabs>
+      {/* Limits section divider */}
+      <div className="flex items-center gap-2 pt-2">
+        <span className="text-[0.6rem] font-ui font-medium text-muted-foreground uppercase tracking-wider shrink-0">
+          Limits
+        </span>
+        <div className="flex-1 h-px bg-border" />
+      </div>
 
-      {/* Advanced Settings Collapsible */}
-      <Collapsible open={advancedOpen} onOpenChange={setAdvancedOpen} className="mt-4">
-        <CollapsibleTrigger className="flex items-center justify-between w-full p-3 rounded-md bg-secondary/50 hover:bg-secondary/70 transition-colors">
-          <span className="font-medium text-sm">Advanced Settings</span>
-          <ChevronDown className={cn(
-            "h-4 w-4 transition-transform duration-200",
-            advancedOpen && "rotate-180"
-          )} />
-        </CollapsibleTrigger>
-        <CollapsibleContent className="mt-2 space-y-4">
-          <SliderControl
-            id="min_flow"
-            label="Min Flow"
-            min={15}
-            max={35}
-            step={1}
-            value={curve.minFlow}
-            unit="°C"
-            onChange={v => setCurveParam('minFlow', v)}
-            tooltip={
-              <InfoTooltip title="Minimum Flow Temperature" icon={<MinFlowIcon />}>
-                <p>The <strong>lowest allowed</strong> flow temperature, even when it's warm outside.</p>
-                <p>Protects the boiler and ensures proper circulation.</p>
-              </InfoTooltip>
-            }
-          />
+      {/* Flow limits - side by side */}
+      <div className="grid grid-cols-2 gap-x-8">
+        <SliderControl
+          id="min_flow"
+          label="Min Flow"
+          min={15}
+          max={35}
+          step={1}
+          value={curve.minFlow}
+          unit="°C"
+          onChange={v => setCurveParam('minFlow', v)}
+          tooltip={
+            <InfoTooltip title="Minimum Flow Temperature" icon={<MinFlowIcon />}>
+              <p>The <strong>lowest allowed</strong> flow temperature, even when it's warm outside.</p>
+              <p>Protects the boiler and ensures proper circulation.</p>
+            </InfoTooltip>
+          }
+        />
 
-          <SliderControl
-            id="max_flow"
-            label="Max Flow"
-            min={50}
-            max={90}
-            step={1}
-            value={curve.maxFlow}
-            unit="°C"
-            onChange={v => setCurveParam('maxFlow', v)}
-            tooltip={
-              <InfoTooltip title="Maximum Flow Temperature" icon={<MaxFlowIcon />}>
-                <p>The <strong>highest allowed</strong> flow temperature at extreme cold.</p>
-                <p>Limits protect floor pipes and prevent overheating.</p>
-              </InfoTooltip>
-            }
-          />
+        <SliderControl
+          id="max_flow"
+          label="Max Flow"
+          min={50}
+          max={90}
+          step={1}
+          value={curve.maxFlow}
+          unit="°C"
+          onChange={v => setCurveParam('maxFlow', v)}
+          tooltip={
+            <InfoTooltip title="Maximum Flow Temperature" icon={<MaxFlowIcon />}>
+              <p>The <strong>highest allowed</strong> flow temperature at extreme cold.</p>
+              <p>Limits protect floor pipes and prevent overheating.</p>
+            </InfoTooltip>
+          }
+        />
+      </div>
 
-          <SliderControl
-            id="t_out_min"
-            label="Outdoor Min"
-            min={-30}
-            max={5}
-            step={1}
-            value={curve.tOutMin}
-            unit="°C"
-            onChange={v => setCurveParam('tOutMin', v)}
-            tooltip={
-              <InfoTooltip title="Outdoor Temperature Minimum" icon={<OutMinIcon />}>
-                <p>The <strong>coldest outdoor temperature</strong> in your climate for curve design.</p>
-                <p>Typical values: -20°C (cold), -10°C (moderate).</p>
-              </InfoTooltip>
-            }
-          />
+      {/* Outdoor range section divider */}
+      <div className="flex items-center gap-2 pt-2">
+        <span className="text-[0.6rem] font-ui font-medium text-muted-foreground uppercase tracking-wider shrink-0">
+          Outdoor Range
+        </span>
+        <div className="flex-1 h-px bg-border" />
+      </div>
 
-          <SliderControl
-            id="t_out_max"
-            label="Outdoor Max"
-            min={0}
-            max={30}
-            step={1}
-            value={curve.tOutMax}
-            unit="°C"
-            onChange={v => setCurveParam('tOutMax', v)}
-            tooltip={
-              <InfoTooltip title="Outdoor Temperature Maximum" icon={<OutMaxIcon />}>
-                <p>The <strong>warmest outdoor temperature</strong> where heating is still needed.</p>
-                <p>Usually 15-20°C. Below this, heating activates.</p>
-              </InfoTooltip>
-            }
-          />
-        </CollapsibleContent>
-      </Collapsible>
+      {/* Outdoor range - side by side */}
+      <div className="grid grid-cols-2 gap-x-8">
+        <SliderControl
+          id="t_out_min"
+          label="Outdoor Min"
+          min={-30}
+          max={5}
+          step={1}
+          value={curve.tOutMin}
+          unit="°C"
+          onChange={v => setCurveParam('tOutMin', v)}
+          tooltip={
+            <InfoTooltip title="Outdoor Temperature Minimum" icon={<OutMinIcon />}>
+              <p>The <strong>coldest outdoor temperature</strong> in your climate for curve design.</p>
+              <p>Typical values: -20°C (cold), -10°C (moderate).</p>
+            </InfoTooltip>
+          }
+        />
 
-      <div className="bg-secondary rounded-md p-2 text-center mt-4">
+        <SliderControl
+          id="t_out_max"
+          label="Outdoor Max"
+          min={0}
+          max={30}
+          step={1}
+          value={curve.tOutMax}
+          unit="°C"
+          onChange={v => setCurveParam('tOutMax', v)}
+          tooltip={
+            <InfoTooltip title="Outdoor Temperature Maximum" icon={<OutMaxIcon />}>
+              <p>The <strong>warmest outdoor temperature</strong> where heating is still needed.</p>
+              <p>Usually 15-20°C. Below this, heating activates.</p>
+            </InfoTooltip>
+          }
+        />
+      </div>
+
+      <div className="bg-secondary rounded-md p-2 text-center">
         <code className="font-mono text-xs text-secondary-foreground">t_flow = t_target + shift + hc × ΔT<sup>1/n</sup></code>
       </div>
     </div>
