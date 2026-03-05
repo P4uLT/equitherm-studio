@@ -16,7 +16,7 @@ const statusConfig: Record<StatusVariant, { label: string; className: string }> 
   },
   cooling: {
     label: 'Cooling',
-    className: 'bg-cyan-500/20 text-cyan-400 border-cyan-500/30 shadow-[var(--glow-cooling)]',
+    className: 'bg-cold/20 text-cold border-cold/30 shadow-[var(--glow-cooling)]',
   },
   standby: {
     label: 'Standby',
