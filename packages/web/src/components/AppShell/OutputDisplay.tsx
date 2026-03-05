@@ -2,7 +2,7 @@
 import { useStore } from '@/store/useStore';
 import { DigitalDisplay } from './DigitalDisplay';
 import { StatusIndicator } from './StatusIndicator';
-import { SliderVariant } from '@/components/ui/slider-variants';
+import { SliderVariant } from '@/components/ControlsCard/slider-variants';
 import { cn } from '@/lib/utils';
 
 export function OutdoorSlider({ className }: { className?: string }) {
@@ -48,7 +48,7 @@ export function OutputDisplay() {
   return (
     <div className="flex items-stretch gap-4">
       {/* Outdoor Slider - desktop only (inline) */}
-      <div className="hidden sm:flex flex-col gap-2 flex-1 min-w-0">
+      <div className="hidden sm:flex flex-col gap-2 flex-1 min-w-0 justify-center">
         <div className="flex items-center justify-between px-1">
           <span className="text-[0.65rem] md:text-xs font-ui font-medium text-muted-foreground uppercase tracking-wider">
             Outdoor

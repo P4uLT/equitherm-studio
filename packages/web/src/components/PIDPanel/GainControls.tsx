@@ -1,7 +1,7 @@
 // src/components/PIDPanel/GainControls.tsx
 import { useStore } from '@/store/useStore';
 import { InfoTooltip } from '../ControlsCard/InfoTooltip';
-import { SliderVariant } from '@/components/ui/slider-variants';
+import { SliderVariant } from '@/components/ControlsCard/slider-variants';
 
 const ROOM_TEMP_CONFIG = {
   offset:   { min: -5, max: 5, step: 0.1, label: 'Room Offset' },
