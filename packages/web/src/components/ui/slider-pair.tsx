@@ -22,12 +22,15 @@ export function SliderPair({
   onChange,
   className,
 }: SliderPairProps) {
+  // Derive decimal precision from step value
+  const decimalPlaces = (step.toString().split('.')[1] || '').length;
+
   return (
     <div className={cn('space-y-1.5', className)}>
       <div className="flex items-center justify-between">
         <span className="text-xs font-medium text-muted-foreground">{label}</span>
         <span className="font-mono text-sm font-semibold text-foreground">
-          {value.toFixed(step < 0.1 ? 3 : 2)}
+          {value.toFixed(decimalPlaces)}
         </span>
       </div>
       <Slider

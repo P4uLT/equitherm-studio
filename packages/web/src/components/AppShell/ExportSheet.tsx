@@ -78,7 +78,7 @@ export function ExportSheet() {
                   label="Ki (Integral)"
                   min={0}
                   max={0.5}
-                  step={0.01}
+                  step={0.0001}
                   value={pid.ki}
                   onChange={(v) => setPidParam('ki', v)}
                 />
@@ -111,7 +111,7 @@ export function ExportSheet() {
                   label="Ki Multiplier"
                   min={0}
                   max={1}
-                  step={0.05}
+                  step={0.0001}
                   value={pid.deadbandKiMultiplier}
                   onChange={(v) => setPidParam('deadbandKiMultiplier', v)}
                 />
