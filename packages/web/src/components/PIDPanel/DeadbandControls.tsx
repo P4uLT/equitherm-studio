@@ -1,9 +1,12 @@
 // src/components/PIDPanel/DeadbandControls.tsx
-import type { ReactNode } from 'react';
+import { useState, type ReactNode } from 'react';
 import { useStore } from '../../store/useStore';
 import { InfoTooltip } from '../ControlsCard/InfoTooltip';
 import { Switch } from '@/components/ui/switch';
 import { SliderVariant } from '@/components/ui/slider-variants';
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
+import { ChevronDown } from 'lucide-react';
+import { cn } from '@/lib/utils';
 
 interface DeadbandInstrumentProps {
   label: string;
@@ -62,24 +65,29 @@ function DeadbandInstrument({ label, min, max, step, value, onChange, unit = '°
 export function DeadbandControls() {
   const pid = useStore(s => s.pid);
   const setPidParam = useStore(s => s.setPidParam);
+  const [isOpen, setIsOpen] = useState(true);
 
   return (
-    <details className="border-b border-border" open>
-      <summary className="flex items-center gap-2 px-4 py-3 cursor-pointer list-none [&::-webkit-details-marker]:hidden">
-        <div onClick={e => e.stopPropagation()}>
-          <Switch
-            checked={pid.deadbandEnabled}
-            onCheckedChange={(checked) => setPidParam('deadbandEnabled', checked)}
-          />
-        </div>
-        <span className="text-sm font-semibold text-foreground">Deadband</span>
-        <InfoTooltip title="Deadband" icon={<span>?</span>} position="sideLeft">
-          <p>A <strong>tolerance zone</strong> where PID output is reduced to prevent constant small adjustments.</p>
-          <p>When room temp error is within [Low, High], gains are multiplied by their reduction factors.</p>
-        </InfoTooltip>
-      </summary>
+    <Collapsible open={isOpen} onOpenChange={setIsOpen} className="border-b border-border">
+      <div className="flex items-center gap-2 px-4 py-3">
+        <Switch
+          checked={pid.deadbandEnabled}
+          onCheckedChange={(checked) => setPidParam('deadbandEnabled', checked)}
+        />
+        <CollapsibleTrigger className="flex items-center gap-2 flex-1 cursor-pointer">
+          <span className="text-sm font-semibold text-foreground">Deadband</span>
+          <InfoTooltip title="Deadband" icon={<span>?</span>} position="sideLeft">
+            <p>A <strong>tolerance zone</strong> where PID output is reduced to prevent constant small adjustments.</p>
+            <p>When room temp error is within [Low, High], gains are multiplied by their reduction factors.</p>
+          </InfoTooltip>
+          <ChevronDown className={cn(
+            "h-4 w-4 ml-auto transition-transform duration-200",
+            isOpen && "rotate-180"
+          )} />
+        </CollapsibleTrigger>
+      </div>
 
-      <div className="px-4 py-3 border-t border-border">
+      <CollapsibleContent className="px-4 py-3 border-t border-border">
         {/* Instantaneous - affects curve */}
         <div className="mb-3">
           <span className="block text-[0.55rem] font-semibold text-muted-foreground uppercase tracking-widest mb-2 opacity-80">Thresholds & Kp</span>
@@ -136,7 +144,7 @@ export function DeadbandControls() {
             />
           </div>
         </div>
-      </div>
-    </details>
+      </CollapsibleContent>
+    </Collapsible>
   );
 }
