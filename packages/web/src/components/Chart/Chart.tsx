@@ -59,8 +59,9 @@ export function HeatingChart() {
     : (currentPoint?.equitherm ?? equithermFlow);
 
   return (
-    <section className="@container bg-card rounded-xl p-4 border border-border h-full min-h-[300px] @lg:min-h-[400px] @xl:min-h-[500px] flex flex-col">
-      <ChartContainer config={chartConfig} className="flex-1 w-full min-h-0">
+    <section className="@container bg-card rounded-xl p-4 border border-border h-full min-h-[300px] @lg:min-h-[400px] @xl:min-h-[500px] flex flex-col shadow-[var(--shadow-card)]">
+      <div className="chart-grid rounded-lg flex-1 min-h-0 overflow-hidden">
+        <ChartContainer config={chartConfig} className="h-full w-full">
         <LineChart data={chartData} accessibilityLayer>
           <CartesianGrid
             stroke="hsl(var(--border))"
@@ -165,14 +166,41 @@ export function HeatingChart() {
             <ReferenceDot
               x={tCurrent}
               y={currentFlowY}
-              r={6}
+              r={8}
               fill="var(--color-combined)"
               stroke="hsl(var(--background))"
-              strokeWidth={2}
+              strokeWidth={3}
+              className="chart-marker-glow"
+              shape={(props: any) => {
+                const { cx, cy } = props;
+                return (
+                  <g>
+                    {/* Outer glow ring */}
+                    <circle
+                      cx={cx}
+                      cy={cy}
+                      r={14}
+                      fill="var(--color-combined)"
+                      opacity={0.2}
+                      className="animate-pulse"
+                    />
+                    {/* Main dot */}
+                    <circle
+                      cx={cx}
+                      cy={cy}
+                      r={8}
+                      fill="var(--color-combined)"
+                      stroke="hsl(var(--background))"
+                      strokeWidth={3}
+                    />
+                  </g>
+                );
+              }}
             />
           )}
         </LineChart>
       </ChartContainer>
+      </div>
     </section>
   );
 }
