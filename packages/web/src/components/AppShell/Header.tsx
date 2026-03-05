@@ -1,6 +1,7 @@
 // src/components/AppShell/Header.tsx
 import { useTheme } from '../../contexts/ThemeContext';
 import { OutputDisplay } from './OutputDisplay';
+import { ExportSheet } from './ExportSheet';
 import { showToast } from '@/lib/toast';
 import { useStore } from '../../store/useStore';
 import { Button } from '@/components/ui/button';
@@ -73,6 +74,8 @@ export function Header() {
           <LinkIcon className="w-3.5 h-3.5" />
           <span className="hidden sm:inline text-xs">Share</span>
         </Button>
+
+        <ExportSheet />
 
         {/* Theme Toggle */}
         <button
