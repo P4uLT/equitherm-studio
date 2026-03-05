@@ -61,12 +61,12 @@ export function Header() {
       <header className="flex items-center gap-3 px-3 py-2 sm:px-4 sm:py-3 bg-card border border-border rounded-xl mb-3 sm:mb-4">
         {/* Logo */}
         <div className="hidden lg:flex items-center gap-2 shrink-0">
-          <div className="flex items-center justify-center w-8 h-8 rounded-lg bg-accent/10 border border-accent/20">
-            <FlameIcon className="w-4 h-4 text-accent" />
+          <div className="flex items-center justify-center w-9 h-9 rounded-lg bg-accent/10 border border-accent/30 shadow-[var(--glow-heating)] transition-shadow duration-[var(--duration-normal)]">
+            <FlameIcon className="w-5 h-5 text-accent" />
           </div>
           <div className="flex flex-col">
-            <span className="font-ui font-bold text-foreground text-sm leading-none">Equitherm</span>
-            <span className="font-ui text-[0.6rem] text-muted-foreground uppercase tracking-wider">Studio</span>
+            <span className="font-ui font-bold text-foreground text-sm leading-none tracking-tight">Equitherm</span>
+            <span className="font-ui text-[0.6rem] text-muted-foreground uppercase tracking-widest">Studio</span>
           </div>
         </div>
 
@@ -80,7 +80,7 @@ export function Header() {
           <Button
             variant="outline"
             size="sm"
-            className="gap-1.5 min-h-touch h-8"
+            className="gap-1.5 min-h-touch h-8 hover:shadow-[var(--glow-focus)] transition-shadow duration-[var(--duration-fast)]"
             onClick={() => setYamlOpen(true)}
           >
             <CopyIcon className="w-3.5 h-3.5" />
@@ -89,7 +89,7 @@ export function Header() {
           <Button
             variant="outline"
             size="sm"
-            className="gap-1.5 min-h-touch h-8"
+            className="gap-1.5 min-h-touch h-8 hover:shadow-[var(--glow-focus)] transition-shadow duration-[var(--duration-fast)]"
             onClick={handleShare}
           >
             <LinkIcon className="w-3.5 h-3.5" />
