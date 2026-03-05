@@ -6,7 +6,6 @@ import { ScrollArea } from '@/components/ui/scroll-area';
 import { ControlsCard } from '../ControlsCard';
 import { PIDPanel } from '../PIDPanel';
 import { PresetsPanel } from '../SidePanel/PresetsPanel';
-import { ExportPanel } from './ExportPanel';
 import { cn } from '@/lib/utils';
 
 export function Sidebar() {
@@ -66,28 +65,6 @@ export function Sidebar() {
             </span>
           </TabsTrigger>
           <TabsTrigger
-            value="export"
-            className={cn(
-              "relative flex-1 min-h-touch",
-              "rounded-none text-xs font-ui font-medium tracking-wide uppercase",
-              "transition-all duration-[var(--duration-normal)]",
-              "data-[state=active]:bg-transparent data-[state=active]:text-primary",
-              "data-[state=inactive]:bg-transparent data-[state=inactive]:text-muted-foreground data-[state=inactive]:hover:text-foreground",
-              "after:absolute after:bottom-0 after:left-4 after:right-4 after:h-0.5",
-              "after:bg-transparent after:transition-all after:duration-[var(--duration-normal)]",
-              "data-[state=active]:after:bg-accent data-[state=active]:after:shadow-[var(--glow-heating)]"
-            )}
-          >
-            <span className="flex items-center gap-1.5">
-              <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
-                <polyline points="7,10 12,15 17,10"/>
-                <line x1="12" y1="15" x2="12" y2="3"/>
-              </svg>
-              <span className="hidden sm:inline">Export</span>
-            </span>
-          </TabsTrigger>
-          <TabsTrigger
             value="presets"
             className={cn(
               "relative flex-1 min-h-touch",
@@ -120,12 +97,6 @@ export function Sidebar() {
           <TabsContent value="pid" className="m-0 focus-visible:outline-none">
             <div className="p-4">
               <PIDPanel />
-            </div>
-          </TabsContent>
-
-          <TabsContent value="export" className="m-0 focus-visible:outline-none">
-            <div className="p-4">
-              <ExportPanel />
             </div>
           </TabsContent>
 
