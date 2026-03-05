@@ -67,11 +67,13 @@ export function MobileBottomSheet({ activeTab, onTabChange }: MobileBottomSheetP
   return (
     <div className="md:hidden fixed bottom-0 left-0 right-0 z-50">
       {/* Tab Bar */}
-      <div className="flex items-center justify-around bg-card/95 backdrop-blur-sm border-t border-border px-2 py-1 safe-area-inset-bottom">
+      <div className="flex items-center justify-around bg-card/95 backdrop-blur-sm border-t border-border px-2 py-1 pb-[env(safe-area-inset-bottom)]">
         {tabs.map((tab) => (
           <button
             key={tab.value}
             onClick={() => handleTabClick(tab.value)}
+            aria-label={tab.label}
+            aria-pressed={activeTab === tab.value && isOpen}
             className={cn(
               "flex flex-col items-center justify-center min-w-touch min-h-touch rounded-lg transition-all duration-[var(--duration-fast)]",
               activeTab === tab.value && isOpen
