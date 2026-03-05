@@ -1,2 +1,2 @@
-// src/components/ResultDisplay/index.js
+// src/components/ResultDisplay/index.ts
 export { ResultDisplay } from './ResultDisplay';

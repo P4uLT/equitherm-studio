@@ -9,7 +9,6 @@ export function ResultDisplay() {
   const computed = useStore(s => s.computed);
   const pidEnabled = useStore(s => s.pid.enabled);
   const pidOutput = computed.pidRawOutput ?? 0;
-  const pidSign = pidOutput >= 0 ? '+' : '';
 
   return (
     <div className="flex items-center gap-3 md:gap-4 flex-1 min-w-0">
@@ -49,7 +48,7 @@ export function ResultDisplay() {
             'font-figtree text-lg lg:text-xl font-semibold',
             pidOutput >= 0 ? 'text-success' : 'text-destructive'
           )}>
-            {pidSign}{pidOutput.toFixed(1)}°
+            {pidOutput >= 0 ? '+' : ''}{Math.abs(pidOutput).toFixed(1)}°
           </span>
         </div>
       )}
@@ -66,10 +65,19 @@ export function ResultDisplay() {
       {/* Flow output */}
       <div className="flex flex-col items-center gap-1 min-w-[80px] lg:min-w-[100px] shrink-0">
         <span className="text-[0.65rem] md:text-xs font-medium text-muted-foreground uppercase tracking-widest">Flow</span>
-        <span className="relative font-figtree text-2xl md:text-4xl lg:text-5xl font-bold text-primary pr-[0.7em]">
-          {computed.flowTemp?.toFixed(1) ?? '--'}
-          <span className="absolute right-0 top-[0.1em] text-[0.4em] opacity-70">°C</span>
-        </span>
+        <div className="relative inline-flex items-baseline font-figtree text-2xl md:text-4xl lg:text-5xl font-bold text-primary">
+          <span>{computed.flowTemp?.toFixed(1) ?? '--'}</span>
+          {/* Mobile: superscript PID delta - color IS the sign */}
+          {pidEnabled && pidOutput !== 0 && (
+            <sup className={cn(
+              "md:hidden ml-0.5 text-[0.4em] font-bold tracking-tight",
+              pidOutput >= 0 ? "text-success" : "text-destructive"
+            )}>
+              {Math.abs(pidOutput).toFixed(1)}
+            </sup>
+          )}
+          <span className="text-[0.4em] opacity-60 ml-0.5">°C</span>
+        </div>
         <div className="hidden md:flex items-center gap-2 px-2.5 py-1 bg-secondary rounded border border-border">
           <span className="w-2 h-2 rounded-full bg-success" />
           <span className="text-2xs text-muted-foreground uppercase">{computed.status}</span>

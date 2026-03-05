@@ -1,0 +1,141 @@
+// src/components/AppShell/Sidebar.tsx
+import { useState } from 'react';
+import { Card } from '@/components/ui/card';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { ScrollArea } from '@/components/ui/scroll-area';
+import { ControlsCard } from '../ControlsCard';
+import { PIDPanel } from '../PIDPanel';
+import { PresetsPanel } from '../SidePanel/PresetsPanel';
+import { ExportPanel } from './ExportPanel';
+import { cn } from '@/lib/utils';
+
+export function Sidebar() {
+  const [activeTab, setActiveTab] = useState('curve');
+
+  return (
+    <Card className={cn(
+      "flex flex-col overflow-hidden",
+      "h-full md:max-h-none md:w-[280px] lg:w-[320px]",
+      "border-border shadow-[var(--shadow-card)]"
+    )}>
+      {/* Tab Bar */}
+      <Tabs value={activeTab} onValueChange={setActiveTab} className="flex flex-col flex-1 min-h-0">
+        <TabsList className={cn(
+          "w-full rounded-none border-b border-border bg-secondary/50 shrink-0",
+          "flex-row gap-0"
+        )}>
+          <TabsTrigger
+            value="curve"
+            className={cn(
+              "relative flex-1 min-h-touch",
+              "rounded-none text-xs font-ui font-medium tracking-wide uppercase",
+              "transition-all duration-[var(--duration-normal)]",
+              "data-[state=active]:bg-transparent data-[state=active]:text-primary",
+              "data-[state=inactive]:bg-transparent data-[state=inactive]:text-muted-foreground data-[state=inactive]:hover:text-foreground",
+              "after:absolute after:bottom-0 after:left-4 after:right-4 after:h-0.5",
+              "after:bg-transparent after:transition-all after:duration-[var(--duration-normal)]",
+              "data-[state=active]:after:bg-accent data-[state=active]:after:shadow-[var(--glow-heating)]"
+            )}
+          >
+            <span className="flex items-center gap-1.5">
+              <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <path d="M3 12h4l3-9 6 18 3-9h4"/>
+              </svg>
+              <span className="hidden sm:inline">Curve</span>
+            </span>
+          </TabsTrigger>
+          <TabsTrigger
+            value="pid"
+            className={cn(
+              "relative flex-1 min-h-touch",
+              "rounded-none text-xs font-ui font-medium tracking-wide uppercase",
+              "transition-all duration-[var(--duration-normal)]",
+              "data-[state=active]:bg-transparent data-[state=active]:text-primary",
+              "data-[state=inactive]:bg-transparent data-[state=inactive]:text-muted-foreground data-[state=inactive]:hover:text-foreground",
+              "after:absolute after:bottom-0 after:left-4 after:right-4 after:h-0.5",
+              "after:bg-transparent after:transition-all after:duration-[var(--duration-normal)]",
+              "data-[state=active]:after:bg-accent data-[state=active]:after:shadow-[var(--glow-heating)]"
+            )}
+          >
+            <span className="flex items-center gap-1.5">
+              <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <circle cx="12" cy="12" r="3"/>
+                <path d="M12 2v4m0 12v4M2 12h4m12 0h4"/>
+              </svg>
+              <span className="hidden sm:inline">PID</span>
+            </span>
+          </TabsTrigger>
+          <TabsTrigger
+            value="export"
+            className={cn(
+              "relative flex-1 min-h-touch",
+              "rounded-none text-xs font-ui font-medium tracking-wide uppercase",
+              "transition-all duration-[var(--duration-normal)]",
+              "data-[state=active]:bg-transparent data-[state=active]:text-primary",
+              "data-[state=inactive]:bg-transparent data-[state=inactive]:text-muted-foreground data-[state=inactive]:hover:text-foreground",
+              "after:absolute after:bottom-0 after:left-4 after:right-4 after:h-0.5",
+              "after:bg-transparent after:transition-all after:duration-[var(--duration-normal)]",
+              "data-[state=active]:after:bg-accent data-[state=active]:after:shadow-[var(--glow-heating)]"
+            )}
+          >
+            <span className="flex items-center gap-1.5">
+              <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                <polyline points="7,10 12,15 17,10"/>
+                <line x1="12" y1="15" x2="12" y2="3"/>
+              </svg>
+              <span className="hidden sm:inline">Export</span>
+            </span>
+          </TabsTrigger>
+          <TabsTrigger
+            value="presets"
+            className={cn(
+              "relative flex-1 min-h-touch",
+              "rounded-none text-xs font-ui font-medium tracking-wide uppercase",
+              "transition-all duration-[var(--duration-normal)]",
+              "data-[state=active]:bg-transparent data-[state=active]:text-primary",
+              "data-[state=inactive]:bg-transparent data-[state=inactive]:text-muted-foreground data-[state=inactive]:hover:text-foreground",
+              "after:absolute after:bottom-0 after:left-4 after:right-4 after:h-0.5",
+              "after:bg-transparent after:transition-all after:duration-[var(--duration-normal)]",
+              "data-[state=active]:after:bg-accent data-[state=active]:after:shadow-[var(--glow-heating)]"
+            )}
+          >
+            <span className="flex items-center gap-1.5">
+              <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/>
+              </svg>
+              <span className="hidden sm:inline">Presets</span>
+            </span>
+          </TabsTrigger>
+        </TabsList>
+
+        {/* Tab Content */}
+        <ScrollArea className="flex-1 min-h-0">
+          <TabsContent value="curve" className="m-0 focus-visible:outline-none">
+            <div className="p-4">
+              <ControlsCard />
+            </div>
+          </TabsContent>
+
+          <TabsContent value="pid" className="m-0 focus-visible:outline-none">
+            <div className="p-4">
+              <PIDPanel />
+            </div>
+          </TabsContent>
+
+          <TabsContent value="export" className="m-0 focus-visible:outline-none">
+            <div className="p-4">
+              <ExportPanel />
+            </div>
+          </TabsContent>
+
+          <TabsContent value="presets" className="m-0 focus-visible:outline-none">
+            <div className="p-4">
+              <PresetsPanel />
+            </div>
+          </TabsContent>
+        </ScrollArea>
+      </Tabs>
+    </Card>
+  );
+}

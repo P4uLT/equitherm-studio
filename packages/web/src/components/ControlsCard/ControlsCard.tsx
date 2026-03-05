@@ -1,8 +1,12 @@
 // src/components/ControlsCard/ControlsCard.tsx
+import { useState } from 'react';
 import { useStore } from '../../store/useStore';
 import { SliderControl } from './SliderControl';
 import { InfoTooltip } from './InfoTooltip';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
+import { ChevronDown } from 'lucide-react';
+import { cn } from '@/lib/utils';
 
 // Tooltip icons as SVG components
 const SetpointIcon = () => (
@@ -52,16 +56,16 @@ const OutMaxIcon = () => (
 export function ControlsCard() {
   const curve = useStore(s => s.curve);
   const setCurveParam = useStore(s => s.setCurveParam);
+  const [advancedOpen, setAdvancedOpen] = useState(false);
 
   return (
     <div className="p-4">
       <Tabs defaultValue="basic" className="w-full">
         <TabsList className="w-full">
           <TabsTrigger value="basic" className="flex-1">Basic</TabsTrigger>
-          <TabsTrigger value="advanced" className="flex-1">Advanced</TabsTrigger>
         </TabsList>
 
-        <TabsContent value="basic" className="mt-4">
+        <TabsContent value="basic" className="mt-4 space-y-4">
           <SliderControl
             id="t_target"
             label="Room Setpoint"
@@ -131,8 +135,18 @@ export function ControlsCard() {
             }
           />
         </TabsContent>
+      </Tabs>
 
-        <TabsContent value="advanced" className="mt-4">
+      {/* Advanced Settings Collapsible */}
+      <Collapsible open={advancedOpen} onOpenChange={setAdvancedOpen} className="mt-4">
+        <CollapsibleTrigger className="flex items-center justify-between w-full p-3 rounded-md bg-secondary/50 hover:bg-secondary/70 transition-colors">
+          <span className="font-medium text-sm">Advanced Settings</span>
+          <ChevronDown className={cn(
+            "h-4 w-4 transition-transform duration-200",
+            advancedOpen && "rotate-180"
+          )} />
+        </CollapsibleTrigger>
+        <CollapsibleContent className="mt-2 space-y-4">
           <SliderControl
             id="min_flow"
             label="Min Flow"
@@ -200,8 +214,8 @@ export function ControlsCard() {
               </InfoTooltip>
             }
           />
-        </TabsContent>
-      </Tabs>
+        </CollapsibleContent>
+      </Collapsible>
 
       <div className="bg-secondary rounded-md p-2 text-center mt-4">
         <code className="font-mono text-xs text-secondary-foreground">t_flow = t_target + shift + hc × ΔT<sup>1/n</sup></code>
