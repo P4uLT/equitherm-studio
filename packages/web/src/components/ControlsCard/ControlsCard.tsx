@@ -181,7 +181,7 @@ export function ControlsCard() {
           id="t_out_min"
           label="Outdoor Min"
           min={-30}
-          max={5}
+          max={-1}
           step={1}
           value={curve.tOutMin}
           unit="°C"
@@ -197,7 +197,7 @@ export function ControlsCard() {
         <SliderControl
           id="t_out_max"
           label="Outdoor Max"
-          min={0}
+          min={1}
           max={30}
           step={1}
           value={curve.tOutMax}
