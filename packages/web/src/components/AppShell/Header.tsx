@@ -6,24 +6,7 @@ import { showToast } from '@/lib/toast';
 import { useStore } from '@/store/useStore';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
-
-function FlameIcon({ className }: { className?: string }) {
-  return (
-    <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-      <path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38.5-2 1-3 1-2 3-2.5a3 3 0 0 0-3-2.5c0 0 0-1.5-1-3s-2.5-1-2.5-3 0 0 0 1.5-3 1-2 .5-1 1-3a2.5 2.5 0 0 0 2.5 2.5" />
-      <path d="M11 12c0 1.5 1.5 3 2 3a3 3 0 0 0-2-2.5c0 0 0 1.5-1 3s2.5 1 2.5 3 0 0 0-1.5 3-1 2-.5 1-1 3a2.5 2.5 0 0 0-2.5-2.5" />
-    </svg>
-  );
-}
-
-function LinkIcon({ className }: { className?: string }) {
-  return (
-    <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-      <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
-      <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
-    </svg>
-  );
-}
+import { Flame, Link2 } from 'lucide-react';
 
 export function Header() {
   const { theme, setTheme } = useTheme();
@@ -52,7 +35,7 @@ export function Header() {
         {/* Logo - visible on sm+ instead of lg+ for balance */}
         <div className="hidden sm:flex items-center gap-2 shrink-0">
           <div className="flex items-center justify-center w-9 h-9 rounded-lg bg-accent/10 border border-accent/30 shadow-glow-heating transition-shadow duration-normal">
-            <FlameIcon className="w-5 h-5 text-accent" />
+            <Flame className="w-5 h-5 text-accent" />
           </div>
           <div className="flex flex-col">
             <span className="font-ui font-bold text-foreground text-sm leading-none tracking-tight">Equitherm</span>
@@ -73,7 +56,7 @@ export function Header() {
             className="gap-1.5 min-h-touch h-8 hover:shadow-glow-focus transition-shadow duration-fast"
             onClick={handleShare}
           >
-            <LinkIcon className="w-3.5 h-3.5" />
+            <Link2 className="w-3.5 h-3.5" />
             <span className="hidden sm:inline text-xs">Share</span>
           </Button>
 
