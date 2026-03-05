@@ -82,13 +82,13 @@ describe('validateCurveState', () => {
   it('should fix inverted minFlow/maxFlow', () => {
     const input = { minFlow: 70, maxFlow: 20 };
     const result = validateCurveState(input);
-    expect(result.minFlow).toBeLessThan(result.maxFlow);
+    expect(result.minFlow!).toBeLessThan(result.maxFlow!);
   });
 
   it('should fix inverted tOutMin/tOutMax', () => {
     const input = { tOutMin: 20, tOutMax: -20 };
     const result = validateCurveState(input);
-    expect(result.tOutMin).toBeLessThan(result.tOutMax);
+    expect(result.tOutMin!).toBeLessThan(result.tOutMax!);
   });
 
   it('should handle partial state', () => {
