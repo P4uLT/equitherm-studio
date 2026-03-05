@@ -51,12 +51,23 @@ export function HeatingChart() {
     });
   }, [combinedFlow, pidCorrection, status, setComputed]);
 
-  // Current position on the curve - look up exact value from chartData to ensure
-  // ReferenceDot y matches the line's data point byte-for-byte
-  const currentPoint = chartData.find((p) => p.tOutdoor === Math.round(tCurrent));
+  // Current position on the curve - interpolate y to match Recharts' linear interpolation
+  // This ensures the dot sits exactly on the line at any float x position
+  const floorT = Math.floor(tCurrent);
+  const ceilT = Math.ceil(tCurrent);
+  const lowerPoint = chartData.find((p) => p.tOutdoor === floorT);
+  const upperPoint = chartData.find((p) => p.tOutdoor === ceilT);
+
+  const interpolateY = (lower: number | undefined, upper: number | undefined): number | undefined => {
+    if (lower === undefined || upper === undefined) return undefined;
+    if (floorT === ceilT) return lower; // tCurrent is already an integer
+    const t = (tCurrent - floorT) / (ceilT - floorT); // interpolation factor
+    return lower + (upper - lower) * t;
+  };
+
   const currentFlowY = pid.enabled
-    ? (currentPoint?.combined ?? combinedFlow)
-    : (currentPoint?.equitherm ?? equithermFlow);
+    ? interpolateY(lowerPoint?.combined, upperPoint?.combined) ?? combinedFlow
+    : interpolateY(lowerPoint?.equitherm, upperPoint?.equitherm) ?? equithermFlow;
 
   return (
     <section className="@container bg-card rounded-xl p-4 border border-border h-full min-h-[300px] @lg:min-h-[400px] @xl:min-h-[500px] flex flex-col shadow-[var(--shadow-card)]">
