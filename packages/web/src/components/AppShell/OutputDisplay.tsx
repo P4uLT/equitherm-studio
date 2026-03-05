@@ -22,7 +22,7 @@ export function OutdoorSlider({ className }: { className?: string }) {
         />
       </div>
       <div className="flex items-center gap-2">
-        <span className="text-[0.6rem] font-display text-cold w-8 text-center">-30°</span>
+        <span className="text-[0.55rem] font-display text-cold w-7 text-center">-30°</span>
         <SliderVariant
           variant="temp"
           min={-30}
@@ -32,7 +32,7 @@ export function OutdoorSlider({ className }: { className?: string }) {
           onValueChange={(vals) => setTCurrent(vals[0])}
           className="flex-1 cursor-grab min-h-touch"
         />
-        <span className="text-[0.6rem] font-display text-hot w-8 text-center">25°</span>
+        <span className="text-[0.55rem] font-display text-hot w-7 text-center">25°</span>
       </div>
     </div>
   );
