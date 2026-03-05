@@ -23,11 +23,7 @@ interface GainInstrumentProps {
 
 // Instantaneous control (affects curve)
 function GainInstrument({ label, min, max, step, value, onChange, unit = '', tooltipTitle, tooltipContent, tooltipIcon }: GainInstrumentProps) {
-  const formatAnchor = (val: number) => {
-    if (val < 0) return `${val}${unit}`;
-    if (unit === '°') return `${val}°`;
-    return `${val}${unit}`;
-  };
+  const formatAnchor = (val: number) => `${val}${unit}`;
 
   return (
     <div className="flex flex-col gap-1">

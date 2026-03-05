@@ -24,10 +24,7 @@ interface DeadbandInstrumentProps {
 
 // Standard instrument control (affects curve)
 function DeadbandInstrument({ label, min, max, step, value, onChange, unit = '°', reverseLabels, tooltipTitle, tooltipContent, tooltipIcon }: DeadbandInstrumentProps) {
-  const formatAnchor = (val: number) => {
-    if (val < 0) return `${val}${unit}`;
-    return `${val}${unit}`;
-  };
+  const formatAnchor = (val: number) => `${val}${unit}`;
 
   const leftVal = reverseLabels ? max : min;
   const rightVal = reverseLabels ? min : max;
