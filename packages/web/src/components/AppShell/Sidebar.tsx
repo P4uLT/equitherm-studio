@@ -18,7 +18,7 @@ export function Sidebar({ activeTab, onTabChange }: SidebarProps) {
     <Card className={cn(
       "flex flex-col overflow-hidden",
       "h-full md:max-h-none md:w-[280px] lg:w-[320px]",
-      "border-border shadow-[var(--shadow-card)]"
+      "border-border shadow-card"
     )}>
       {/* Tab Bar */}
       <Tabs value={activeTab} onValueChange={onTabChange} className="flex flex-col flex-1 min-h-0">
@@ -31,12 +31,12 @@ export function Sidebar({ activeTab, onTabChange }: SidebarProps) {
             className={cn(
               "relative flex-1 min-h-touch",
               "rounded-none text-xs font-ui font-medium tracking-wide uppercase",
-              "transition-all duration-[var(--duration-normal)]",
+              "transition-all duration-normal",
               "data-[state=active]:bg-transparent data-[state=active]:text-primary",
               "data-[state=inactive]:bg-transparent data-[state=inactive]:text-muted-foreground data-[state=inactive]:hover:text-foreground",
               "after:absolute after:bottom-0 after:left-4 after:right-4 after:h-0.5",
-              "after:bg-transparent after:transition-all after:duration-[var(--duration-normal)]",
-              "data-[state=active]:after:bg-accent data-[state=active]:after:shadow-[var(--glow-heating)]"
+              "after:bg-transparent after:transition-all after:duration-normal",
+              "data-[state=active]:after:bg-accent data-[state=active]:after:shadow-glow-heating"
             )}
           >
             <span className="flex items-center gap-1.5">
@@ -51,12 +51,12 @@ export function Sidebar({ activeTab, onTabChange }: SidebarProps) {
             className={cn(
               "relative flex-1 min-h-touch",
               "rounded-none text-xs font-ui font-medium tracking-wide uppercase",
-              "transition-all duration-[var(--duration-normal)]",
+              "transition-all duration-normal",
               "data-[state=active]:bg-transparent data-[state=active]:text-primary",
               "data-[state=inactive]:bg-transparent data-[state=inactive]:text-muted-foreground data-[state=inactive]:hover:text-foreground",
               "after:absolute after:bottom-0 after:left-4 after:right-4 after:h-0.5",
-              "after:bg-transparent after:transition-all after:duration-[var(--duration-normal)]",
-              "data-[state=active]:after:bg-accent data-[state=active]:after:shadow-[var(--glow-heating)]"
+              "after:bg-transparent after:transition-all after:duration-normal",
+              "data-[state=active]:after:bg-accent data-[state=active]:after:shadow-glow-heating"
             )}
           >
             <span className="flex items-center gap-1.5">
@@ -72,12 +72,12 @@ export function Sidebar({ activeTab, onTabChange }: SidebarProps) {
             className={cn(
               "relative flex-1 min-h-touch",
               "rounded-none text-xs font-ui font-medium tracking-wide uppercase",
-              "transition-all duration-[var(--duration-normal)]",
+              "transition-all duration-normal",
               "data-[state=active]:bg-transparent data-[state=active]:text-primary",
               "data-[state=inactive]:bg-transparent data-[state=inactive]:text-muted-foreground data-[state=inactive]:hover:text-foreground",
               "after:absolute after:bottom-0 after:left-4 after:right-4 after:h-0.5",
-              "after:bg-transparent after:transition-all after:duration-[var(--duration-normal)]",
-              "data-[state=active]:after:bg-accent data-[state=active]:after:shadow-[var(--glow-heating)]"
+              "after:bg-transparent after:transition-all after:duration-normal",
+              "data-[state=active]:after:bg-accent data-[state=active]:after:shadow-glow-heating"
             )}
           >
             <span className="flex items-center gap-1.5">

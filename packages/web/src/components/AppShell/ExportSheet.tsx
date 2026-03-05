@@ -42,7 +42,7 @@ export function ExportSheet() {
           <Button
             variant="outline"
             size="sm"
-            className="gap-1.5 min-h-touch h-8 hover:shadow-[var(--glow-focus)] transition-shadow duration-[var(--duration-fast)]"
+            className="gap-1.5 min-h-touch h-8 hover:shadow-glow-focus transition-shadow duration-fast"
           >
             <DownloadIcon className="w-3.5 h-3.5" />
             <span className="hidden sm:inline text-xs">Export</span>

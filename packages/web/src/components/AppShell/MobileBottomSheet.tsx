@@ -65,7 +65,7 @@ export function MobileBottomSheet({ activeTab, onTabChange }: MobileBottomSheetP
             aria-label={tab.label}
             aria-pressed={activeTab === tab.value && isOpen}
             className={cn(
-              "flex flex-col items-center justify-center min-w-touch min-h-touch rounded-lg transition-all duration-[var(--duration-fast)]",
+              "flex flex-col items-center justify-center min-w-touch min-h-touch rounded-lg transition-all duration-fast",
               activeTab === tab.value && isOpen
                 ? "text-accent"
                 : "text-muted-foreground"

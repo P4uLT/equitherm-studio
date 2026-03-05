@@ -12,11 +12,11 @@ interface StatusBadgeProps {
 const statusConfig: Record<StatusVariant, { label: string; className: string }> = {
   heating: {
     label: 'Heating',
-    className: 'bg-accent/20 text-accent border-accent/30 shadow-[var(--glow-heating)]',
+    className: 'bg-accent/20 text-accent border-accent/30 shadow-glow-heating',
   },
   cooling: {
     label: 'Cooling',
-    className: 'bg-cold/20 text-cold border-cold/30 shadow-[var(--glow-cooling)]',
+    className: 'bg-cold/20 text-cold border-cold/30 shadow-glow-cooling',
   },
   standby: {
     label: 'Standby',
@@ -36,7 +36,7 @@ export function StatusBadge({ status, className }: StatusBadgeProps) {
       variant="outline"
       className={cn(
         'px-2 py-0.5 text-[0.65rem] font-ui font-medium uppercase tracking-wider',
-        'transition-all duration-[var(--duration-normal)]',
+        'transition-all duration-normal',
         config.className,
         className
       )}

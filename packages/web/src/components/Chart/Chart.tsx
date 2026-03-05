@@ -70,7 +70,7 @@ export function HeatingChart() {
     : interpolateY(lowerPoint?.equitherm, upperPoint?.equitherm) ?? equithermFlow;
 
   return (
-    <section className="@container bg-card rounded-xl p-4 border border-border h-full min-h-[300px] @lg:min-h-[400px] @xl:min-h-[500px] flex flex-col shadow-[var(--shadow-card)]">
+    <section className="@container bg-card rounded-xl p-4 border border-border h-full min-h-[300px] @lg:min-h-[400px] @xl:min-h-[500px] flex flex-col shadow-card">
       <div className="chart-grid rounded-lg flex-1 min-h-0 overflow-hidden">
         <ChartContainer config={chartConfig} className="h-full w-full">
         <LineChart data={chartData} accessibilityLayer>

@@ -93,8 +93,16 @@ export default {
   			]
   		},
   		transitionDuration: {
+  			fast: 'var(--duration-fast)',
+  			normal: 'var(--duration-normal)',
   			medium: '300ms',
-  			slow: '500ms'
+  			slow: 'var(--duration-slow)'
+  		},
+  		boxShadow: {
+  			'glow-heating': 'var(--glow-heating)',
+  			'glow-cooling': 'var(--glow-cooling)',
+  			'glow-focus': 'var(--glow-focus)',
+  			'card': 'var(--shadow-card)',
   		},
   		zIndex: {
   			dropdown: '100',

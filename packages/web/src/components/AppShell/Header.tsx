@@ -51,7 +51,7 @@ export function Header() {
       <div className="flex items-center gap-3 flex-1 min-w-0">
         {/* Logo - visible on sm+ instead of lg+ for balance */}
         <div className="hidden sm:flex items-center gap-2 shrink-0">
-          <div className="flex items-center justify-center w-9 h-9 rounded-lg bg-accent/10 border border-accent/30 shadow-[var(--glow-heating)] transition-shadow duration-[var(--duration-normal)]">
+          <div className="flex items-center justify-center w-9 h-9 rounded-lg bg-accent/10 border border-accent/30 shadow-glow-heating transition-shadow duration-normal">
             <FlameIcon className="w-5 h-5 text-accent" />
           </div>
           <div className="flex flex-col">
@@ -70,7 +70,7 @@ export function Header() {
           <Button
             variant="outline"
             size="sm"
-            className="gap-1.5 min-h-touch h-8 hover:shadow-[var(--glow-focus)] transition-shadow duration-[var(--duration-fast)]"
+            className="gap-1.5 min-h-touch h-8 hover:shadow-glow-focus transition-shadow duration-fast"
             onClick={handleShare}
           >
             <LinkIcon className="w-3.5 h-3.5" />
