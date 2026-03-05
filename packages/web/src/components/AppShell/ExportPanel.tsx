@@ -13,6 +13,8 @@ export function ExportPanel() {
   const kd = useStore(s => s.pid.kd);
   const setPidParam = useStore(s => s.setPidParam);
   const [showYamlPreview, setShowYamlPreview] = useState(false);
+  const [includeSensors, setIncludeSensors] = useState(false);
+  const [includeNumbers, setIncludeNumbers] = useState(false);
 
   return (
     <div className="space-y-6">
@@ -85,7 +87,10 @@ export function ExportPanel() {
             <span className="text-sm font-ui text-foreground">Diagnostic Sensors</span>
             <span className="text-xs text-muted-foreground">Additional sensors in YAML</span>
           </div>
-          <Switch checked={false} onCheckedChange={() => {}} />
+          <Switch
+            checked={includeSensors}
+            onCheckedChange={setIncludeSensors}
+          />
         </div>
 
         <div className="flex items-center justify-between py-2">
@@ -93,7 +98,10 @@ export function ExportPanel() {
             <span className="text-sm font-ui text-foreground">Runtime Tuning</span>
             <span className="text-xs text-muted-foreground">Number inputs for live adjustment</span>
           </div>
-          <Switch checked={false} onCheckedChange={() => {}} />
+          <Switch
+            checked={includeNumbers}
+            onCheckedChange={setIncludeNumbers}
+          />
         </div>
       </div>
 
@@ -109,7 +117,12 @@ export function ExportPanel() {
       </Button>
 
       {/* YAML Modal */}
-      <YAMLModal isOpen={showYamlPreview} onClose={() => setShowYamlPreview(false)} />
+      <YAMLModal
+        isOpen={showYamlPreview}
+        onClose={() => setShowYamlPreview(false)}
+        includeSensors={includeSensors}
+        includeNumbers={includeNumbers}
+      />
     </div>
   );
 }
