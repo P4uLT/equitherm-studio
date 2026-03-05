@@ -27,7 +27,7 @@ function App() {
         <main className="@container grid grid-cols-1 gap-4 md:grid-cols-[minmax(280px,320px)_1fr]">
           {/* Desktop Sidebar */}
           <div className="hidden md:block">
-            <Sidebar />
+            <Sidebar activeTab={activeTab} onTabChange={setActiveTab} />
           </div>
 
           {/* Chart */}

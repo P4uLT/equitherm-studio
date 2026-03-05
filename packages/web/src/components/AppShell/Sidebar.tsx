@@ -1,5 +1,4 @@
 // src/components/AppShell/Sidebar.tsx
-import { useState } from 'react';
 import { Card } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { ScrollArea } from '@/components/ui/scroll-area';
@@ -8,8 +7,12 @@ import { PIDPanel } from '../PIDPanel';
 import { PresetsPanel } from '../SidePanel/PresetsPanel';
 import { cn } from '@/lib/utils';
 
-export function Sidebar() {
-  const [activeTab, setActiveTab] = useState('curve');
+interface SidebarProps {
+  activeTab: string;
+  onTabChange: (tab: string) => void;
+}
+
+export function Sidebar({ activeTab, onTabChange }: SidebarProps) {
 
   return (
     <Card className={cn(
@@ -18,7 +21,7 @@ export function Sidebar() {
       "border-border shadow-[var(--shadow-card)]"
     )}>
       {/* Tab Bar */}
-      <Tabs value={activeTab} onValueChange={setActiveTab} className="flex flex-col flex-1 min-h-0">
+      <Tabs value={activeTab} onValueChange={onTabChange} className="flex flex-col flex-1 min-h-0">
         <TabsList className={cn(
           "w-full rounded-none border-b border-border bg-secondary/50 shrink-0",
           "flex-row gap-0"
