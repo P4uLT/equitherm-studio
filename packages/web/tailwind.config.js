@@ -78,10 +78,6 @@ export default {
   				'IBM Plex Mono',
   				'JetBrains Mono',
   				'monospace'
-  			],
-  			figtree: [
-  				'Figtree',
-  				'sans-serif'
   			]
   		},
   		fontSize: {
