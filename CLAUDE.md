@@ -41,12 +41,10 @@ equitherm-studio/
 │   └── web/                     # @equitherm-studio/web
 │       ├── src/
 │       │   ├── components/      # React UI components
-│       │   │   ├── Chart/       # HeatingChart, useChartData, useComputedFlow
-│       │   │   ├── ControlsCard/# ControlsCard, SliderControl, InfoTooltip
-│       │   │   ├── PIDPanel/    # PIDPanel, GainControls, DeadbandControls
-│       │   │   ├── Header/      # Header, PresetsDropdown
-│       │   │   ├── ResultDisplay/
-│       │   │   ├── Modals/      # YAMLModal
+│       │   │   ├── AppShell/    # Header, Sidebar, OutputDisplay, StatusIndicator, MobileBottomSheet, ExportSheet
+│       │   │   ├── Chart/       # Chart, useChartData, useComputedFlow
+│       │   │   ├── ControlsCard/# ControlsCard, SliderControl, SliderPair, InfoTooltip
+│       │   │   ├── SidePanel/   # SidePanel (Curve/PID/Presets tabs), PresetsPanel
 │       │   │   └── ui/          # shadcn/ui primitives
 │       │   ├── store/           # Zustand state management
 │       │   ├── config/          # storage.ts, yaml.ts, URL parsing
@@ -62,16 +60,17 @@ equitherm-studio/
 
 ## Tech Stack
 
-| Layer | Technology |
-|-------|------------|
-| Package Manager | pnpm 9 (workspaces) |
-| Build | Vite 5.x |
-| UI | React 19 + shadcn/ui (Radix primitives) |
-| State | Zustand |
-| Charts | Recharts |
-| Styling | Tailwind CSS 3.x + CSS Custom Properties |
-| Icons | Lucide React |
-| Testing | Vitest |
+| Layer           | Technology                                      |
+| --------------- | ----------------------------------------------- |
+| Package Manager | pnpm 9 (workspaces)                             |
+| Build           | Vite 5.x                                        |
+| UI              | React 19 + shadcn/ui (Radix primitives)         |
+| State           | Zustand                                         |
+| Charts          | Recharts                                        |
+| Styling         | Tailwind CSS 3.x + CSS Custom Properties        |
+| Responsive      | @tailwindcss/container-queries + fluid-tailwind |
+| Icons           | Lucide React                                    |
+| Testing         | Vitest                                          |
 
 ## Package Details
 
@@ -207,6 +206,22 @@ interface StoreState {
 5. **Co-located tests**: Test files live next to source (`*.test.ts`)
 6. **Index re-exports**: Each component folder has `index.ts`
 7. **Custom hooks**: Complex computations in hooks (useComputedFlow, useChartData)
+8. **Path alias**: Use `@/` for imports (e.g., `@/components/ui/button`)
+
+## Input Validation
+
+Defense-in-depth approach for curve parameters:
+
+**UI Layer** (`ControlsCard.tsx`):
+- Slider ranges designed to prevent overlap (e.g., `tOutMin: -30 to -1`, `tOutMax: 1 to 30`)
+
+**Store Layer** (`validation.ts`):
+- `validateCurveParam()` - Clamps values when setting individual params
+- `validateCurveState()` - Fixes inverted pairs when loading configs
+- Invariants: `minFlow < maxFlow`, `tOutMin < tOutMax`
+
+**Core Layer** (`curve.ts`):
+- Handles inverted min/max gracefully with `Math.min/max` swap
 
 ## Testing
 
@@ -221,16 +236,16 @@ pnpm --filter @equitherm-studio/core test:watch  # Watch mode
 
 ### Heating Curve Calculator
 
-| Parameter | Range | Default | Description |
-|-----------|-------|---------|-------------|
-| `tTarget` | 16-26°C | 21°C | Room setpoint temperature |
-| `hc` | 0.5-3.0 | 0.9 | Heat curve coefficient (steepness) |
-| `n` | 1.0-2.0 | 1.25 | Curve exponent (non-linearity) |
-| `shift` | -15 to +15°C | 0°C | Constant temperature offset |
-| `minFlow` | 15-35°C | 20°C | Minimum flow temperature |
-| `maxFlow` | 50-90°C | 70°C | Maximum flow temperature |
-| `tOutMin` | -30 to 5°C | -20°C | Outdoor temp range minimum |
-| `tOutMax` | 0-30°C | 20°C | Outdoor temp range maximum |
+| Parameter | Range        | Default | Description                        |
+| --------- | ------------ | ------- | ---------------------------------- |
+| `tTarget` | 16-26°C      | 21°C    | Room setpoint temperature          |
+| `hc`      | 0.5-3.0      | 0.9     | Heat curve coefficient (steepness) |
+| `n`       | 1.0-2.0      | 1.25    | Curve exponent (non-linearity)     |
+| `shift`   | -15 to +15°C | 0°C     | Constant temperature offset        |
+| `minFlow` | 15-35°C      | 20°C    | Minimum flow temperature           |
+| `maxFlow` | 50-90°C      | 70°C    | Maximum flow temperature           |
+| `tOutMin` | -30 to 5°C   | -20°C   | Outdoor temp range minimum         |
+| `tOutMax` | 0-30°C       | 20°C    | Outdoor temp range maximum         |
 
 ### PID Control System
 
@@ -238,11 +253,11 @@ pnpm --filter @equitherm-studio/core test:watch  # Watch mode
 - **Offset Mode**: `roomTemp` is an offset from setpoint (-5 to +5°C)
 - **Absolute Mode**: `roomTemp` is actual room temperature (10-30°C)
 
-| Parameter | Range | Default | Affects Curve |
-|-----------|-------|---------|---------------|
-| `kp` | 0-5 | 1.0 | ✅ Instantaneous |
-| `ki` | 0-0.5 | 0.0 | ❌ YAML export only |
-| `kd` | 0-2 | 0.0 | ❌ YAML export only |
+| Parameter | Range | Default | Affects Curve      |
+| --------- | ----- | ------- | ------------------ |
+| `kp`      | 0-5   | 1.0     | ✅ Instantaneous    |
+| `ki`      | 0-0.5 | 0.0     | ❌ YAML export only |
+| `kd`      | 0-2   | 0.0     | ❌ YAML export only |
 
 **Deadband Configuration**:
 - `thresholdHigh`: 0-2°C (upper bound)
@@ -264,20 +279,20 @@ pnpm --filter @equitherm-studio/core test:watch  # Watch mode
 ?t=21&hc=0.9&n=1.25&s=0&min=20&max=70&tmin=-20&tmax=20&tcur=5&pid=1&kp=1&ki=0&kd=0&db=1&th=0.3&tl=-0.3&kpm=0.1
 ```
 
-| Param | Maps To | Description |
-|-------|---------|-------------|
-| `t` | tTarget | Room setpoint |
-| `hc` | hc | Heat curve coefficient |
-| `n` | n | Exponent |
-| `s` | shift | Temperature offset |
-| `min`/`max` | minFlow/maxFlow | Flow temp limits |
-| `tmin`/`tmax` | tOutMin/tOutMax | Outdoor temp range |
-| `tcur` | tCurrent | Current outdoor temp |
-| `pid` | enabled | PID enabled (1/0) |
-| `kp`/`ki`/`kd` | kp/ki/kd | PID gains |
-| `db` | deadbandEnabled | Deadband (1/0) |
-| `th`/`tl` | thresholdHigh/Low | Deadband thresholds |
-| `kpm` | kpMultiplier | Deadband Kp factor |
+| Param          | Maps To           | Description            |
+| -------------- | ----------------- | ---------------------- |
+| `t`            | tTarget           | Room setpoint          |
+| `hc`           | hc                | Heat curve coefficient |
+| `n`            | n                 | Exponent               |
+| `s`            | shift             | Temperature offset     |
+| `min`/`max`    | minFlow/maxFlow   | Flow temp limits       |
+| `tmin`/`tmax`  | tOutMin/tOutMax   | Outdoor temp range     |
+| `tcur`         | tCurrent          | Current outdoor temp   |
+| `pid`          | enabled           | PID enabled (1/0)      |
+| `kp`/`ki`/`kd` | kp/ki/kd          | PID gains              |
+| `db`           | deadbandEnabled   | Deadband (1/0)         |
+| `th`/`tl`      | thresholdHigh/Low | Deadband thresholds    |
+| `kpm`          | kpMultiplier      | Deadband Kp factor     |
 
 ### Presets System
 
@@ -298,10 +313,3 @@ pnpm --filter @equitherm-studio/core test:watch  # Watch mode
 - CSS Custom Properties for theming
 - Tailwind CSS with semantic color tokens
 - Persisted in LocalStorage
-
-## Technical Debt & Limitations
-
-1. **Ki/Kd don't affect curve** - Time-domain parameters only exported to YAML
-2. **No input validation** - Invalid combinations allowed (e.g., minFlow > maxFlow)
-3. **No undo/redo** - Can't revert accidental changes
-4. **Limited mobile layout** - Chart can be cramped on small screens
