@@ -104,7 +104,7 @@ export function Header() {
 
       {/* Row 2: Outdoor Slider (mobile only, full width) */}
       <div className="sm:hidden">
-        OutdoorSlider placeholder
+        {/* TODO: OutdoorSlider component (Task 2) */}
       </div>
     </header>
   );
