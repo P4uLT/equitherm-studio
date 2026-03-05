@@ -5,6 +5,39 @@ import { StatusIndicator } from './StatusIndicator';
 import { SliderVariant } from '@/components/ui/slider-variants';
 import { cn } from '@/lib/utils';
 
+export function OutdoorSlider({ className }: { className?: string }) {
+  const tCurrent = useStore(s => s.ui.tCurrent);
+  const setTCurrent = useStore(s => s.setTCurrent);
+
+  return (
+    <div className={cn("flex flex-col gap-2 w-full", className)}>
+      <div className="flex items-center justify-between px-1">
+        <span className="text-[0.65rem] font-ui font-medium text-muted-foreground uppercase tracking-wider">
+          Outdoor Temperature
+        </span>
+        <DigitalDisplay
+          value={tCurrent}
+          unit="°C"
+          size="sm"
+        />
+      </div>
+      <div className="flex items-center gap-2">
+        <span className="text-[0.6rem] font-display text-cold w-8 text-center">-30°</span>
+        <SliderVariant
+          variant="temp"
+          min={-30}
+          max={25}
+          step={1}
+          value={[tCurrent]}
+          onValueChange={(vals) => setTCurrent(vals[0])}
+          className="flex-1 cursor-grab min-h-touch"
+        />
+        <span className="text-[0.6rem] font-display text-hot w-8 text-center">25°</span>
+      </div>
+    </div>
+  );
+}
+
 export function OutputDisplay() {
   const tCurrent = useStore(s => s.ui.tCurrent);
   const setTCurrent = useStore(s => s.setTCurrent);
@@ -14,8 +47,8 @@ export function OutputDisplay() {
 
   return (
     <div className="flex items-stretch gap-4">
-      {/* Outdoor Temperature Input */}
-      <div className="flex flex-col gap-2 flex-1 min-w-0">
+      {/* Outdoor Slider - desktop only (inline) */}
+      <div className="hidden sm:flex flex-col gap-2 flex-1 min-w-0">
         <div className="flex items-center justify-between px-1">
           <span className="text-[0.65rem] md:text-xs font-ui font-medium text-muted-foreground uppercase tracking-wider">
             Outdoor
