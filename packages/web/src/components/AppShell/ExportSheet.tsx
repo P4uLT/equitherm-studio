@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useStore } from '@/store/useStore';
-import { SliderPair } from '@/components/ui/slider-pair';
+import { SliderPair } from './slider-pair';
 import { YAMLModal } from '../Modals/YAMLModal';
 import { InfoTooltip } from '../ControlsCard/InfoTooltip';
 import {
