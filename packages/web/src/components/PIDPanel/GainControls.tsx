@@ -59,56 +59,6 @@ function GainInstrument({ label, min, max, step, value, onChange, unit = '', too
   );
 }
 
-interface TimeDomainInstrumentProps {
-  label: string;
-  min: number;
-  max: number;
-  step: number;
-  value: number;
-  onChange: (value: number) => void;
-  tooltipTitle?: string;
-  tooltipContent?: React.ReactNode;
-  tooltipIcon?: React.ReactNode;
-}
-
-// Time-domain instrument (YAML export only, no curve impact)
-function TimeDomainInstrument({ label, min, max, step, value, onChange, tooltipTitle, tooltipContent, tooltipIcon }: TimeDomainInstrumentProps) {
-  const formatAnchor = (val: number) => {
-    if (val < 0) return `${val}`;
-    return `${val}`;
-  };
-
-  return (
-    <div className="flex flex-col gap-0.5 opacity-85">
-      <div className="flex items-baseline justify-between">
-        <div className="flex items-center gap-1">
-          <span className="text-[0.6rem] font-semibold text-muted-foreground uppercase tracking-wider">{label}</span>
-          {tooltipContent && (
-            <InfoTooltip title={tooltipTitle || 'Time-domain parameter'} icon={tooltipIcon} position="sideLeft" size="small">
-              {tooltipContent}
-            </InfoTooltip>
-          )}
-          <span className="text-[0.45rem] font-bold text-muted-foreground bg-secondary py-0.5 px-1 rounded-[2px] uppercase tracking-wider border border-border">YAML</span>
-        </div>
-        <span className="font-mono text-sm font-semibold text-secondary-foreground">{value.toFixed(2)}</span>
-      </div>
-      <div className="flex items-center gap-2">
-        <span className="font-mono text-[0.55rem] font-medium text-muted-foreground whitespace-nowrap flex-shrink-0 min-w-[1.5rem]">{formatAnchor(min)}</span>
-        <SliderVariant
-          variant="ghost"
-          min={min}
-          max={max}
-          step={step}
-          value={[value]}
-          onValueChange={(vals) => onChange(vals[0])}
-          className="flex-1 cursor-pointer opacity-70 hover:opacity-100"
-        />
-        <span className="font-mono text-[0.55rem] font-medium text-muted-foreground whitespace-nowrap flex-shrink-0 min-w-[1.5rem] text-right">{formatAnchor(max)}</span>
-      </div>
-    </div>
-  );
-}
-
 export function GainControls() {
   const pid = useStore(s => s.pid);
   const setPidParam = useStore(s => s.setPidParam);
@@ -147,54 +97,6 @@ export function GainControls() {
             </>
           }
         />
-      </div>
-
-      {/* Time-domain - YAML export only */}
-      <div className="mt-3 pt-3 border-t border-dashed border-border">
-        <div className="flex items-center gap-1.5 mb-2">
-          <span className="text-[0.55rem] font-semibold text-muted-foreground uppercase tracking-widest opacity-80">Ki / Kd (Time-domain)</span>
-          <InfoTooltip title="Time-domain parameters" icon={<span>⏱</span>} position="sideLeft" size="small">
-            <p><strong>Export only</strong> — These values require real-time sensor data over time.</p>
-            <p>Ki (integral) accumulates error. Kd (derivative) measures rate of change.</p>
-            <p>They won't affect the curve preview but will be included in your ESPHome YAML.</p>
-          </InfoTooltip>
-        </div>
-        <div className="flex flex-col gap-2">
-          <TimeDomainInstrument
-            label="Ki — Integral"
-            min={0}
-            max={0.5}
-            step={0.01}
-            value={pid.ki}
-            onChange={v => setPidParam('ki', v)}
-            tooltipTitle="Integral Gain"
-            tooltipIcon={<span>Ki</span>}
-            tooltipContent={
-              <>
-                <p>Accumulates error over time to eliminate <strong>steady-state offset</strong>.</p>
-                <p><code>output += Ki × error × dt</code></p>
-                <p>Use low values. Often 0 for heating.</p>
-              </>
-            }
-          />
-          <TimeDomainInstrument
-            label="Kd — Derivative"
-            min={0}
-            max={2}
-            step={0.05}
-            value={pid.kd}
-            onChange={v => setPidParam('kd', v)}
-            tooltipTitle="Derivative Gain"
-            tooltipIcon={<span>Kd</span>}
-            tooltipContent={
-              <>
-                <p>Predicts future error by measuring the <strong>rate of change</strong>.</p>
-                <p><code>output = Kd × (dError/dt)</code></p>
-                <p>Dampens oscillations and reduces overshoot.</p>
-              </>
-            }
-          />
-        </div>
       </div>
     </div>
   );
