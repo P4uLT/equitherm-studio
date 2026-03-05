@@ -71,7 +71,7 @@
 
 /* Anchor values (min/max labels) */
 .anchor {
-  font-size: 0.6rem;
+  font-size: 0.7rem;
   font-weight: 500;
   color: hsl(var(--muted-foreground));
   white-space: nowrap;

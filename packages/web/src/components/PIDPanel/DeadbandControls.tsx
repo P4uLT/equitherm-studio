@@ -46,7 +46,7 @@ function DeadbandInstrument({ label, min, max, step, value, onChange, unit = '°
         <span className="font-mono text-lg font-bold text-primary leading-none">{value.toFixed(1)}{unit}</span>
       </div>
       <div className="flex items-center gap-2">
-        <span className="font-mono text-[0.55rem] font-medium text-muted-foreground whitespace-nowrap flex-shrink-0 min-w-[1.5rem]">{formatAnchor(leftVal)}</span>
+        <span className="font-mono text-[0.7rem] font-medium text-muted-foreground whitespace-nowrap flex-shrink-0 min-w-[1.5rem]">{formatAnchor(leftVal)}</span>
         <SliderVariant
           variant="primary"
           min={min}
@@ -56,7 +56,7 @@ function DeadbandInstrument({ label, min, max, step, value, onChange, unit = '°
           onValueChange={(vals) => onChange(vals[0])}
           className="flex-1 cursor-pointer"
         />
-        <span className="font-mono text-[0.55rem] font-medium text-muted-foreground whitespace-nowrap flex-shrink-0 min-w-[1.5rem] text-right">{formatAnchor(rightVal)}</span>
+        <span className="font-mono text-[0.7rem] font-medium text-muted-foreground whitespace-nowrap flex-shrink-0 min-w-[1.5rem] text-right">{formatAnchor(rightVal)}</span>
       </div>
     </div>
   );

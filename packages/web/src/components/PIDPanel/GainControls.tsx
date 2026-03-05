@@ -39,7 +39,7 @@ function GainInstrument({ label, min, max, step, value, onChange, unit = '', too
         <span className="font-mono text-lg font-bold text-primary leading-none">{value.toFixed(unit === '°' ? 1 : 2)}{unit}</span>
       </div>
       <div className="flex items-center gap-2">
-        <span className="font-mono text-[0.55rem] font-medium text-muted-foreground whitespace-nowrap flex-shrink-0 min-w-[1.5rem]">{formatAnchor(min)}</span>
+        <span className="font-mono text-[0.7rem] font-medium text-muted-foreground whitespace-nowrap flex-shrink-0 min-w-[1.5rem]">{formatAnchor(min)}</span>
         <SliderVariant
           variant="primary"
           min={min}
@@ -49,7 +49,7 @@ function GainInstrument({ label, min, max, step, value, onChange, unit = '', too
           onValueChange={(vals) => onChange(vals[0])}
           className="flex-1 cursor-pointer"
         />
-        <span className="font-mono text-[0.55rem] font-medium text-muted-foreground whitespace-nowrap flex-shrink-0 min-w-[1.5rem] text-right">{formatAnchor(max)}</span>
+        <span className="font-mono text-[0.7rem] font-medium text-muted-foreground whitespace-nowrap flex-shrink-0 min-w-[1.5rem] text-right">{formatAnchor(max)}</span>
       </div>
     </div>
   );

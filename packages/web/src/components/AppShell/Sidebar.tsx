@@ -17,7 +17,7 @@ export function Sidebar({ activeTab, onTabChange }: SidebarProps) {
   return (
     <Card className={cn(
       "flex flex-col overflow-hidden",
-      "h-full md:max-h-none md:min-h-[520px] md:w-[340px] lg:w-[400px]",
+      "h-full md:h-[560px] md:w-[340px] lg:w-[400px]",
       "border-border shadow-card"
     )}>
       {/* Tab Bar */}
