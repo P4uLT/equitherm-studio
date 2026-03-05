@@ -83,7 +83,7 @@ export function MobileBottomSheet({ activeTab, onTabChange }: MobileBottomSheetP
       <Sheet open={isOpen} onOpenChange={setIsOpen}>
         <SheetContent
           side="bottom"
-          className="h-[60vh] rounded-t-2xl border-t border-border bg-card p-0 animate-slide-up"
+          className="h-[60vh] rounded-t-2xl border-t border-border bg-card p-0"
         >
           {/* Drag Handle */}
           <div className="flex justify-center pt-2 pb-1">
