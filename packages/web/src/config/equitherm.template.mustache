@@ -32,7 +32,8 @@ climate:
     # Output behavior
     output_parameters:
       min_flow_temp: {{minFlow}}°C
-      max_flow_temp: {{maxFlow}}°C{{#deadbandParams}}
+      max_flow_temp: {{maxFlow}}°C
+{{/outputParams}}{{#deadbandParams}}
     deadband_parameters:
       threshold_low: {{thresholdLow}}
       threshold_high: {{thresholdHigh}}{{#kpMultiplier}}
@@ -40,7 +41,6 @@ climate:
       ki_multiplier: {{kiMultiplier}}{{/kiMultiplier}}{{#kdMultiplier}}
       kd_multiplier: {{kdMultiplier}}{{/kdMultiplier}}
 {{/deadbandParams}}
-{{/outputParams}}
 {{#includeSensors}}
 
 # Diagnostic sensors

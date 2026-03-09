@@ -55,7 +55,7 @@ function buildViewModel(p: YAMLParams, options: YAMLOptions) {
     minFlow: p.min,
     maxFlow: p.max,
 
-    // Deadband within output_parameters (requires PID enabled)
+    // Deadband parameters (sibling to control/output, requires PID enabled)
     deadbandParams: p.pid && p.db ? true : null,
     thresholdHigh: p.pid && p.db ? p.th : null,
     thresholdLow: p.pid && p.db ? p.tl : null,
