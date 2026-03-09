@@ -209,8 +209,8 @@ describe('YAMLModal - Copy Functionality', () => {
     });
 
     const writtenText = mockClipboardWrite.mock.calls[0][0];
-    expect(writtenText).toContain('default_target_temperature: 22');
-    expect(writtenText).toContain('hc: 1.5');
+    expect(writtenText).toContain('default_target_temperature: 22°C');
+    expect(writtenText).toContain('heat_curve_coefficient: 1.5');
   });
 
   it('should include sensors in YAML when includeSensors is true', async () => {

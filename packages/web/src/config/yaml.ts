@@ -21,6 +21,14 @@ interface YAMLParams {
   kpm: number;
   kim?: number;
   kdm?: number;
+  // New PID integral limits
+  minIntegral?: number;
+  maxIntegral?: number;
+  // New output parameters
+  rateLimitRising?: number;
+  rateLimitFalling?: number;
+  actionHysteresis?: number;
+  writeDeadband?: number;
 }
 
 interface YAMLOptions {
@@ -49,11 +57,17 @@ function buildViewModel(p: YAMLParams, options: YAMLOptions) {
     kp: p.pid && p.kp !== 0 ? p.kp : null,
     ki: p.pid && p.ki !== 0 ? p.ki : null,
     kd: p.pid && p.kd !== 0 ? p.kd : null,
+    minIntegral: p.pid && p.minIntegral !== undefined && p.minIntegral !== 0 ? p.minIntegral : null,
+    maxIntegral: p.pid && p.maxIntegral !== undefined && p.maxIntegral !== 0 ? p.maxIntegral : null,
 
     // Output parameters section (always present)
     outputParams: true,
     minFlow: p.min,
     maxFlow: p.max,
+    rateLimitRising: p.rateLimitRising !== undefined && p.rateLimitRising !== 0 ? p.rateLimitRising : null,
+    rateLimitFalling: p.rateLimitFalling !== undefined && p.rateLimitFalling !== 0 ? p.rateLimitFalling : null,
+    actionHysteresis: p.actionHysteresis !== undefined && p.actionHysteresis !== 0 ? p.actionHysteresis : null,
+    writeDeadband: p.writeDeadband !== undefined && p.writeDeadband !== 0 ? p.writeDeadband : null,
 
     // Deadband within output_parameters (requires PID enabled)
     deadbandParams: p.pid && p.db ? true : null,
@@ -70,6 +84,7 @@ function buildViewModel(p: YAMLParams, options: YAMLOptions) {
     // Runtime tuning numbers (conditional)
     includeNumbers: options.includeNumbers ?? false,
     hasShift: p.s !== 0,
+    hasRateLimits: p.rateLimitRising !== undefined || p.rateLimitFalling !== undefined,
   };
 }
 

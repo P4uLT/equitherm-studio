@@ -7,34 +7,45 @@
 climate:
   - platform: equitherm
     id: heating_controller
-    name: "Equitherm Climate"
+    name: "Equitherm Heating"
 
     # Required sensors
     outdoor_sensor: outdoor_sensor
     indoor_sensor: indoor_sensor
-    default_target_temperature: {{t}}
+    default_target_temperature: {{t}}°C
 
-    # Output configuration
+    # Fallback configuration
+    fallback_outdoor_temp: 0.0°C
+    sensor_stale_timeout: 10min
+
+    # Output (choose ONE)
     heat_output: heat_output
-    fallback_outdoor_temp: 0.0
+    # flow_setpoint: flow_setpoint
 {{#controlParams}}
+
     # Heating curve + PID parameters
     control_parameters:
-      hc: {{hc}}
-      n: {{n}}{{#shift}}
-      shift: {{shift}}{{/shift}}{{#kp}}
+      heat_curve_coefficient: {{hc}}
+      heat_curve_exponent: {{n}}{{#shift}}
+      heat_curve_shift: {{shift}}{{/shift}}{{#kp}}
       kp: {{kp}}{{/kp}}{{#ki}}
       ki: {{ki}}{{/ki}}{{#kd}}
-      kd: {{kd}}{{/kd}}
+      kd: {{kd}}{{/kd}}{{#minIntegral}}
+      min_integral: {{minIntegral}}{{/minIntegral}}{{#maxIntegral}}
+      max_integral: {{maxIntegral}}{{/maxIntegral}}
 {{/controlParams}}
 {{#outputParams}}
     # Output behavior
     output_parameters:
-      min_flow_temp: {{minFlow}}
-      max_flow_temp: {{maxFlow}}{{#deadbandParams}}
+      min_flow_temp: {{minFlow}}°C
+      max_flow_temp: {{maxFlow}}°C{{#rateLimitRising}}
+      rate_limit_rising: {{rateLimitRising}}{{/rateLimitRising}}{{#rateLimitFalling}}
+      rate_limit_falling: {{rateLimitFalling}}{{/rateLimitFalling}}{{#actionHysteresis}}
+      action_hysteresis: {{actionHysteresis}}{{/actionHysteresis}}{{#writeDeadband}}
+      write_deadband: {{writeDeadband}}{{/writeDeadband}}{{#deadbandParams}}
     deadband_parameters:
-      threshold_high: {{thresholdHigh}}
-      threshold_low: {{thresholdLow}}{{#kpMultiplier}}
+      threshold_low: {{thresholdLow}}
+      threshold_high: {{thresholdHigh}}{{#kpMultiplier}}
       kp_multiplier: {{kpMultiplier}}{{/kpMultiplier}}{{#kiMultiplier}}
       ki_multiplier: {{kiMultiplier}}{{/kiMultiplier}}{{#kdMultiplier}}
       kd_multiplier: {{kdMultiplier}}{{/kdMultiplier}}
@@ -50,22 +61,49 @@ sensor:
     name: "Curve Output Raw"
   - platform: equitherm
     climate_id: heating_controller
+    type: base_curve_output
+    name: "Base Curve Output"
+  - platform: equitherm
+    climate_id: heating_controller
     type: final_flow_setpoint
     name: "Final Flow Setpoint"
-  {{#pid}}
+  - platform: equitherm
+    climate_id: heating_controller
+    type: last_written_setpoint
+    name: "Last Written Setpoint"{{#pid}}
   - platform: equitherm
     climate_id: heating_controller
     type: pid_correction
-    name: "PID Correction"{{/pid}}
+    name: "PID Correction"
+  - platform: equitherm
+    climate_id: heating_controller
+    type: proportional_term
+    name: "PID P-Term"
+  - platform: equitherm
+    climate_id: heating_controller
+    type: integral_term
+    name: "PID I-Term"
+  - platform: equitherm
+    climate_id: heating_controller
+    type: derivative_term
+    name: "PID D-Term"{{/pid}}
+  - platform: equitherm
+    climate_id: heating_controller
+    type: fallback_duration
+    name: "Fallback Duration"
 
+# Diagnostic binary sensors
 binary_sensor:
   - platform: equitherm
     climate_id: heating_controller
     outdoor_fallback_active:
-      name: "Outdoor Sensor Fallback"
+      name: "Outdoor Fallback"
+    indoor_fallback_active:
+      name: "Indoor Fallback"
     rate_limiting_active:
-      name: "Rate Limiting Active"
+      name: "Rate Limiting"
 
+# Diagnostic text sensor
 text_sensor:
   - platform: equitherm
     climate_id: heating_controller
@@ -79,28 +117,37 @@ number:
   - platform: equitherm
     climate_id: heating_controller
     heat_curve_coefficient:
-      name: "Heating Curve Coefficient"
+      name: "HC Coefficient"
   - platform: equitherm
     climate_id: heating_controller
     heat_curve_exponent:
-      name: "Heating Curve Exponent"
-  {{#hasShift}}
+      name: "HC Exponent"{{#hasShift}}
   - platform: equitherm
     climate_id: heating_controller
     heat_curve_shift:
-      name: "Heating Curve Shift"
-  {{/hasShift}}
-  {{#pid}}
+      name: "HC Shift"{{/hasShift}}{{#pid}}
   - platform: equitherm
     climate_id: heating_controller
     pid_proportional_gain:
-      name: "PID Proportional Gain"
+      name: "PID Kp"
   - platform: equitherm
     climate_id: heating_controller
     pid_integral_gain:
-      name: "PID Integral Gain"
+      name: "PID Ki"
   - platform: equitherm
     climate_id: heating_controller
     pid_derivative_gain:
-      name: "PID Derivative Gain"{{/pid}}
+      name: "PID Kd"{{/pid}}
+  - platform: equitherm
+    climate_id: heating_controller
+    fallback_outdoor_temp:
+      name: "Fallback Outdoor"{{#hasRateLimits}}
+  - platform: equitherm
+    climate_id: heating_controller
+    rate_limit_rising:
+      name: "Rate Limit Rising"
+  - platform: equitherm
+    climate_id: heating_controller
+    rate_limit_falling:
+      name: "Rate Limit Falling"{{/hasRateLimits}}
 {{/includeNumbers}}

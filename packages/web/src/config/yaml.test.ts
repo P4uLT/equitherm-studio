@@ -28,23 +28,23 @@ describe('generateYAML', () => {
       expect(yaml).toContain('climate:');
       expect(yaml).toContain('platform: equitherm');
       expect(yaml).toContain('id: heating_controller');
-      expect(yaml).toContain('default_target_temperature: 21');
+      expect(yaml).toContain('default_target_temperature: 21°C');
     });
 
     it('should include control_parameters section with hc and n', () => {
       const yaml = generateYAML(defaultParams);
 
       expect(yaml).toContain('control_parameters:');
-      expect(yaml).toContain('hc: 0.9');
-      expect(yaml).toContain('n: 1.25');
+      expect(yaml).toContain('heat_curve_coefficient: 0.9');
+      expect(yaml).toContain('heat_curve_exponent: 1.25');
     });
 
     it('should include output_parameters section with min/max flow', () => {
       const yaml = generateYAML(defaultParams);
 
       expect(yaml).toContain('output_parameters:');
-      expect(yaml).toContain('min_flow_temp: 20');
-      expect(yaml).toContain('max_flow_temp: 70');
+      expect(yaml).toContain('min_flow_temp: 20°C');
+      expect(yaml).toContain('max_flow_temp: 70°C');
     });
 
     it('should not include sensor section by default', () => {
@@ -67,19 +67,19 @@ describe('generateYAML', () => {
     it('should omit shift when s is 0', () => {
       const yaml = generateYAML({ ...defaultParams, s: 0 });
 
-      expect(yaml).not.toContain('shift:');
+      expect(yaml).not.toContain('heat_curve_shift:');
     });
 
     it('should include shift when s is positive', () => {
       const yaml = generateYAML({ ...defaultParams, s: 5 });
 
-      expect(yaml).toContain('shift: 5');
+      expect(yaml).toContain('heat_curve_shift: 5');
     });
 
     it('should include shift when s is negative', () => {
       const yaml = generateYAML({ ...defaultParams, s: -3 });
 
-      expect(yaml).toContain('shift: -3');
+      expect(yaml).toContain('heat_curve_shift: -3');
     });
   });
 
@@ -442,12 +442,12 @@ describe('generateYAML', () => {
       );
 
       // Base params
-      expect(yaml).toContain('default_target_temperature: 22');
-      expect(yaml).toContain('hc: 1');
-      expect(yaml).toContain('n: 1.3');
-      expect(yaml).toContain('shift: 2');
-      expect(yaml).toContain('min_flow_temp: 25');
-      expect(yaml).toContain('max_flow_temp: 75');
+      expect(yaml).toContain('default_target_temperature: 22°C');
+      expect(yaml).toContain('heat_curve_coefficient: 1');
+      expect(yaml).toContain('heat_curve_exponent: 1.3');
+      expect(yaml).toContain('heat_curve_shift: 2');
+      expect(yaml).toContain('min_flow_temp: 25°C');
+      expect(yaml).toContain('max_flow_temp: 75°C');
 
       // PID params
       expect(yaml).toContain('kp: 1.5');
@@ -493,10 +493,10 @@ describe('generateYAML', () => {
         {}
       );
 
-      expect(yaml).toContain('default_target_temperature: 20');
-      expect(yaml).toContain('hc: 0.8');
-      expect(yaml).toContain('n: 1.2');
-      expect(yaml).not.toContain('shift:');
+      expect(yaml).toContain('default_target_temperature: 20°C');
+      expect(yaml).toContain('heat_curve_coefficient: 0.8');
+      expect(yaml).toContain('heat_curve_exponent: 1.2');
+      expect(yaml).not.toContain('heat_curve_shift:');
       expect(yaml).not.toContain('kp:');
       expect(yaml).not.toContain('deadband_parameters:');
       // Check for diagnostic sensor section specifically (not outdoor_sensor/indoor_sensor)
