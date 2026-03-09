@@ -1,7 +1,6 @@
 // src/components/Modals/YAMLModal.tsx
 import { useState, useEffect, useMemo } from 'react';
-import hljs from 'highlight.js/lib/core';
-import yaml from 'highlight.js/lib/languages/yaml';
+import { codeToHtml } from 'shiki';
 import { useStore } from '@/store/useStore';
 import { generateYAML } from '@/config/yaml';
 import { showToast } from '@/lib/toast';
@@ -13,10 +12,7 @@ import {
 } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
-import styles from './YAMLModal.module.css';
-
-// Register YAML language
-hljs.registerLanguage('yaml', yaml);
+import { equithermTheme } from '@/lib/shiki-theme';
 
 // SVG Icons
 const LayersIcon = () => (
@@ -50,6 +46,7 @@ export function YAMLModal({
   const curve = useStore(s => s.curve);
   const pid = useStore(s => s.pid);
   const [copied, setCopied] = useState(false);
+  const [highlightedHtml, setHighlightedHtml] = useState<string | null>(null);
 
   // Map store state to YAML generator params
   const yamlParams = useMemo(() => ({
@@ -73,9 +70,28 @@ export function YAMLModal({
 
   const rawYaml = useMemo(() => generateYAML(yamlParams, { includeSensors, includeNumbers }), [yamlParams, includeSensors, includeNumbers]);
 
-  // Syntax highlighted YAML using highlight.js
-  const highlightedYaml = useMemo(() => {
-    return hljs.highlight(rawYaml, { language: 'yaml' }).value;
+  // Async syntax highlighting with Shiki
+  useEffect(() => {
+    let cancelled = false;
+    setHighlightedHtml(null); // Reset when YAML changes
+
+    codeToHtml(rawYaml, {
+      lang: 'yaml',
+      theme: equithermTheme,
+    }).then((html) => {
+      if (!cancelled) {
+        setHighlightedHtml(html);
+      }
+    }).catch((error) => {
+      console.error('Shiki highlighting failed:', error);
+      if (!cancelled) {
+        setHighlightedHtml(null); // Keep plain text on error
+      }
+    });
+
+    return () => {
+      cancelled = true;
+    };
   }, [rawYaml]);
 
   const handleCopy = async () => {
@@ -107,13 +123,21 @@ export function YAMLModal({
         </DialogHeader>
 
         {/* Code Area */}
-        <div className={styles.codeArea}>
-          <div className={styles.lineNumbers}>{lineNumbers}</div>
-          <pre className={styles.codeContent}>
-            <code
-              className={cn('language-yaml', 'hljs', styles.codeHighlight)}
-              dangerouslySetInnerHTML={{ __html: highlightedYaml }}
-            />
+        <div className="flex flex-1 min-h-0 overflow-auto max-h-[60vh] bg-card">
+          <div className="p-4 text-right font-mono text-[13px] leading-[1.625] select-none whitespace-pre min-w-[40px] flex-shrink-0 bg-muted/50 text-muted-foreground">
+            {lineNumbers}
+          </div>
+          <pre className="flex-1 m-0 p-4 bg-transparent font-mono text-[13px] leading-[1.625] whitespace-pre overflow-visible">
+            {highlightedHtml ? (
+              <code
+                className="bg-transparent p-0"
+                dangerouslySetInnerHTML={{ __html: highlightedHtml }}
+              />
+            ) : (
+              <code className="bg-transparent p-0 text-foreground">
+                {rawYaml}
+              </code>
+            )}
           </pre>
         </div>
 
