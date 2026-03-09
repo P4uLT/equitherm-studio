@@ -360,7 +360,6 @@ describe('generateYAML', () => {
 
       expect(yaml).toContain('binary_sensor:');
       expect(yaml).toContain('outdoor_fallback_active:');
-      expect(yaml).toContain('rate_limiting_active:');
       expect(yaml).toContain('text_sensor:');
       expect(yaml).toContain('control_mode:');
     });

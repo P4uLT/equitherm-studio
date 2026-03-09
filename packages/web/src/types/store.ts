@@ -27,12 +27,6 @@ export interface PIDStoreSlice {
   deadbandKpMultiplier: number;
   deadbandKiMultiplier: number;
   deadbandKdMultiplier: number;
-  // Advanced PID parameters
-  minIntegral: number;
-  maxIntegral: number;
-  // Output rate limiting
-  rateLimitRising: number;
-  rateLimitFalling: number;
 }
 
 // UI state slice
