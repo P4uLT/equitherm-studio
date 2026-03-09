@@ -333,8 +333,8 @@ describe('generateYAML', () => {
 
       expect(yaml).toContain('# Diagnostic sensors');
       expect(yaml).toContain('sensor:');
-      expect(yaml).toContain('type: curve_output_raw');
-      expect(yaml).toContain('type: final_flow_setpoint');
+      expect(yaml).toContain('type: HEATING_CURVE_OUTPUT');
+      expect(yaml).toContain('type: FLOW_SETPOINT');
     });
 
     it('should include PID sensor when pid is enabled and sensors included', () => {
@@ -343,7 +343,7 @@ describe('generateYAML', () => {
         { includeSensors: true }
       );
 
-      expect(yaml).toContain('type: pid_correction');
+      expect(yaml).toContain('type: PID_CORRECTION');
     });
 
     it('should not include PID sensor when pid is disabled', () => {
@@ -352,14 +352,14 @@ describe('generateYAML', () => {
         { includeSensors: true }
       );
 
-      expect(yaml).not.toContain('type: pid_correction');
+      expect(yaml).not.toContain('type: PID_CORRECTION');
     });
 
     it('should include binary_sensor and text_sensor sections', () => {
       const yaml = generateYAML(defaultParams, { includeSensors: true });
 
       expect(yaml).toContain('binary_sensor:');
-      expect(yaml).toContain('outdoor_fallback_active:');
+      expect(yaml).toContain('outdoor_sensor_fault:');
       expect(yaml).toContain('text_sensor:');
       expect(yaml).toContain('control_mode:');
     });
@@ -474,7 +474,7 @@ describe('generateYAML', () => {
 
       // Sensors
       expect(yaml).toContain('sensor:');
-      expect(yaml).toContain('type: pid_correction');
+      expect(yaml).toContain('type: PID_CORRECTION');
 
       // Numbers
       expect(yaml).toContain('number:');
