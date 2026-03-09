@@ -43,7 +43,7 @@ equitherm-studio/
 │       │   ├── components/      # React UI components
 │       │   │   ├── AppShell/    # Header, Sidebar, OutputDisplay, StatusIndicator, MobileBottomSheet, ExportSheet
 │       │   │   ├── Chart/       # Chart, useChartData, useComputedFlow
-│       │   │   ├── ControlsCard/# ControlsCard, SliderControl, SliderPair, InfoTooltip
+│       │   │   ├── ControlsCard/ # ControlsCard, SliderControl, SliderPair, InfoTooltip
 │       │   │   ├── SidePanel/   # SidePanel (Curve/PID/Presets tabs), PresetsPanel
 │       │   │   └── ui/          # shadcn/ui primitives
 │       │   ├── store/           # Zustand state management
