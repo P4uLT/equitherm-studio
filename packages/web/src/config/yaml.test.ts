@@ -393,9 +393,9 @@ describe('generateYAML', () => {
       expect(yaml).not.toContain('heat_curve_shift:');
     });
 
-    it('should include PID numbers when pid is enabled', () => {
+    it('should include PID numbers when pid is enabled and gains are non-zero', () => {
       const yaml = generateYAML(
-        { ...defaultParams, pid: true },
+        { ...defaultParams, pid: true, kp: 1.5, ki: 0.1, kd: 0.5 },
         { includeNumbers: true }
       );
 
@@ -407,6 +407,17 @@ describe('generateYAML', () => {
     it('should not include PID numbers when pid is disabled', () => {
       const yaml = generateYAML(
         { ...defaultParams, pid: false },
+        { includeNumbers: true }
+      );
+
+      expect(yaml).not.toContain('pid_proportional_gain:');
+      expect(yaml).not.toContain('pid_integral_gain:');
+      expect(yaml).not.toContain('pid_derivative_gain:');
+    });
+
+    it('should not include PID numbers when pid is enabled but all gains are zero', () => {
+      const yaml = generateYAML(
+        { ...defaultParams, pid: true, kp: 0, ki: 0, kd: 0 },
         { includeNumbers: true }
       );
 

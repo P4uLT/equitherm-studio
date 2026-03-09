@@ -117,21 +117,17 @@ number:
   - platform: equitherm
     climate_id: heating_controller
     heat_curve_shift:
-      name: "HC Shift"{{/hasShift}}{{#pid}}
+      name: "HC Shift"{{/hasShift}}{{#hasKp}}
   - platform: equitherm
     climate_id: heating_controller
     pid_proportional_gain:
-      name: "PID Kp"
+      name: "PID Kp"{{/hasKp}}{{#hasKi}}
   - platform: equitherm
     climate_id: heating_controller
     pid_integral_gain:
-      name: "PID Ki"
+      name: "PID Ki"{{/hasKi}}{{#hasKd}}
   - platform: equitherm
     climate_id: heating_controller
     pid_derivative_gain:
-      name: "PID Kd"{{/pid}}
-  - platform: equitherm
-    climate_id: heating_controller
-    fallback_outdoor_temp:
-      name: "Fallback Outdoor"
+      name: "PID Kd"{{/hasKd}}
 {{/includeNumbers}}

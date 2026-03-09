@@ -70,6 +70,9 @@ function buildViewModel(p: YAMLParams, options: YAMLOptions) {
     // Runtime tuning numbers (conditional)
     includeNumbers: options.includeNumbers ?? false,
     hasShift: p.s !== 0,
+    hasKp: p.pid && p.kp !== 0,
+    hasKi: p.pid && p.ki !== 0,
+    hasKd: p.pid && p.kd !== 0,
   };
 }
 
