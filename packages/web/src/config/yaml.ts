@@ -56,11 +56,10 @@ function buildViewModel(p: YAMLParams, options: YAMLOptions) {
     maxFlow: p.max,
 
     // Deadband within output_parameters (requires PID enabled)
-    // kpMultiplier only shows when NOT the ESPHome default (0.1)
     deadbandParams: p.pid && p.db ? true : null,
     thresholdHigh: p.pid && p.db ? p.th : null,
     thresholdLow: p.pid && p.db ? p.tl : null,
-    kpMultiplier: p.pid && p.db && p.kpm !== undefined && p.kim !== 0 ? p.kpm : null,
+    kpMultiplier: p.pid && p.db && p.kpm !== undefined && p.kpm !== 0 ? p.kpm : null,
     kiMultiplier: p.pid && p.db && p.kim !== undefined && p.kim !== 0 ? p.kim : null,
     kdMultiplier: p.pid && p.db && p.kdm !== undefined && p.kdm !== 0 ? p.kdm : null,
 
