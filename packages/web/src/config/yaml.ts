@@ -28,32 +28,22 @@ interface YAMLOptions {
 }
 
 /**
- * Format number for YAML output - strip trailing zeros but keep one decimal
- */
-function fmt(val: number, decimals: number = 2): string {
-  let s = val.toFixed(decimals);
-  s = s.replace(/0+$/, '');
-  if (s.endsWith('.')) s = s.slice(0, -1) + '.0';
-  return s;
-}
-
-/**
  * Build climate section configuration object
  */
 function buildClimateSection(p: YAMLParams): object {
-  const controlParams: Record<string, string> = {
-    hc: fmt(p.hc),
-    n: fmt(p.n),
+  const controlParams: Record<string, number> = {
+    hc: p.hc,
+    n: p.n,
   };
   if (p.s !== 0) {
-    controlParams.shift = fmt(p.s, 1);
+    controlParams.shift = p.s;
   }
 
   // Add PID parameters if enabled (only non-zero values)
   if (p.pid) {
-    if (p.kp !== 0) controlParams.kp = fmt(p.kp);
-    if (p.ki !== 0) controlParams.ki = fmt(p.ki, 3);
-    if (p.kd !== 0) controlParams.kd = fmt(p.kd);
+    if (p.kp !== 0) controlParams.kp = p.kp;
+    if (p.ki !== 0) controlParams.ki = p.ki;
+    if (p.kd !== 0) controlParams.kd = p.kd;
   }
 
   const outputParams: Record<string, number | object> = {
@@ -63,13 +53,13 @@ function buildClimateSection(p: YAMLParams): object {
 
   // Add deadband parameters if enabled
   if (p.db) {
-    const deadbandParams: Record<string, string> = {
-      threshold_high: fmt(p.th, 1),
-      threshold_low: fmt(p.tl, 1),
+    const deadbandParams: Record<string, number> = {
+      threshold_high: p.th,
+      threshold_low: p.tl,
     };
-    if (p.kpm !== 0.1) deadbandParams.kp_multiplier = fmt(p.kpm);
-    if (p.kim !== undefined && p.kim !== 0) deadbandParams.ki_multiplier = fmt(p.kim);
-    if (p.kdm !== undefined && p.kdm !== 0) deadbandParams.kd_multiplier = fmt(p.kdm);
+    if (p.kpm !== 0.1) deadbandParams.kp_multiplier = p.kpm;
+    if (p.kim !== undefined && p.kim !== 0) deadbandParams.ki_multiplier = p.kim;
+    if (p.kdm !== undefined && p.kdm !== 0) deadbandParams.kd_multiplier = p.kdm;
     outputParams.deadband_parameters = deadbandParams;
   }
 
