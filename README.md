@@ -66,8 +66,9 @@ t_flow = t_target + shift + hc × (t_target - t_outdoor)^(1/n)
 import {
   computeFlowTemperature,
   computePID,
-  createPIDState
+  isInDeadband
 } from '@equitherm-studio/core';
+import type { PIDState } from '@equitherm-studio/core';
 
 // Calculate flow temperature
 const flowTemp = computeFlowTemperature({
@@ -80,9 +81,9 @@ const flowTemp = computeFlowTemperature({
   maxFlow: 70,      // Maximum flow (°C)
 });
 
-// PID control
-const pidState = createPIDState({ kp: 2.0, ki: 0.1 });
-const correction = computePID(pidState, 22, 20); // setpoint, actual
+// PID control (state managed by caller)
+const pidState: PIDState = { kp: 2.0, ki: 0.1, kd: 0, integral: 0, prevError: 0 };
+const correction = computePID(pidState, 22, 20); // state, setpoint, actual
 ```
 
 ## Tech Stack

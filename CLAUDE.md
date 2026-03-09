@@ -43,7 +43,7 @@ equitherm-studio/
 │       │   ├── components/      # React UI components
 │       │   │   ├── AppShell/    # Header, Sidebar, OutputDisplay, StatusIndicator, MobileBottomSheet, ExportSheet
 │       │   │   ├── Chart/       # Chart, useChartData, useComputedFlow
-│       │   │   ├── ControlsCard/# ControlsCard, SliderControl, SliderPair, InfoTooltip
+│       │   │   ├── ControlsCard/ # ControlsCard, SliderControl, SliderPair, InfoTooltip
 │       │   │   ├── SidePanel/   # SidePanel (Curve/PID/Presets tabs), PresetsPanel
 │       │   │   └── ui/          # shadcn/ui primitives
 │       │   ├── store/           # Zustand state management
@@ -272,6 +272,66 @@ pnpm --filter @equitherm-studio/core test:watch  # Watch mode
 - Smart formatting (trailing zeros stripped)
 - Optional diagnostic sensors
 - Optional runtime tuning numbers
+
+#### Mustache Template Architecture
+
+YAML generation uses Mustache templates for separation of logic and formatting:
+
+**Template File**: `packages/web/src/config/equitherm.template.mustache`
+
+**Entry Point**: `generateYAML(params, options)` in `yaml.ts`
+
+**ViewModel Transformation**: `buildViewModel(p, options)` transforms flat `YAMLParams` into a nested view model:
+
+```typescript
+// Input: YAMLParams (flat structure from store)
+{ t: 21, hc: 0.9, n: 1.25, s: 0, pid: true, kp: 1.0, ... }
+
+// Output: ViewModel (nested with conditionals)
+{
+  controlParams: true,        // Section always renders
+  hc: 0.9,                    // Always included
+  shift: null,                // null = omit from output
+  kp: 1.0,                    // Present (PID enabled, non-zero)
+  ki: null,                   // null = omit (zero value)
+  deadbandParams: true,       // Section renders (PID + deadband enabled)
+  ...
+}
+```
+
+**Conditional Sections** (Mustache syntax):
+
+| Syntax | Behavior |
+| ------ | -------- |
+| `{{#section}}...{{/section}}` | Renders when value is truthy |
+| `{{^section}}...{{/section}}` | Renders when value is falsy |
+| `{{value}}` | Renders value directly |
+| `null` or `undefined` | Omits the line entirely |
+
+**Key Conditional Sections**:
+
+- `{{#controlParams}}` - Heating curve + PID parameters (always true)
+- `{{#outputParams}}` - Output behavior (always true)
+- `{{#deadbandParams}}` - Deadband configuration (requires PID + deadband enabled)
+- `{{#includeSensors}}` - Diagnostic sensors section
+- `{{#includeNumbers}}` - Runtime tuning numbers section
+
+**Inline Conditionals** for optional values:
+
+```mustache
+hc: {{hc}}{{#shift}}
+shift: {{shift}}{{/shift}}{{#kp}}
+kp: {{kp}}{{/kp}}
+```
+
+This pattern omits lines when values are `null`, producing clean YAML without empty entries.
+
+**Modifying the Template**:
+
+1. Edit `packages/web/src/config/equitherm.template.mustache`
+2. Add new fields to `YAMLParams` interface in `yaml.ts`
+3. Update `buildViewModel()` to transform new params
+4. Use `null` for optional values, truthy values for sections
 
 ### URL Parameter Sharing
 
