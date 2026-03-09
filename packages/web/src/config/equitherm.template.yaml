@@ -21,7 +21,7 @@ climate:
     # Heating curve + PID parameters
     control_parameters:
       hc: {{hc}}
-      "n": {{n}}{{#shift}}
+      n: {{n}}{{#shift}}
       shift: {{shift}}{{/shift}}{{#kp}}
       kp: {{kp}}{{/kp}}{{#ki}}
       ki: {{ki}}{{/ki}}{{#kd}}
@@ -32,12 +32,12 @@ climate:
     output_parameters:
       min_flow_temp: {{minFlow}}
       max_flow_temp: {{maxFlow}}{{#deadbandParams}}
-      deadband_parameters:
-        threshold_high: {{thresholdHigh}}
-        threshold_low: {{thresholdLow}}{{#kpMultiplier}}
-        kp_multiplier: {{kpMultiplier}}{{/kpMultiplier}}{{#kiMultiplier}}
-        ki_multiplier: {{kiMultiplier}}{{/kiMultiplier}}{{#kdMultiplier}}
-        kd_multiplier: {{kdMultiplier}}{{/kdMultiplier}}
+    deadband_parameters:
+      threshold_high: {{thresholdHigh}}
+      threshold_low: {{thresholdLow}}{{#kpMultiplier}}
+      kp_multiplier: {{kpMultiplier.value}}{{/kpMultiplier}}{{#kiMultiplier}}
+      ki_multiplier: {{kiMultiplier}}{{/kiMultiplier}}{{#kdMultiplier}}
+      kd_multiplier: {{kdMultiplier}}{{/kdMultiplier}}
 {{/deadbandParams}}
 {{/outputParams}}
 {{#includeSensors}}
@@ -51,7 +51,8 @@ sensor:
   - platform: equitherm
     climate_id: heating_controller
     type: final_flow_setpoint
-    name: "Final Flow Setpoint"{{#pid}}
+    name: "Final Flow Setpoint"
+  {{#pid}}
   - platform: equitherm
     climate_id: heating_controller
     type: pid_correction

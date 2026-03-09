@@ -56,10 +56,11 @@ function buildViewModel(p: YAMLParams, options: YAMLOptions) {
     maxFlow: p.max,
 
     // Deadband within output_parameters (requires PID enabled)
+    // Note: Use object wrapper for kpMultiplier so 0 is still truthy in Mustache
     deadbandParams: p.pid && p.db ? true : null,
     thresholdHigh: p.pid && p.db ? p.th : null,
     thresholdLow: p.pid && p.db ? p.tl : null,
-    kpMultiplier: p.pid && p.db ? p.kpm : null,
+    kpMultiplier: p.pid && p.db ? { value: p.kpm } : null,
     kiMultiplier: p.pid && p.db && p.kim !== undefined && p.kim !== 0 ? p.kim : null,
     kdMultiplier: p.pid && p.db && p.kdm !== undefined && p.kdm !== 0 ? p.kdm : null,
 
