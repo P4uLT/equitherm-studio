@@ -2,7 +2,7 @@
 // ESPHome YAML configuration generator using Mustache templates
 
 import Mustache from 'mustache';
-import template from './equitherm.template.yaml?raw';
+import template from './equitherm.template.mustache?raw';
 
 interface YAMLParams {
   t: number;

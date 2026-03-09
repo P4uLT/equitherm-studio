@@ -83,11 +83,14 @@ number:
   - platform: equitherm
     climate_id: heating_controller
     heat_curve_exponent:
-      name: "Heating Curve Exponent"{{#hasShift}}
+      name: "Heating Curve Exponent"
+  {{#hasShift}}
   - platform: equitherm
     climate_id: heating_controller
     heat_curve_shift:
-      name: "Heating Curve Shift"{{/hasShift}}{{#pid}}
+      name: "Heating Curve Shift"
+  {{/hasShift}}
+  {{#pid}}
   - platform: equitherm
     climate_id: heating_controller
     pid_proportional_gain:
