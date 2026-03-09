@@ -14,8 +14,8 @@ vi.mock('@/lib/shiki-theme', () => ({
   equithermTheme: 'mocked-theme',
 }));
 
-// Mock zustand store
-const mockStore = {
+// Default store state - used to reset mockStore between tests
+const defaultStoreState = {
   curve: {
     tTarget: 21,
     hc: 0.9,
@@ -42,12 +42,16 @@ const mockStore = {
   },
 };
 
+// Mock zustand store (mutable for tests that need to modify state)
+const mockStore = { ...defaultStoreState, curve: { ...defaultStoreState.curve }, pid: { ...defaultStoreState.pid } };
+
 vi.mock('@/store/useStore', () => ({
   useStore: vi.fn((selector) => selector(mockStore)),
 }));
 
 // Mock clipboard API
 const mockClipboardWrite = vi.fn();
+const originalClipboard = navigator.clipboard;
 
 describe('YAMLModal - Copy Functionality', () => {
   const mockOnClose = vi.fn();
@@ -55,8 +59,12 @@ describe('YAMLModal - Copy Functionality', () => {
   beforeEach(() => {
     vi.clearAllMocks();
 
-    // Setup clipboard mock
-    vi.stubGlobal('navigator', {
+    // Reset mock store to default state to prevent test pollution
+    Object.assign(mockStore.curve, defaultStoreState.curve);
+    Object.assign(mockStore.pid, defaultStoreState.pid);
+
+    // Setup clipboard mock with targeted approach (preserves rest of navigator)
+    Object.assign(navigator, {
       clipboard: {
         writeText: mockClipboardWrite.mockResolvedValue(undefined),
       },
@@ -64,7 +72,8 @@ describe('YAMLModal - Copy Functionality', () => {
   });
 
   afterEach(() => {
-    vi.unstubAllGlobals();
+    // Restore clipboard to original state
+    Object.assign(navigator, { clipboard: originalClipboard });
     vi.useRealTimers();
   });
 
@@ -124,7 +133,7 @@ describe('YAMLModal - Copy Functionality', () => {
     // Now the button should show "Copied!"
     expect(screen.getByRole('button', { name: 'Copied!' })).toBeInTheDocument();
 
-    // Fast-forward 1500ms for the setTimeout
+    // Advance by 1500ms (matches setTimeout in YAMLModal.tsx:101)
     await act(async () => {
       vi.advanceTimersByTime(1500);
     });
@@ -202,10 +211,6 @@ describe('YAMLModal - Copy Functionality', () => {
     const writtenText = mockClipboardWrite.mock.calls[0][0];
     expect(writtenText).toContain('default_target_temperature: 22');
     expect(writtenText).toContain('hc: 1.5');
-
-    // Reset mock store
-    mockStore.curve.tTarget = 21;
-    mockStore.curve.hc = 0.9;
   });
 
   it('should include sensors in YAML when includeSensors is true', async () => {
