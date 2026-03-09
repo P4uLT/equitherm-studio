@@ -35,8 +35,8 @@ climate:
       max_flow_temp: {{maxFlow}}°C
 {{/outputParams}}{{#deadbandParams}}
     deadband_parameters:
-      threshold_low: {{thresholdLow}}
-      threshold_high: {{thresholdHigh}}{{#kpMultiplier}}
+      threshold_low: {{thresholdLow}}°C
+      threshold_high: {{thresholdHigh}}°C{{#kpMultiplier}}
       kp_multiplier: {{kpMultiplier}}{{/kpMultiplier}}{{#kiMultiplier}}
       ki_multiplier: {{kiMultiplier}}{{/kiMultiplier}}{{#kdMultiplier}}
       kd_multiplier: {{kdMultiplier}}{{/kdMultiplier}}
@@ -47,39 +47,39 @@ climate:
 sensor:
   - platform: equitherm
     climate_id: heating_controller
-    type: curve_output_raw
-    name: "Curve Output Raw"
+    type: HEATING_CURVE_OUTPUT
+    name: "Heating Curve Output"
   - platform: equitherm
     climate_id: heating_controller
-    type: base_curve_output
-    name: "Base Curve Output"
+    type: PID_ADJUSTED_OUTPUT
+    name: "PID Adjusted Output"
   - platform: equitherm
     climate_id: heating_controller
-    type: final_flow_setpoint
-    name: "Final Flow Setpoint"
+    type: FLOW_SETPOINT
+    name: "Flow Setpoint"
   - platform: equitherm
     climate_id: heating_controller
-    type: last_written_setpoint
-    name: "Last Written Setpoint"{{#pid}}
+    type: ACTIVE_SETPOINT
+    name: "Active Setpoint"{{#pid}}
   - platform: equitherm
     climate_id: heating_controller
-    type: pid_correction
+    type: PID_CORRECTION
     name: "PID Correction"
   - platform: equitherm
     climate_id: heating_controller
-    type: proportional_term
+    type: PID_PROPORTIONAL
     name: "PID P-Term"
   - platform: equitherm
     climate_id: heating_controller
-    type: integral_term
+    type: PID_INTEGRAL
     name: "PID I-Term"
   - platform: equitherm
     climate_id: heating_controller
-    type: derivative_term
+    type: PID_DERIVATIVE
     name: "PID D-Term"{{/pid}}
   - platform: equitherm
     climate_id: heating_controller
-    type: fallback_duration
+    type: FALLBACK_DURATION
     name: "Fallback Duration"
 
 # Diagnostic binary sensors
