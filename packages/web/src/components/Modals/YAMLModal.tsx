@@ -104,6 +104,11 @@ export function YAMLModal({
     }
   };
 
+  const handleOpenChange = (open: boolean) => {
+    if (!open) onClose();
+  };
+
+  // Reset copied state when dialog opens (controlled by parent's isOpen prop)
   useEffect(() => {
     if (isOpen) setCopied(false);
   }, [isOpen]);
@@ -112,7 +117,7 @@ export function YAMLModal({
   const lineNumbers = Array.from({ length: lineCount }, (_, i) => i + 1).join('\n');
 
   return (
-    <Dialog open={isOpen} onOpenChange={(open) => !open && onClose()}>
+    <Dialog open={isOpen} onOpenChange={handleOpenChange}>
       <DialogContent className="max-w-[95vw] sm:max-w-[700px] p-0 gap-0 overflow-hidden max-h-[90dvh] flex flex-col">
         {/* Header with Tab Style */}
         <DialogHeader className="flex flex-row items-center justify-between p-3 bg-card border-b border-border">
@@ -129,6 +134,7 @@ export function YAMLModal({
           </div>
           <pre className="flex-1 m-0 p-4 bg-transparent font-mono text-[13px] leading-[1.625] whitespace-pre overflow-visible">
             {highlightedHtml ? (
+              // Safe: Shiki output from trusted source (generated YAML, not user input)
               <code
                 className="bg-transparent p-0"
                 dangerouslySetInnerHTML={{ __html: highlightedHtml }}
