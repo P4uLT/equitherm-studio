@@ -31,6 +31,12 @@ export const useStore = create<StoreState>((set) => ({
     deadbandKpMultiplier: 0.1,
     deadbandKiMultiplier: 0.0,
     deadbandKdMultiplier: 0.0,
+    // Advanced PID parameters
+    minIntegral: -5,
+    maxIntegral: 5,
+    // Output rate limiting
+    rateLimitRising: 0.5,
+    rateLimitFalling: 2.0,
   },
 
   // UI state
