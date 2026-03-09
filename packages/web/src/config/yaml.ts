@@ -55,13 +55,13 @@ function buildViewModel(p: YAMLParams, options: YAMLOptions) {
     minFlow: p.min,
     maxFlow: p.max,
 
-    // Deadband within output_parameters
-    deadbandParams: p.db ? true : null,
-    thresholdHigh: p.db ? p.th : null,
-    thresholdLow: p.db ? p.tl : null,
-    kpMultiplier: p.db && p.kpm !== 0.1 ? p.kpm : null,
-    kiMultiplier: p.db && p.kim !== undefined && p.kim !== 0 ? p.kim : null,
-    kdMultiplier: p.db && p.kdm !== undefined && p.kdm !== 0 ? p.kdm : null,
+    // Deadband within output_parameters (requires PID enabled)
+    deadbandParams: p.pid && p.db ? true : null,
+    thresholdHigh: p.pid && p.db ? p.th : null,
+    thresholdLow: p.pid && p.db ? p.tl : null,
+    kpMultiplier: p.pid && p.db && p.kpm !== 0.1 ? p.kpm : null,
+    kiMultiplier: p.pid && p.db && p.kim !== undefined && p.kim !== 0 ? p.kim : null,
+    kdMultiplier: p.pid && p.db && p.kdm !== undefined && p.kdm !== 0 ? p.kdm : null,
 
     // Diagnostic sensors (conditional)
     includeSensors: options.includeSensors ?? false,
