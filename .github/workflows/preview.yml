@@ -34,7 +34,7 @@ jobs:
         run: cp packages/web/public/404.html packages/web/dist/app/404.html
 
       - name: Deploy PR Preview
-        uses: rossjrw/pr-preview-action@v1
+        uses: rossjrw/pr-preview-action@v1.8.1
         with:
           source-dir: packages/web/dist/app
           preview-branch: gh-pages
