@@ -41,6 +41,16 @@ jobs:
 
       - name: Build
         run: pnpm build
+        env:
+          VITE_BASE_PATH: /equitherm-studio/pr-preview/pr-${{ github.event.number }}/
+
+      - name: Upload build artifact
+        if: github.event_name == 'pull_request'
+        uses: actions/upload-artifact@v4
+        with:
+          name: preview-build
+          path: packages/web/dist/app
+          retention-days: 1
 
   preview:
     runs-on: ubuntu-latest
@@ -54,22 +64,11 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - uses: pnpm/action-setup@v4
-
-      - uses: actions/setup-node@v4
+      - name: Download build artifact
+        uses: actions/download-artifact@v4
         with:
-          node-version: 20
-          cache: 'pnpm'
-
-      - run: pnpm install --frozen-lockfile
-
-      - name: Build
-        run: pnpm build
-        env:
-          VITE_BASE_PATH: /equitherm-studio/pr-preview/pr-${{ github.event.number }}/
-
-      - name: Copy 404.html for SPA routing
-        run: cp packages/web/public/404.html packages/web/dist/app/404.html
+          name: preview-build
+          path: packages/web/dist/app
 
       - name: Deploy PR Preview
         uses: rossjrw/pr-preview-action@v1.8.1
