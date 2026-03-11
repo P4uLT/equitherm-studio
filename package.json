@@ -1,6 +1,26 @@
 {
   "name": "equitherm-studio",
+  "version": "0.1.0",
   "private": true,
+  "description": "Companion tools for the ESPHome equitherm climate component",
+  "author": "P4uLT",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/P4uLT/equitherm-studio.git"
+  },
+  "homepage": "https://p4ult.github.io/equitherm-studio/",
+  "bugs": {
+    "url": "https://github.com/P4uLT/equitherm-studio/issues"
+  },
+  "keywords": [
+    "esphome",
+    "equitherm",
+    "heating",
+    "climate",
+    "pid",
+    "hvac"
+  ],
   "scripts": {
     "dev": "pnpm --filter @equitherm-studio/web dev",
     "dev:core": "pnpm --filter @equitherm-studio/core dev",

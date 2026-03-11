@@ -1,7 +1,15 @@
 {
   "name": "@equitherm-studio/core",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "private": true,
+  "description": "Pure calculation library for equitherm heating curves and PID control",
+  "author": "P4uLT",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/P4uLT/equitherm-studio.git",
+    "directory": "packages/core"
+  },
   "type": "module",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
