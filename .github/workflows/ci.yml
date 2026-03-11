@@ -80,5 +80,4 @@ jobs:
           preview-branch: gh-pages
           umbrella-dir: pr-preview
           action: auto
-          wait-for-pages-deployment: true
           qr-code: false
