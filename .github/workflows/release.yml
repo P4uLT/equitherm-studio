@@ -30,9 +30,6 @@ jobs:
         id: changesets
         uses: changesets/action@v1
         with:
-          # Version + changelog only (creates/updates PR)
-          version: pnpm version  # Or just 'true'
-          publish: none          # Disables publish entirely [web:73]
+          version: pnpm version
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          # NO NPM_TOKEN = extra safety
