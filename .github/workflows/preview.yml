@@ -41,3 +41,4 @@ jobs:
           umbrella-dir: pr-preview
           action: auto
           wait-for-pages-deployment: true
+          include-qrcode: false
