@@ -22,7 +22,7 @@
     "hvac"
   ],
   "scripts": {
-    "dev": "pnpm --filter @equitherm-studio/web dev",
+    "dev": "pnpm --filter @equitherm-studio/core build && pnpm --filter @equitherm-studio/web dev",
     "dev:core": "pnpm --filter @equitherm-studio/core dev",
     "build": "pnpm -r build",
     "test": "pnpm -r test",
