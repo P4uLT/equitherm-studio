@@ -2,6 +2,11 @@ name: Version
 on:
   push:
     branches: [main]
+
+permissions:
+  contents: write
+  pull-requests: write
+
 concurrency: ${{ github.workflow }}-${{ github.ref }}
 
 jobs:
