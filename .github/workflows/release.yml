@@ -32,10 +32,11 @@ jobs:
       - name: Install Dependencies
         run: pnpm install --frozen-lockfile
 
-      - name: Create Version PR
+      - name: Create Version PR or Tag Release
         id: changesets
         uses: changesets/action@v1
         with:
           version: pnpm run version
+          publish: pnpm run tag
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
