@@ -35,3 +35,9 @@ docs/plans/
 # mise local config
 mise.local.toml
 .turbo/
+
+# Claude Code local
+.claude/
+
+# Playwright CLI cache
+.playwright-cli/
