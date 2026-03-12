@@ -4,7 +4,7 @@ import { useStore } from './store/useStore';
 import { loadFromURL } from './config/storage';
 import { Sidebar } from './components/AppShell/Sidebar';
 import { MobileBottomSheet } from './components/AppShell/MobileBottomSheet';
-import { Header } from './components/AppShell/Header';
+import { Header, Footer } from './components/AppShell';
 import { HeatingChart } from './components/Chart';
 import { TooltipProvider } from './components/ui/tooltip';
 import { ThemedToaster } from './components/ThemedToaster';
@@ -22,9 +22,9 @@ function App() {
   return (
     <TooltipProvider>
       <div className="atmosphere" />
-      <div className="min-h-dvh max-w-screen-2xl mx-auto px-3.5 py-2.5 sm:px-6 sm:py-4 pb-20 md:pb-4">
+      <div className="flex flex-col min-h-dvh max-w-screen-2xl mx-auto px-3.5 py-2.5 sm:px-6 sm:py-4 pb-20 md:pb-4">
         <Header />
-        <main className="@container grid grid-cols-1 gap-4 md:grid-cols-[minmax(340px,400px)_1fr]">
+        <main className="@container flex-1 grid grid-cols-1 gap-4 md:grid-cols-[minmax(340px,400px)_1fr]">
           {/* Desktop Sidebar */}
           <div className="hidden md:block">
             <Sidebar activeTab={activeTab} onTabChange={setActiveTab} />
@@ -35,6 +35,8 @@ function App() {
             <HeatingChart />
           </div>
         </main>
+
+        <Footer />
 
         {/* Mobile Bottom Sheet */}
         <MobileBottomSheet activeTab={activeTab} onTabChange={setActiveTab} />
