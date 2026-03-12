@@ -29,6 +29,7 @@
     "typecheck": "turbo typecheck",
     "changeset": "changeset",
     "version": "changeset version",
+    "tag": "node scripts/tag-release.mjs",
     "release": "pnpm build && changeset publish"
   },
   "devDependencies": {
