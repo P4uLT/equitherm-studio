@@ -11,21 +11,23 @@ interface FooterLinkProps {
   icon?: React.ReactNode;
   children: React.ReactNode;
   external?: boolean;
+  'aria-label'?: string;
 }
 
-function FooterLink({ href, icon, children, external }: FooterLinkProps) {
+function FooterLink({ href, icon, children, external, 'aria-label': ariaLabel }: FooterLinkProps) {
   return (
     <a
       href={href}
       target={external ? '_blank' : undefined}
       rel={external ? 'noopener noreferrer' : undefined}
+      aria-label={ariaLabel}
       className={cn(
         'inline-flex items-center gap-1.5 text-xs text-muted-foreground hover:text-foreground',
-        'transition-colors duration-200 hover:underline underline-offset-2'
+        'transition-colors duration-200 hover:underline underline-offset-4'
       )}
     >
       {icon}
-      <span>{children}</span>
+      {children}
       {external && <ExternalLink className="w-2.5 h-2.5 opacity-50" />}
     </a>
   );
@@ -42,13 +44,14 @@ export function Footer() {
             href={ESPHOME_WEB}
             target="_blank"
             rel="noopener noreferrer"
+            aria-label="ESPHome website (opens in new tab)"
             className="inline-flex items-center gap-1 hover:text-accent transition-colors"
           >
             <Flame className="w-3 h-3 text-accent/80" />
             <span className="font-medium">ESPHome</span>
             <ExternalLink className="w-2.5 h-2.5 opacity-40" />
           </a>
-          <span className="inline-flex items-center gap-1.5 text-muted-foreground/80">
+          <span className="inline-flex items-center gap-1.5 text-muted-foreground/80" title="All calculations run in your browser">
             <ShieldCheck className="w-3.5 h-3.5" />
             <span>Runs locally</span>
           </span>
@@ -56,10 +59,10 @@ export function Footer() {
 
         {/* Center: Links */}
         <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-1">
-          <FooterLink href={REPO_URL} icon={<Github className="w-3 h-3" />} external>
+          <FooterLink href={REPO_URL} icon={<Github className="w-3 h-3" />} external aria-label="GitHub repository (opens in new tab)">
             GitHub
           </FooterLink>
-          <FooterLink href={ESPHOME_DOCS} external>
+          <FooterLink href={ESPHOME_DOCS} external aria-label="ESPHome equitherm documentation (opens in new tab)">
             Documentation
           </FooterLink>
         </div>
@@ -72,6 +75,7 @@ export function Footer() {
             href={`${REPO_URL}/blob/main/LICENSE`}
             target="_blank"
             rel="noopener noreferrer"
+            aria-label="MIT License (opens in new tab)"
             className="hover:text-muted-foreground transition-colors"
           >
             MIT
